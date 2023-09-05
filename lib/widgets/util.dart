@@ -1,15 +1,66 @@
+import 'package:app_cashback_soamer/widgets/custom_clipper.dart';
 import 'package:flutter/material.dart';
 
-class CadastroScreen extends StatefulWidget {
-  const CadastroScreen({super.key});
-
-  @override
-  State<CadastroScreen> createState() => _CadastroScreenState();
+Widget backgroundCadastroLogin(BuildContext context, {required Widget child, double? height}) {
+  return ListView(
+    children: [
+      Container(
+        height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerRight,
+            end: Alignment.centerLeft,
+            colors: [
+              Colors.grey.shade300,
+              Colors.white,
+              Colors.grey.shade300,
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height / 5, child: Image.asset("assets/images/logo_soamer.png")),
+            ClipPath(
+              clipper: CurvaLoginCadastro(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(color: Color.fromRGBO(34, 111, 162, 1)),
+                child: child,
+              ),
+            )
+          ],
+        ),
+      ),
+    ],
+  );
 }
 
-class _CadastroScreenState extends State<CadastroScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
+Widget text(
+  String text, {
+  Color? color,
+  double? fontSize,
+  bool? overflow,
+  bool? bold,
+  double? letterSpacing,
+  String? fontFamily,
+  TextAlign? textAlign,
+}) {
+  return StatefulBuilder(
+    builder: (context, setState) {
+      return Text(
+        text,
+        textAlign: textAlign ?? TextAlign.start,
+        style: TextStyle(
+          color: color,
+          fontSize: fontSize ?? 15,
+          overflow: overflow == true ? TextOverflow.ellipsis : null,
+          fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
+          letterSpacing: letterSpacing,
+          fontFamily: fontFamily ?? 'source',
+        ),
+      );
+    },
+  );
 }

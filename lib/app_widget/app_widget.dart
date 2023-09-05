@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/widgets/util.dart';
+import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppWidget extends StatelessWidget {
@@ -7,9 +7,8 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: CadastroScreen(),
     );
   }
 }
-
-asdnlad
