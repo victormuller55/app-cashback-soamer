@@ -2,11 +2,13 @@ import 'package:app_cashback_soamer/app_widget/formatters/formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
+import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_bloc.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
+import 'package:app_cashback_soamer/telas/entrar/entrar_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/sized_box.dart';
@@ -22,7 +24,6 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
-
   CadastroBloc cadastroBloc = CadastroBloc();
 
   final FocusScopeNode _focusScope = FocusScopeNode();
@@ -72,9 +73,8 @@ class _CadastroScreenState extends State<CadastroScreen> {
   }
 
   void _onChangeState(CadastroState state) {
-    if(state is CadastroErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? "Ocorreu um erro, tente novamente mais tarde." : state.errorModel.mensagem);
-    if(state is CadastroSuccessState) showSnackbarSuccess(context, message: "Sucesso ao criar conta.");
-
+    if (state is CadastroErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? "Ocorreu um erro, tente novamente mais tarde." : state.errorModel.mensagem);
+    if (state is CadastroSuccessState) showSnackbarSuccess(context, message: "Sucesso ao criar conta.");
     _focusScope.unfocus();
   }
 
@@ -103,7 +103,11 @@ class _CadastroScreenState extends State<CadastroScreen> {
           sizedBoxVertical(20),
           _botaoCadastrarBloc(),
           sizedBoxVertical(10),
-          elevatedButtonText(Strings.jaTenhoConta.toUpperCase(), transparente: true, function: () => _validar()),
+          elevatedButtonText(
+            Strings.jaTenhoConta.toUpperCase(),
+            transparente: true,
+            function: () => open(context, screen: const EntrarScreen(), closePrevious: true),
+          ),
           sizedBoxVertical(20),
         ],
       ),
@@ -114,7 +118,16 @@ class _CadastroScreenState extends State<CadastroScreen> {
     return BlocConsumer<CadastroBloc, CadastroState>(
       bloc: cadastroBloc,
       listener: (context, state) => _onChangeState(state),
-      builder: (context, state) => elevatedButtonPadrao(state is CadastroLoadingState ? const CircularProgressIndicator() : text(Strings.cadastrar.toUpperCase(), color: const Color.fromRGBO(34, 111, 162, 1), bold: true), function: () => _validar()),
+      builder: (context, state) => elevatedButtonPadrao(
+        function: () => _validar(),
+        state is CadastroLoadingState
+            ? const CircularProgressIndicator()
+            : text(
+                Strings.cadastrar.toUpperCase(),
+                color: const Color.fromRGBO(34, 111, 162, 1),
+                bold: true,
+              ),
+      ),
     );
   }
 

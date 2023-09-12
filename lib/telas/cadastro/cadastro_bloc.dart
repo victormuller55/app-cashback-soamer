@@ -15,7 +15,7 @@ class CadastroBloc extends Bloc<CadastroEvent, CadastroState> {
       Response response = Response(statusCode: 0, body: "");
       try {
         response = await postUser(event.usuarioModel);
-        if(response.statusCode == 200) {
+        if (response.statusCode == 200) {
           emit(CadastroSuccessState(usuarioModel: UsuarioModel.fromMap(jsonDecode(response.body)), errorModel: ErrorModel.empty()));
         } else {
           emit(CadastroErrorState(contaModel: UsuarioModel.empty(), errorModel: ErrorModel.fromMap(jsonDecode(response.body))));
