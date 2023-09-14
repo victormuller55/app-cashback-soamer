@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 Map<String, String>? header = <String, String>{'Content-Type': 'application/json; charset=UTF-8'};
@@ -15,16 +17,30 @@ String getParametersFormatted({required Map<String, dynamic>? parameters}) {
 }
 
 Future<Response> postHTTP({required String endpoint, required Map<String, dynamic> body, Map<String, String>? parameters}) async {
+  if (kDebugMode) {
+    print("API: $endpoint${getParametersFormatted(parameters: parameters)}");
+  }
+
   http.Response endpointResult = await http.post(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header, body: jsonEncode(body));
   return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
 }
 
 Future<Response> putHTTP({required String endpoint, Map<String, String>? parameters}) async {
+
+  if (kDebugMode) {
+    print("API: $endpoint${getParametersFormatted(parameters: parameters)}");
+  }
+
   http.Response endpointResult = await http.put(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header);
   return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
 }
 
 Future<Response> getHTTP({required String endpoint, Map<String, String>? parameters}) async {
+
+  if (kDebugMode) {
+    print("API: $endpoint${getParametersFormatted(parameters: parameters)}");
+  }
+
   http.Response endpointResult = await http.get(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header);
   return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
 }
@@ -33,5 +49,5 @@ class Response {
   int statusCode;
   String body;
 
-  Response({required this.statusCode,required this.body});
+  Response({required this.statusCode, required this.body});
 }

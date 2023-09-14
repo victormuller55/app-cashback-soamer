@@ -1,0 +1,65 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:app_cashback_soamer/functions/navigation.dart';
+import 'package:app_cashback_soamer/telas/home/extrato/extrato_screen.dart';
+import 'package:app_cashback_soamer/telas/home/inicio/inicio_screen.dart';
+import 'package:app_cashback_soamer/telas/home/perfil/perfil_screen.dart';
+import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_screen.dart';
+import 'package:flutter/material.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    InicioScreen(),
+    RecompensasScreen(),
+    ExtratoScreen(),
+    PerfilScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        height: 60,
+        icons: const [
+          Icons.home,
+          Icons.card_giftcard,
+          Icons.history,
+          Icons.person,
+        ],
+        activeIndex: _selectedIndex,
+        gapLocation: GapLocation.center,
+        notchSmoothness: NotchSmoothness.defaultEdge,
+        onTap: (index) => setState(() => _selectedIndex = index),
+        backgroundColor: const Color.fromRGBO(24, 76, 111, 1),
+        iconSize: 30,
+        notchMargin: 5,
+        splashSpeedInMilliseconds: 0,
+        gapWidth: 100,
+        activeColor: Colors.white,
+        inactiveColor: Colors.grey.shade300,
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SizedBox(
+        height: 70,
+        width: 70,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () => open(context, screen: Container()),
+            backgroundColor: const Color.fromRGBO(24, 76, 111, 1),
+            child: const Icon(Icons.qr_code_scanner, size: 30),
+          ),
+        ),
+      ),
+    );
+  }
+}

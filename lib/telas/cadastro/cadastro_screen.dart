@@ -1,3 +1,4 @@
+import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/app_widget/formatters/formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
@@ -5,6 +6,7 @@ import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/telas/apresentacao/apresentacao_screen.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_bloc.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
@@ -24,6 +26,7 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
+
   CadastroBloc cadastroBloc = CadastroBloc();
 
   final FocusScopeNode _focusScope = FocusScopeNode();
@@ -54,27 +57,26 @@ class _CadastroScreenState extends State<CadastroScreen> {
           if (controllerSenha.text == controllerConfirmarSenha.text) {
             if (termosAceitos) {
               _salvar();
-              showSnackbarSuccess(context, message: "Conta criada com sucesso");
             } else {
-              showSnackbarWarning(context, message: "Concorde com o termo de uso e politica de privacidade!");
+              showSnackbarWarning(context, message: Strings.concordeComOsTermosDeUsoEPoliticaDePrivacidade);
             }
           } else {
-            showSnackbarWarning(context, message: "As senhas não são iguais");
+            showSnackbarWarning(context, message: Strings.asSenhasNaoSaoIguais);
           }
         } else {
-          showSnackbarWarning(context, message: "CPF inválido.");
+          showSnackbarWarning(context, message: Strings.cpfInvalido);
         }
       } else {
-        showSnackbarWarning(context, message: "E-mail inválido.");
+        showSnackbarWarning(context, message: Strings.emailInvalido);
       }
     } else {
-      showSnackbarWarning(context, message: "Todos os campos são obrigatórios.");
+      showSnackbarWarning(context, message: Strings.todosOsCamposSaoObrigatorios);
     }
   }
 
   void _onChangeState(CadastroState state) {
     if (state is CadastroErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? "Ocorreu um erro, tente novamente mais tarde." : state.errorModel.mensagem);
-    if (state is CadastroSuccessState) showSnackbarSuccess(context, message: "Sucesso ao criar conta.");
+    if (state is CadastroSuccessState) open(context, screen: const ApresentacaoScreen(), closePrevious: true);
     _focusScope.unfocus();
   }
 
@@ -96,7 +98,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
               value: termosAceitos,
               title: text(Strings.concordoTermosPoliticas, color: Colors.white, bold: false),
               onChanged: (value) => setState(() => termosAceitos = !termosAceitos),
-              checkColor: const Color.fromRGBO(34, 111, 162, 1),
+              checkColor: AppColor.primaryColor,
               fillColor: MaterialStateProperty.all<Color>(Colors.white),
             ),
           ),
@@ -124,7 +126,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             ? const CircularProgressIndicator()
             : text(
                 Strings.cadastrar.toUpperCase(),
-                color: const Color.fromRGBO(34, 111, 162, 1),
+                color: AppColor.primaryColor,
                 bold: true,
               ),
       ),

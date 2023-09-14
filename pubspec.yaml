@@ -19,6 +19,7 @@ dependencies:
   http: ^1.1.0
   loading_animation_widget: ^1.2.0+4
   flutter_snackbar_content: ^0.0.3
+  animated_bottom_navigation_bar: ^1.2.1
 
 dev_dependencies:
   flutter_test:
