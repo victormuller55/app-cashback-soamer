@@ -3,6 +3,7 @@ import 'package:app_cashback_soamer/app_widget/formatters/formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
+import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
@@ -76,7 +77,10 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   void _onChangeState(CadastroState state) {
     if (state is CadastroErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? "Ocorreu um erro, tente novamente mais tarde." : state.errorModel.mensagem);
-    if (state is CadastroSuccessState) open(context, screen: const ApresentacaoScreen(), closePrevious: true);
+    if (state is CadastroSuccessState) {
+      open(context, screen: ApresentacaoScreen(usuarioModel: state.usuarioModel), closePrevious: true);
+      saveLocalUserData(state.usuarioModel);
+    }
     _focusScope.unfocus();
   }
 

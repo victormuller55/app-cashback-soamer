@@ -1,5 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
+import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_screen.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/perfil_screen.dart';
@@ -7,7 +9,8 @@ import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_screen.da
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  UsuarioModel usuarioModel;
+  HomeScreen({super.key, required this.usuarioModel});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,12 +19,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    InicioScreen(),
-    RecompensasScreen(),
-    ExtratoScreen(),
-    PerfilScreen(),
-  ];
+  static List<Widget> _widgetOptions = [];
+
+  @override
+  void initState() {
+    _widgetOptions = <Widget>[
+      InicioScreen(usuarioModel: widget.usuarioModel),
+      const RecompensasScreen(),
+      const ExtratoScreen(),
+      const PerfilScreen(),
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.defaultEdge,
         onTap: (index) => setState(() => _selectedIndex = index),
-        backgroundColor: const Color.fromRGBO(24, 76, 111, 1),
+        backgroundColor: AppColor.primaryColor,
         iconSize: 30,
         notchMargin: 5,
         splashSpeedInMilliseconds: 0,
@@ -55,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: FittedBox(
           child: FloatingActionButton(
             onPressed: () => open(context, screen: Container()),
-            backgroundColor: const Color.fromRGBO(24, 76, 111, 1),
+            backgroundColor: AppColor.secondaryColor,
             child: const Icon(Icons.qr_code_scanner, size: 30),
           ),
         ),

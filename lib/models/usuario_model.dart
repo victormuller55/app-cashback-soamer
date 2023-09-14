@@ -3,6 +3,8 @@ class UsuarioModel {
   String? nomeUsuario;
   String? emailUsuario;
   String? cpfUsuario;
+  int? pontosUsuario;
+  int? pontosPendentesUsuario;
   String? senhaUsuario;
   String? dataUsuario;
 
@@ -11,6 +13,8 @@ class UsuarioModel {
     this.nomeUsuario,
     this.emailUsuario,
     this.cpfUsuario,
+    this.pontosUsuario,
+    this.pontosPendentesUsuario,
     this.senhaUsuario,
     this.dataUsuario,
   });
@@ -20,6 +24,8 @@ class UsuarioModel {
       idUsuario: 0,
       nomeUsuario: "",
       cpfUsuario: "",
+      pontosUsuario: 0,
+      pontosPendentesUsuario: 0,
       emailUsuario: "",
       senhaUsuario: "",
       dataUsuario: "",
@@ -31,6 +37,8 @@ class UsuarioModel {
     nomeUsuario = json['nome_usuario'];
     emailUsuario = json['email_usuario'];
     cpfUsuario = json['cpf_usuario'];
+    pontosUsuario = json['pontos_usuario'];
+    pontosPendentesUsuario = json['pontos_pendentes_usuario'];
     senhaUsuario = json['senha_usuario'];
     dataUsuario = json['data_usuario'];
   }

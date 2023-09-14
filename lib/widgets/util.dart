@@ -64,3 +64,30 @@ Widget text(
     },
   );
 }
+
+Widget infoColumn({
+  required String title,
+  required String value,
+  CrossAxisAlignment? crossAxisAlignment,
+  Color? titleColor,
+  Color? valueColor,
+  double? titleSize,
+  double? valueSize,
+  double? width,
+  bool? spacing,
+}) {
+  return Builder(builder: (context) {
+    return SizedBox(
+      width: width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
+        children: [
+          text(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 20),
+          SizedBox(height: spacing ?? false ? 5 : 0),
+          text(value, color: valueColor ?? Colors.white, overflow: true, fontSize: valueSize),
+        ],
+      ),
+    );
+  });
+}
