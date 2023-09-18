@@ -5,6 +5,8 @@ import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_screen.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/perfil_screen.dart';
+import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_bloc.dart';
+import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_event.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +19,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
 
+  VaucherBloc vaucherBloc = VaucherBloc();
+
+  int _selectedIndex = 0;
   static List<Widget> _widgetOptions = [];
 
   @override
@@ -63,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 70,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () => open(context, screen: Container()),
+            onPressed: () => vaucherBloc.add(VaucherLoadEvent()),
             backgroundColor: AppColor.secondaryColor,
             child: const Icon(Icons.qr_code_scanner, size: 30),
           ),

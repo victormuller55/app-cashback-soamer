@@ -131,7 +131,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             : text(
                 Strings.cadastrar.toUpperCase(),
                 color: AppColor.primaryColor,
-                bold: true,
+                bold: true
               ),
       ),
     );

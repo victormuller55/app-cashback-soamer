@@ -1,12 +1,11 @@
 import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/functions/service.dart';
 
-Future<Response> getUser(String email, String senha) async {
+Future<Response> getHome(String email) async {
   return await getHTTP(
-    endpoint: Endpoint.endpointEntrarCadastrar,
+    endpoint: Endpoint.endpointHome,
     parameters: {
       "email": email,
-      "senha": senha,
     },
   );
 }

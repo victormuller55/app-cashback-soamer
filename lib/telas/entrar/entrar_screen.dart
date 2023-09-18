@@ -2,12 +2,15 @@ import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
+import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
+import 'package:app_cashback_soamer/telas/apresentacao/apresentacao_screen.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_bloc.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_event.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_state.dart';
+import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
@@ -24,6 +27,7 @@ class EntrarScreen extends StatefulWidget {
 }
 
 class _EntrarScreenState extends State<EntrarScreen> {
+
   EntrarBloc bloc = EntrarBloc();
 
   final FocusScopeNode _focusScope = FocusScopeNode();
@@ -45,8 +49,10 @@ class _EntrarScreenState extends State<EntrarScreen> {
 
   void _onChangeState(EntrarState state) {
     if (state is EntrarErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? Strings.ocorreuUmErro : state.errorModel.mensagem);
-    if (state is EntrarSuccessState) showSnackbarSuccess(context, message: Strings.sucessoAoCriarConta);
-
+    if (state is EntrarSuccessState) {
+      open(context, screen: HomeScreen(usuarioModel: state.usuarioModel), closePrevious: true);
+      saveLocalUserData(state.usuarioModel);
+    }
     _focusScope.unfocus();
   }
 
