@@ -9,17 +9,17 @@ abstract class EntrarState {
 }
 
 class EntrarInitialState extends EntrarState {
-  EntrarInitialState({required UsuarioModel contaModel, required ErrorModel errorModel}) : super(usuarioModel: contaModel, errorModel: errorModel);
+  EntrarInitialState() : super(usuarioModel: UsuarioModel.empty(), errorModel: ErrorModel.empty());
 }
 
 class EntrarLoadingState extends EntrarState {
-  EntrarLoadingState({required UsuarioModel contaModel, required ErrorModel errorModel}) : super(usuarioModel: contaModel, errorModel: errorModel);
+  EntrarLoadingState() : super(usuarioModel: UsuarioModel.empty(), errorModel: ErrorModel.empty());
 }
 
 class EntrarSuccessState extends EntrarState {
-  EntrarSuccessState({required UsuarioModel usuarioModel, required ErrorModel errorModel}) : super(usuarioModel: usuarioModel, errorModel: errorModel);
+  EntrarSuccessState({required UsuarioModel usuarioModel}) : super(usuarioModel: usuarioModel, errorModel: ErrorModel.empty());
 }
 
 class EntrarErrorState extends EntrarState {
-  EntrarErrorState({required UsuarioModel contaModel, required ErrorModel errorModel}) : super(usuarioModel: contaModel, errorModel: errorModel);
+  EntrarErrorState({required ErrorModel errorModel}) : super(usuarioModel: UsuarioModel.empty(), errorModel: errorModel);
 }

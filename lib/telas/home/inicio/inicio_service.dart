@@ -4,8 +4,10 @@ import 'package:app_cashback_soamer/functions/service.dart';
 Future<Response> getHome(String email) async {
   return await getHTTP(
     endpoint: Endpoint.endpointHome,
-    parameters: {
-      "email": email,
-    },
+    parameters: {"email": email},
   );
+}
+
+Future<Response> getVaucherPromocao() async {
+  return await getHTTP(endpoint: Endpoint.endpointVaucherPromocao);
 }

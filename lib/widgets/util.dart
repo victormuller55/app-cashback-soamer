@@ -46,6 +46,7 @@ Widget text(
   double? letterSpacing,
   String? fontFamily,
   TextAlign? textAlign,
+  bool? cortado,
 }) {
   return StatefulBuilder(
     builder: (context, setState) {
@@ -59,6 +60,7 @@ Widget text(
           fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
           letterSpacing: letterSpacing,
           fontFamily: fontFamily ?? 'source',
+          decoration: cortado ?? false ? TextDecoration.lineThrough : null,
         ),
       );
     },

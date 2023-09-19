@@ -9,17 +9,17 @@ abstract class CadastroState {
 }
 
 class CadastroInitialState extends CadastroState {
-  CadastroInitialState({required UsuarioModel contaModel, required ErrorModel errorModel}) : super(usuarioModel: contaModel, errorModel: errorModel);
+  CadastroInitialState() : super(usuarioModel: UsuarioModel.empty(), errorModel: ErrorModel.empty());
 }
 
 class CadastroLoadingState extends CadastroState {
-  CadastroLoadingState({required UsuarioModel contaModel, required ErrorModel errorModel}) : super(usuarioModel: contaModel, errorModel: errorModel);
+  CadastroLoadingState() : super(usuarioModel: UsuarioModel.empty(), errorModel: ErrorModel.empty());
 }
 
 class CadastroSuccessState extends CadastroState {
-  CadastroSuccessState({required UsuarioModel usuarioModel, required ErrorModel errorModel}) : super(usuarioModel: usuarioModel, errorModel: errorModel);
+  CadastroSuccessState({required UsuarioModel usuarioModel}) : super(usuarioModel: usuarioModel, errorModel: ErrorModel.empty());
 }
 
 class CadastroErrorState extends CadastroState {
-  CadastroErrorState({required UsuarioModel contaModel, required ErrorModel errorModel}) : super(usuarioModel: contaModel, errorModel: errorModel);
+  CadastroErrorState({required ErrorModel errorModel}) : super(usuarioModel: UsuarioModel.empty(), errorModel: errorModel);
 }

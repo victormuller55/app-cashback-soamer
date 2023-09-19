@@ -11,8 +11,8 @@ class ErrorModel {
 
   factory ErrorModel.empty() {
     return ErrorModel(
-      mensagem: "",
-      erro: "",
+      erro: "Ocorreu um erro",
+      mensagem: "Tente novamente mais tarde",
       tipo: "",
     );
   }
