@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/widgets/custom_clipper.dart';
+import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:flutter/material.dart';
 
 Widget backgroundCadastroLogin(BuildContext context, {required Widget child, double? height}) {
@@ -8,28 +8,23 @@ Widget backgroundCadastroLogin(BuildContext context, {required Widget child, dou
         height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.centerRight,
-            end: Alignment.centerLeft,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
-              Colors.grey.shade300,
-              Colors.white,
-              Colors.grey.shade300,
+              AppColor.primaryColor,
+              AppColor.secondaryColor,
             ],
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const SizedBox(height: 20),
-            SizedBox(height: MediaQuery.of(context).size.height / 5, child: Image.asset("assets/images/logo_soamer.png")),
-            ClipPath(
-              clipper: CurvaLoginCadastro(),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(color: Color.fromRGBO(34, 111, 162, 1)),
-                child: child,
-              ),
-            )
+            const SizedBox(height: 40),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 1.2,
+              child: Image.asset("assets/images/logo.png"),
+            ),
+            child,
           ],
         ),
       ),
@@ -59,7 +54,7 @@ Widget text(
           overflow: overflow == true ? TextOverflow.ellipsis : null,
           fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
           letterSpacing: letterSpacing,
-          fontFamily: fontFamily ?? 'source',
+          fontFamily: fontFamily ?? 'lato',
           decoration: cortado ?? false ? TextDecoration.lineThrough : null,
         ),
       );

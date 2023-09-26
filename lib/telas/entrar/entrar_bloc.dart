@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:app_cashback_soamer/app_widget/api_exception.dart';
 import 'package:app_cashback_soamer/functions/service.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';

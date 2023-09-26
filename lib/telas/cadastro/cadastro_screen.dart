@@ -13,11 +13,14 @@ import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
+import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../widgets/loading.dart';
 
 class CadastroScreen extends StatefulWidget {
   const CadastroScreen({super.key});
@@ -27,7 +30,6 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
-
   CadastroBloc cadastroBloc = CadastroBloc();
 
   final FocusScopeNode _focusScope = FocusScopeNode();
@@ -36,7 +38,6 @@ class _CadastroScreenState extends State<CadastroScreen> {
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerCPF = TextEditingController();
   TextEditingController controllerSenha = TextEditingController();
-  TextEditingController controllerConfirmarSenha = TextEditingController();
 
   bool termosAceitos = false;
 
@@ -52,17 +53,13 @@ class _CadastroScreenState extends State<CadastroScreen> {
   }
 
   void _validar() {
-    if (verificaCampoVazio(controllers: [controllerNome.text, controllerEmail.text, controllerCPF.text, controllerSenha.text, controllerConfirmarSenha.text])) {
+    if (verificaCampoVazio(controllers: [controllerNome.text, controllerEmail.text, controllerCPF.text, controllerSenha.text])) {
       if (emailValido(controllerEmail.text)) {
         if (cpfValido(controllerCPF.text)) {
-          if (controllerSenha.text == controllerConfirmarSenha.text) {
-            if (termosAceitos) {
-              _salvar();
-            } else {
-              showSnackbarWarning(context, message: Strings.concordeComOsTermosDeUsoEPoliticaDePrivacidade);
-            }
+          if (termosAceitos) {
+            _salvar();
           } else {
-            showSnackbarWarning(context, message: Strings.asSenhasNaoSaoIguais);
+            showSnackbarWarning(context, message: Strings.concordeComOsTermosDeUsoEPoliticaDePrivacidade);
           }
         } else {
           showSnackbarWarning(context, message: Strings.cpfInvalido);
@@ -90,11 +87,13 @@ class _CadastroScreenState extends State<CadastroScreen> {
       child: Column(
         children: [
           sizedBoxVertical(70),
-          formFieldPadrao(context, controller: controllerNome, Strings.nome, width: 300, textInputType: TextInputType.name),
-          formFieldPadrao(context, controller: controllerEmail, Strings.email, width: 300, textInputType: TextInputType.emailAddress),
-          formFieldPadrao(context, controller: controllerCPF, Strings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: FormattersSoamer.cpfFormatter),
-          formFieldPadrao(context, controller: controllerSenha, Strings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
-          formFieldPadrao(context, controller: controllerConfirmarSenha, Strings.confirmarSenha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+          formFieldPadrao(context, controller: controllerNome, "Pedro Santana", width: 300, textInputType: TextInputType.name),
+          sizedBoxVertical(10),
+          formFieldPadrao(context, controller: controllerEmail, "pedrosantana@cashboost.com", width: 300, textInputType: TextInputType.emailAddress),
+          sizedBoxVertical(10),
+          formFieldPadrao(context, controller: controllerCPF, "322.123.543-98", width: 300, textInputType: TextInputType.number, textInputFormatter: FormattersSoamer.cpfFormatter),
+          sizedBoxVertical(10),
+          formFieldPadrao(context, controller: controllerSenha, "***********", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
           sizedBoxVertical(20),
           SizedBox(
             width: 330,
@@ -107,11 +106,15 @@ class _CadastroScreenState extends State<CadastroScreen> {
             ),
           ),
           sizedBoxVertical(20),
-          _botaoCadastrarBloc(),
+          elevatedButtonPadrao(
+            function: () => _validar(),
+            text(Strings.cadastrar.toUpperCase(), color: AppColor.primaryColor, bold: true),
+          ),
           sizedBoxVertical(10),
           elevatedButtonText(
             Strings.jaTenhoConta.toUpperCase(),
-            transparente: true,
+            color: Colors.transparent,
+            textColor: Colors.white,
             function: () => open(context, screen: const EntrarScreen(), closePrevious: true),
           ),
           sizedBoxVertical(20),
@@ -120,25 +123,24 @@ class _CadastroScreenState extends State<CadastroScreen> {
     );
   }
 
-  Widget _botaoCadastrarBloc() {
+
+  Widget _bodyBuilder() {
     return BlocConsumer<CadastroBloc, CadastroState>(
       bloc: cadastroBloc,
       listener: (context, state) => _onChangeState(state),
-      builder: (context, state) => elevatedButtonPadrao(
-        function: () => _validar(),
-        state is CadastroLoadingState
-            ? const CircularProgressIndicator()
-            : text(
-                Strings.cadastrar.toUpperCase(),
-                color: AppColor.primaryColor,
-                bold: true
-              ),
-      ),
+      builder: (context, state) {
+        switch (state.runtimeType) {
+          case CadastroLoadingState:
+            return loading(color: Colors.white);
+          default:
+            return _body();
+        }
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: backgroundCadastroLogin(context, child: _body()));
+    return Scaffold(body: backgroundCadastroLogin(context, child: _bodyBuilder()));
   }
 }

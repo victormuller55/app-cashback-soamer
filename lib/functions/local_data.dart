@@ -27,6 +27,11 @@ Future<UsuarioModel> getModelLocal() async {
 
 }
 
+void clearLocalData() async {
+  final SharedPreferences localData = await SharedPreferences.getInstance();
+  localData.clear();
+}
+
 Future<bool> temLocalData() async {
   final SharedPreferences localData = await SharedPreferences.getInstance();
   return localData.getInt("id") != null;

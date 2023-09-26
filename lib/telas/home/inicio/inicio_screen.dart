@@ -1,6 +1,4 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_bloc.dart';
@@ -36,6 +34,10 @@ class _InicioScreenState extends State<InicioScreen> {
   void initState() {
     loadHome();
     super.initState();
+  }
+
+  Future<void> _reload() async {
+    loadHome();
   }
 
   Widget _cardInfo({required String title, required String value}) {
@@ -88,45 +90,55 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 
   void _onChangeState(InicioState state) {
-    if (state is InicioErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? Strings.ocorreuUmErro : state.errorModel.mensagem);
-    if (state is InicioSuccessState && carregou == true) {
-      bloc.add(LoadVaucherPromocaoEvent());
+    if (state is InicioSuccessState && carregou) {
+      bloc.add(LoadVaucherPromocaoEvent(state.homeModel));
       carregou = false;
     }
   }
 
   Widget _body(InicioState homeState) {
-    List<Widget> cards = [];
+    List<Widget> cardsPromocao = [];
+    List<Widget> cardsMaisTrocados = [];
 
-    for (VaucherModel vaucherModel in homeState.vaucherList) {
-      cards.add(cardVaucher(vaucherModel));
+    cardsPromocao.add(const SizedBox(width: 10));
+    cardsMaisTrocados.add(const SizedBox(width: 10));
+
+    for (VaucherModel model in homeState.vaucherListPromocao) {
+      cardsPromocao.add(cardVaucher(model));
     }
 
-    return ListView(
-      children: [
-        _header(homeState),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _cardInfo(value: homeState.homeModel.pontosPedentesUsuario.toString(), title: "Pontos pendentes"),
-            _cardInfo(value: "R\$${homeState.homeModel.valorPix},00", title: "Em pix"),
-          ],
-        ),
-        const SizedBox(height: 15),
-        Padding(
-          padding: const EdgeInsets.only(left: 10, bottom: 6),
-          child: text("Vauchers na promoção!", bold: true, color: AppColor.primaryColor, fontSize: 17),
-        ),
-        SizedBox(
-          height: 180,
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            children: cards,
+    for (VaucherModel model in homeState.vaucherListMaisTrocados) {
+      cardsMaisTrocados.add(cardVaucher(model));
+    }
+
+    return RefreshIndicator(
+      onRefresh: _reload,
+      child: ListView(
+        children: [
+          _header(homeState),
+          const SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _cardInfo(value: homeState.homeModel.pontosPedentesUsuario.toString(), title: "Pontos pendentes"),
+              _cardInfo(value: "R\$${homeState.homeModel.valorPix},00", title: "Em pix"),
+            ],
           ),
-        ),
-      ],
+          const SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, bottom: 6),
+            child: text("Vauchers na promoção!", bold: true, color: AppColor.primaryColor, fontSize: 17),
+          ),
+          SizedBox(
+            height: 180,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: cardsPromocao,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -153,14 +165,14 @@ class _InicioScreenState extends State<InicioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColor.primaryColor,
         centerTitle: true,
         title: text("Inicio".toUpperCase(), bold: true),
       ),
-      body: _bodyBuilder(),
+      body: RefreshIndicator(onRefresh: _reload, child: _bodyBuilder()),
     );
   }
 }

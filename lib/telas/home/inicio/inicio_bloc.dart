@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:app_cashback_soamer/app_widget/api_exception.dart';
@@ -11,12 +12,13 @@ import 'package:app_cashback_soamer/telas/home/inicio/inicio_state.dart';
 import 'package:bloc/bloc.dart';
 
 class InicioBloc extends Bloc<InicioEvent, InicioState> {
+
   InicioBloc() : super(InicioInitialState()) {
     on<InicioLoadEvent>((event, emit) async {
       emit(InicioLoadingState());
       try {
         Response response = await getHome(event.email);
-        emit(InicioSuccessState(homeModel: HomeModel.fromMap(jsonDecode(response.body)), vaucherList: []));
+        emit(InicioSuccessState(homeModel: HomeModel.fromMap(jsonDecode(response.body)), vaucherListPromocao: [], vaucherListMaisTrocados: []));
       } catch (e) {
         emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
       }
@@ -34,7 +36,25 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
           itens.add(vaucherModel);
         }
 
-        emit(InicioSuccessState(homeModel: HomeModel.empty(), vaucherList: itens));
+        emit(InicioSuccessState(homeModel: event.homeModel, vaucherListPromocao: itens, vaucherListMaisTrocados: []));
+      } catch (e) {
+        emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+      }
+    });
+
+    on<LoadVaucherMaisTrocadosEvent>((event, emit) async {
+      emit(InicioLoadingState());
+      try {
+
+        Response response = await getVaucherMaisTrocados();
+        List<VaucherModel> itens = [];
+
+        for (var voucher in jsonDecode(response.body)) {
+          var vaucherModel = VaucherModel.fromMap(voucher);
+          itens.add(vaucherModel);
+        }
+
+        emit(InicioSuccessState(homeModel: event.homeModel, vaucherListPromocao: event.vaucherListPromocaoModel, vaucherListMaisTrocados: itens));
       } catch (e) {
         emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
       }

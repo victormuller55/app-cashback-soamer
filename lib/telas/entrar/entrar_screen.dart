@@ -14,6 +14,7 @@ import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
+import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,6 @@ class EntrarScreen extends StatefulWidget {
 }
 
 class _EntrarScreenState extends State<EntrarScreen> {
-
   EntrarBloc bloc = EntrarBloc();
 
   final FocusScopeNode _focusScope = FocusScopeNode();
@@ -62,19 +62,24 @@ class _EntrarScreenState extends State<EntrarScreen> {
       child: Column(
         children: [
           sizedBoxVertical(70),
-          formFieldPadrao(context, controller: controllerEmail, Strings.email, width: 300, textInputType: TextInputType.emailAddress),
-          formFieldPadrao(context, controller: controllerSenha, Strings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+          formFieldPadrao(context, controller: controllerEmail,  "pedrosantana@cashboost.com", width: 300, textInputType: TextInputType.emailAddress),
+          sizedBoxVertical(10),
+          formFieldPadrao(context, controller: controllerSenha, "***********", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
           sizedBoxVertical(20),
           GestureDetector(
             onTap: () => open(context, screen: const EnviarEmailScreen()),
             child: text(Strings.esqueciMinhaSenha, color: Colors.white, bold: true),
           ),
           sizedBoxVertical(35),
-          _botaoCadastrarBloc(),
+          elevatedButtonPadrao(
+            function: () => _validar(),
+            text(Strings.cadastrar.toUpperCase(), color: AppColor.primaryColor, bold: true),
+          ),
           sizedBoxVertical(10),
           elevatedButtonText(
             Strings.naoTenhoConta.toUpperCase(),
-            transparente: true,
+            color: Colors.transparent,
+            textColor: Colors.white,
             function: () => open(context, screen: const CadastroScreen(), closePrevious: true),
           ),
           sizedBoxVertical(20),
@@ -83,25 +88,23 @@ class _EntrarScreenState extends State<EntrarScreen> {
     );
   }
 
-  Widget _botaoCadastrarBloc() {
+  Widget _bodyBuilder() {
     return BlocConsumer<EntrarBloc, EntrarState>(
       bloc: bloc,
       listener: (context, state) => _onChangeState(state),
-      builder: (context, state) => elevatedButtonPadrao(
-        function: () => _validar(),
-        state is EntrarLoadingState
-            ? const CircularProgressIndicator()
-            : text(
-                Strings.cadastrar.toUpperCase(),
-                color: AppColor.primaryColor,
-                bold: true,
-              ),
-      ),
+      builder: (context, state) {
+        switch (state.runtimeType) {
+          case EntrarLoadingState:
+            return loading(color: Colors.white);
+          default:
+            return _body();
+        }
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: backgroundCadastroLogin(context, child: _body()));
+    return Scaffold(body: backgroundCadastroLogin(context, child: _bodyBuilder()));
   }
 }

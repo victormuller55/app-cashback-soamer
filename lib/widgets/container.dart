@@ -1,4 +1,5 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
@@ -43,40 +44,58 @@ Widget container({
 }
 
 Widget cardVaucher(VaucherModel vaucherModel) {
-  return Row(
-    children: [
-      const SizedBox(width: 10),
-      container(
-        height: 170,
-        width: 170,
-        radius: BorderRadius.circular(10),
-        backgroundColor: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            container(
-              height: 85,
-              width: 170,
-              backgroundColor: Colors.grey.shade300,
-              radius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-              image: const NetworkImage("https://i0.wp.com/flyassist.com.br/wp-content/uploads/2020/10/fly_assist_travel_voucher_possibilidades-3.jpg?fit=1920%2C1080&ssl=1"),
+
+  int days = formatarDDMMYYYYHHMMToDate(vaucherModel.dataFinalVaucher!).difference(DateTime.now()).inDays;
+
+  return Builder(
+    builder: (context) {
+      return Row(
+        children: [
+          container(
+            height: 180,
+            width:180,
+            radius: BorderRadius.circular(10),
+            backgroundColor: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                container(
+                  height: 85,
+                  width: 180,
+                  backgroundColor: Colors.grey.shade300,
+                  radius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                  image: const NetworkImage("https://i0.wp.com/flyassist.com.br/wp-content/uploads/2020/10/fly_assist_travel_voucher_possibilidades-3.jpg?fit=1920%2C1080&ssl=1"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 7, right: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      text(vaucherModel.tituloVaucher ?? "vazio", fontSize: 16),
+                      const SizedBox(height: 5),
+                      vaucherModel.descontoVaucher! > 0 ? text("${vaucherModel.pontosCheioVaucher} Pontos", color: Colors.red, fontSize: 17, cortado: true) : const SizedBox(),
+                      const SizedBox(height: 3),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          text("${vaucherModel.pontosVaucher} Pontos", bold: true, color: AppColor.primaryColor, fontSize: 19),
+                          Row(
+                            children: [
+                              const Icon(Icons.timer_sharp, size: 20,),
+                              text("${days}d", fontSize: 16),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, top: 7),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  text(vaucherModel.tituloVaucher!, fontSize: 16),
-                  const SizedBox(height: 5),
-                  vaucherModel.descontoVaucher! > 0 ? text("${vaucherModel.pontosCheioVaucher} Pontos", color: Colors.red, fontSize: 17, cortado: true) : const SizedBox(),
-                  const SizedBox(height: 3),
-                  text("${vaucherModel.pontosVaucher} Pontos", bold: true, color: AppColor.primaryColor, fontSize: 19),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    ],
+          ),
+          const SizedBox(width: 10),
+        ],
+      );
+    }
   );
 }

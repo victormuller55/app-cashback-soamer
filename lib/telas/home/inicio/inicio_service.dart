@@ -11,3 +11,7 @@ Future<Response> getHome(String email) async {
 Future<Response> getVaucherPromocao() async {
   return await getHTTP(endpoint: Endpoint.endpointVaucherPromocao);
 }
+
+Future<Response> getVaucherMaisTrocados() async {
+  return await getHTTP(endpoint: Endpoint.endpointVaucherMaisTrocados);
+}
