@@ -1,6 +1,7 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
+import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_screen.dart';
@@ -21,14 +22,6 @@ class PerfilScreen extends StatefulWidget {
 
 class _PerfilScreenState extends State<PerfilScreen> {
 
-  void _editProfile() {
-    showModalEmpty(
-      context,
-      height: MediaQuery.of(context).size.height - 160,
-      child: const EditarPerfilScreen(),
-    );
-  }
-
   void _sair() {
     showModalEmpty(
       context,
@@ -37,7 +30,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           const SizedBox(height: 20),
-          text("Você realmete deseja sair da conta?", bold: true, fontSize: 17, color: Colors.grey.shade600),
+          text("Você realmete deseja sair da conta?", bold: true, fontSize: 15, color: Colors.grey.shade600),
           const SizedBox(height: 20),
           elevatedButtonText("Sim, sair da conta".toUpperCase(), function: () => _exit(), width: MediaQuery.of(context).size.width, color: Colors.red, textColor: Colors.white),
           const SizedBox(height: 10),
@@ -68,7 +61,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              text(titulo, color: closeAccount ?? false ? Colors.white : Colors.grey, bold: true),
+              text(titulo, color: closeAccount ?? false ? Colors.white : Colors.grey, bold: true, fontSize: 13),
               Icon(Icons.arrow_forward_ios_sharp, color: closeAccount ?? false ? Colors.white : Colors.grey),
             ],
           ),
@@ -90,13 +83,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Automobili Lamborghini", bold: true, fontSize: 17, color: AppColor.primaryColor),
+              text("Automobili Lamborghini", bold: true, fontSize: 14, color: AppColor.primaryColor),
               const SizedBox(height: 7),
-              text(formatarCPF(widget.usuarioModel.cpfUsuario!), bold: true, fontSize: 20, color: Colors.grey.shade600),
+              text(formatarCPF(widget.usuarioModel.cpfUsuario!), bold: true, fontSize: 15, color: Colors.grey.shade600),
               const SizedBox(height: 10),
               elevatedButtonText(
                 "Editar perfil".toUpperCase(),
-                function: () => _editProfile(),
+                function: () => open(context, screen: EditarPerfilScreen(usuarioModel: widget.usuarioModel)),
                 width: 200,
                 height: 45,
                 borderRadius: 10,
@@ -110,7 +103,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
             children: [
               container(height: 90, width: 90, radius: BorderRadius.circular(10), border: Border.all(color: AppColor.primaryColor, width: 4), image: const NetworkImage("https://avatars.githubusercontent.com/u/78230801?v=4")),
               const SizedBox(height: 7),
-              text(widget.usuarioModel.nomeUsuario!, bold: true, fontSize: 17, color: AppColor.primaryColor),
+              text(widget.usuarioModel.nomeUsuario!, bold: true, fontSize: 13, color: AppColor.primaryColor),
             ],
           ),
         ],
@@ -132,11 +125,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
             backgroundColor: Colors.white,
             child: Column(
               children: [
-                _option("NOTIFICAÇÕES", onTap: () => {}),
-                _option("TERMOS DE USO", onTap: () => {}),
-                _option("POLITICA DE PRIVACIDADE", onTap: () => {}),
-                _option("CONTATO SOAMER", onTap: () => {}),
-                _option("SAIR DA CONTA", onTap: () => _sair(), closeAccount: true),
+                _option("Notificações", onTap: () => {}),
+                _option("Termos de uso", onTap: () => {}),
+                _option("Politica de privacidade", onTap: () => {}),
+                _option("Contato Soamer", onTap: () => {}),
+                _option("Sair da conta", onTap: () => _sair(), closeAccount: true),
               ],
             ),
           ),

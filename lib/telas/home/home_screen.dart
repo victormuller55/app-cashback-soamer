@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: AnimatedBottomNavigationBar(
         height: 60,

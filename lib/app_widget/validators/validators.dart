@@ -21,13 +21,12 @@ bool cpfValido(String value) {
     return false;
   }
 
-  value = value.replaceAll('.', '').replaceAll('-', ''); // Remove pontos e traços
+  value = value.replaceAll('.', '').replaceAll('-', '');
 
   if (value.length != 11) {
     return false;
   }
 
-  // Verifica se todos os dígitos são iguais (CPF inválido se todos forem iguais)
   if (RegExp(r'^(\d)\1*$').hasMatch(value)) {
     return false;
   }

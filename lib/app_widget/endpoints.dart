@@ -1,4 +1,4 @@
-const String server = "http://10.68.52.119:8080";
+const String server = "http://192.168.0.188:8080";
 
 class Endpoint {
 

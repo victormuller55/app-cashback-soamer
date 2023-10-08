@@ -46,6 +46,7 @@ class UsuarioModel {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = <String, dynamic>{};
 
+    data['id_usuario'] = idUsuario;
     data['nome_usuario'] = nomeUsuario;
     data['email_usuario'] = emailUsuario;
     data['cpf_usuario'] = cpfUsuario;

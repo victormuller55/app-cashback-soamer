@@ -5,6 +5,7 @@ Widget elevatedButtonPadrao(Widget child, {required void Function() function, Co
   return ElevatedButton(
     onPressed: function,
     style: ElevatedButton.styleFrom(
+      elevation: 0,
       backgroundColor: backgroundColor ?? Colors.white,
       fixedSize: Size(width ?? 300, height ?? 50),
       shape: RoundedRectangleBorder(
@@ -18,7 +19,7 @@ Widget elevatedButtonPadrao(Widget child, {required void Function() function, Co
 
 Widget elevatedButtonText(String texto, {required void Function() function, Color? color, Color? textColor, double? width, double? height, double? borderRadius}) {
   return elevatedButtonPadrao(
-    text(texto, color: textColor ?? const Color.fromRGBO(34, 111, 162, 1), bold: true),
+    text(texto, color: textColor ?? const Color.fromRGBO(34, 111, 162, 1), bold: true, fontSize: 12),
     function: function,
     backgroundColor: color,
     width: width,

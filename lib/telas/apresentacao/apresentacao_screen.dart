@@ -2,26 +2,22 @@ import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/home/home_screen.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class ApresentacaoScreen extends StatefulWidget {
-  UsuarioModel usuarioModel;
-  ApresentacaoScreen({super.key, required this.usuarioModel});
+
+  final UsuarioModel usuarioModel;
+  const ApresentacaoScreen({super.key, required this.usuarioModel});
 
   @override
   State<ApresentacaoScreen> createState() => _ApresentacaoScreenState();
 }
 
 class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
-
-
-
   @override
   Widget build(BuildContext context) {
-
     List<PageViewModel> screens = [];
 
     screens.add(
@@ -31,7 +27,6 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
         image: Image.network("https://www.indianautoexchange.com/assets/images/dealerImage.png", height: 170.0),
       ),
     );
-
 
     screens.add(
       PageViewModel(
@@ -57,30 +52,17 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
       ),
     );
 
-    return  Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       body: IntroductionScreen(
+        globalBackgroundColor: Colors.grey.shade100,
         pages: screens,
         showBackButton: false,
-        onDone: () => Future.delayed(Duration.zero).then((value) => open(context, screen: HomeScreen(usuarioModel: widget.usuarioModel), closePrevious: true)), // todo arrumar isso,
+        onDone: () => Future.delayed(Duration.zero).then((value) => open(context, screen: HomeScreen(usuarioModel: widget.usuarioModel), closePrevious: true)),
         showSkipButton: true,
-        skip: text(
-          "Pular",
-          bold: true,
-          color: Colors.grey,
-          fontSize: 16,
-        ),
-        next: text(
-          "Proximo".toUpperCase(),
-          bold: true,
-          color: AppColor.primaryColor,
-          fontSize: 16,
-        ),
-        done: text(
-          "Concluir".toUpperCase(),
-          bold: true,
-          color: AppColor.primaryColor,
-          fontSize: 16,
-        ),
+        skip: text("Pular", bold: true, color: Colors.grey, fontSize: 16),
+        next: text("Proximo".toUpperCase(), bold: true, color: AppColor.primaryColor, fontSize: 16),
+        done: text("Concluir".toUpperCase(), bold: true, color: AppColor.primaryColor, fontSize: 16),
         dotsDecorator: DotsDecorator(
           size: const Size.square(10.0),
           activeSize: const Size(20.0, 10.0),

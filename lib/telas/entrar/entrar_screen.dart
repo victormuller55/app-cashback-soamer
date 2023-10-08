@@ -5,7 +5,6 @@ import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
-import 'package:app_cashback_soamer/telas/apresentacao/apresentacao_screen.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_bloc.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_event.dart';
@@ -78,7 +77,7 @@ class _EntrarScreenState extends State<EntrarScreen> {
           sizedBoxVertical(10),
           elevatedButtonText(
             Strings.naoTenhoConta.toUpperCase(),
-            color: Colors.transparent,
+            color: AppColor.primaryColor.withOpacity(0.5),
             textColor: Colors.white,
             function: () => open(context, screen: const CadastroScreen(), closePrevious: true),
           ),

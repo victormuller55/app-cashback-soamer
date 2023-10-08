@@ -8,14 +8,16 @@ import 'package:app_cashback_soamer/widgets/circular_avatar.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
+import 'package:app_cashback_soamer/widgets/modal.dart';
+import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InicioScreen extends StatefulWidget {
-  UsuarioModel usuarioModel;
+  final UsuarioModel usuarioModel;
 
-  InicioScreen({super.key, required this.usuarioModel});
+  const InicioScreen({super.key, required this.usuarioModel});
 
   @override
   State<InicioScreen> createState() => _InicioScreenState();
@@ -25,7 +27,7 @@ class _InicioScreenState extends State<InicioScreen> {
   InicioBloc bloc = InicioBloc();
   bool carregou = false;
 
-  void loadHome() {
+  Future<void> loadHome() async {
     bloc.add(InicioLoadEvent(widget.usuarioModel.emailUsuario!));
     carregou = true;
   }
@@ -36,24 +38,35 @@ class _InicioScreenState extends State<InicioScreen> {
     super.initState();
   }
 
-  Future<void> _reload() async {
-    loadHome();
+  void _showModelConcessionaria() {
+    showModalEmpty(
+      context,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          text("Qual das concessionaria abaixo você trabalha?", bold: true, fontSize: 15),
+        ],
+      )
+    );
   }
 
   Widget _cardInfo({required String title, required String value}) {
-    return container(
-      radius: BorderRadius.circular(10),
-      backgroundColor: Colors.grey.shade300,
-      width: MediaQuery.of(context).size.width / 2.2,
-      height: 100,
-      child: infoColumn(
-        title: value,
-        value: title,
-        titleSize: 30,
-        valueSize: 15,
-        titleColor: AppColor.primaryColor,
-        valueColor: Colors.grey.shade600,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return GestureDetector(
+      onTap: () => _showModelConcessionaria(),
+      child: container(
+        radius: BorderRadius.circular(10),
+        backgroundColor: Colors.grey.shade300,
+        width: MediaQuery.of(context).size.width / 2.2,
+        height: 100,
+        child: infoColumn(
+          title: value,
+          value: title,
+          titleSize: 25,
+          valueSize: 13,
+          titleColor: AppColor.primaryColor,
+          valueColor: Colors.grey.shade600,
+          crossAxisAlignment: CrossAxisAlignment.center,
+        ),
       ),
     );
   }
@@ -80,8 +93,8 @@ class _InicioScreenState extends State<InicioScreen> {
           infoColumn(
             title: homeState.homeModel.pontosUsuario.toString(),
             value: "Pontos",
-            titleSize: 30,
-            valueSize: 15,
+            titleSize: 25,
+            valueSize: 13,
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
         ],
@@ -98,21 +111,14 @@ class _InicioScreenState extends State<InicioScreen> {
 
   Widget _body(InicioState homeState) {
     List<Widget> cardsPromocao = [];
-    List<Widget> cardsMaisTrocados = [];
-
     cardsPromocao.add(const SizedBox(width: 10));
-    cardsMaisTrocados.add(const SizedBox(width: 10));
 
     for (VaucherModel model in homeState.vaucherListPromocao) {
       cardsPromocao.add(cardVaucher(model));
     }
 
-    for (VaucherModel model in homeState.vaucherListMaisTrocados) {
-      cardsMaisTrocados.add(cardVaucher(model));
-    }
-
     return RefreshIndicator(
-      onRefresh: _reload,
+      onRefresh: loadHome,
       child: ListView(
         children: [
           _header(homeState),
@@ -127,7 +133,7 @@ class _InicioScreenState extends State<InicioScreen> {
           const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.only(left: 10, bottom: 6),
-            child: text("Vauchers na promoção!", bold: true, color: AppColor.primaryColor, fontSize: 17),
+            child: text("Vauchers na promoção!", bold: true, color: AppColor.primaryColor, fontSize: 14),
           ),
           SizedBox(
             height: 180,
@@ -163,16 +169,10 @@ class _InicioScreenState extends State<InicioScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColor.primaryColor,
-        centerTitle: true,
-        title: text("Inicio".toUpperCase(), bold: true),
-      ),
-      body: RefreshIndicator(onRefresh: _reload, child: _bodyBuilder()),
+    return scaffold(
+      body: _bodyBuilder(),
+      title: "Inicio",
+      hideBackArrow: true,
     );
   }
 }

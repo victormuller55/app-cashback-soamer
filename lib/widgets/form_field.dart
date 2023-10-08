@@ -6,6 +6,7 @@ formFieldPadrao(
   String text, {
   double? width,
   bool? showSenha,
+  bool? enable,
   TextEditingController? controller,
   TextInputType? textInputType,
   String? Function(String? value)? validator,
@@ -17,10 +18,11 @@ formFieldPadrao(
     child: TextFormField(
       controller: controller,
       obscureText: showSenha != null ? !showSenha : false,
-      style: const TextStyle(fontFamily: 'lato', fontSize: 15, color: Colors.black),
+      style: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.black),
       keyboardType: textInputType ?? TextInputType.name,
       onEditingComplete: () => FocusScope.of(context).nextFocus(),
       validator: validator,
+      enabled: enable,
       inputFormatters: textInputFormatter != null ? [textInputFormatter] : null,
       decoration: InputDecoration(
         filled: true,
@@ -33,7 +35,7 @@ formFieldPadrao(
         focusedErrorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red), borderRadius: BorderRadius.circular(40)),
         errorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red), borderRadius: BorderRadius.circular(40)),
         hintText: text,
-        hintStyle: const TextStyle(fontFamily: 'lato', fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
+        hintStyle: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.grey),
       ),
     ),
   );

@@ -50,7 +50,7 @@ Widget text(
         textAlign: textAlign ?? TextAlign.start,
         style: TextStyle(
           color: color,
-          fontSize: fontSize ?? 15,
+          fontSize: fontSize ?? 13,
           overflow: overflow == true ? TextOverflow.ellipsis : null,
           fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
           letterSpacing: letterSpacing,
@@ -80,7 +80,7 @@ Widget infoColumn({
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
         children: [
-          text(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 20),
+          text(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 15),
           SizedBox(height: spacing ?? false ? 5 : 0),
           text(value, color: valueColor ?? Colors.white, overflow: true, fontSize: valueSize),
         ],

@@ -1,5 +1,5 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/formatters/formatter.dart';
+import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
@@ -13,7 +13,6 @@ import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
@@ -30,8 +29,8 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
-  CadastroBloc cadastroBloc = CadastroBloc();
 
+  CadastroBloc cadastroBloc = CadastroBloc();
   final FocusScopeNode _focusScope = FocusScopeNode();
 
   TextEditingController controllerNome = TextEditingController();
@@ -91,7 +90,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
           sizedBoxVertical(10),
           formFieldPadrao(context, controller: controllerEmail, "pedrosantana@cashboost.com", width: 300, textInputType: TextInputType.emailAddress),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerCPF, "322.123.543-98", width: 300, textInputType: TextInputType.number, textInputFormatter: FormattersSoamer.cpfFormatter),
+          formFieldPadrao(context, controller: controllerCPF, "322.123.543-98", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter),
           sizedBoxVertical(10),
           formFieldPadrao(context, controller: controllerSenha, "***********", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
           sizedBoxVertical(20),
@@ -108,12 +107,12 @@ class _CadastroScreenState extends State<CadastroScreen> {
           sizedBoxVertical(20),
           elevatedButtonPadrao(
             function: () => _validar(),
-            text(Strings.cadastrar.toUpperCase(), color: AppColor.primaryColor, bold: true),
+            text(Strings.cadastrar.toUpperCase(), color: AppColor.primaryColor, bold: true, fontSize: 12),
           ),
           sizedBoxVertical(10),
           elevatedButtonText(
             Strings.jaTenhoConta.toUpperCase(),
-            color: Colors.transparent,
+            color: AppColor.primaryColor.withOpacity(0.5),
             textColor: Colors.white,
             function: () => open(context, screen: const EntrarScreen(), closePrevious: true),
           ),

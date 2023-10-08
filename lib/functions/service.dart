@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_cashback_soamer/app_widget/api_exception.dart';
-import 'package:app_cashback_soamer/functions/connection_test.dart';
+import 'package:app_cashback_soamer/functions/internet_connection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 

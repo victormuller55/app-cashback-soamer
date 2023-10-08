@@ -1,3 +1,4 @@
+import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
@@ -31,6 +32,7 @@ class _AppWidgetState extends State<AppWidget> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: screen,
+      theme: ThemeData(scaffoldBackgroundColor: AppColor.primaryColor),
     );
   }
 }
