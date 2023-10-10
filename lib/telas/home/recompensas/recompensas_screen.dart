@@ -1,3 +1,4 @@
+import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 
 class RecompensasScreen extends StatefulWidget {
@@ -10,6 +11,6 @@ class RecompensasScreen extends StatefulWidget {
 class _RecompensasScreeenState extends State<RecompensasScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return scaffold(body: Container(), title: "Recompensas");
   }
 }

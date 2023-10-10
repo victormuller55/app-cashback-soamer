@@ -71,8 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 70,
         child: FittedBox(
           child: FloatingActionButton(
+            heroTag: "floatingButton",
             onPressed: () => open(context, screen: const RegistrarVendaScreen()),
             backgroundColor: AppColor.secondaryColor,
+
             child: const Icon(Icons.qr_code_scanner, size: 30),
           ),
         ),

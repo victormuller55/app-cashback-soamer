@@ -187,6 +187,9 @@ class _InicioScreenState extends State<InicioScreen> {
     }
 
     return RefreshIndicator(
+      color: Colors.white,
+      backgroundColor: AppColor.primaryColor,
+      strokeWidth: 2,
       onRefresh: _loadHome,
       child: ListView(
         children: [

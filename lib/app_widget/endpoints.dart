@@ -7,5 +7,6 @@ class Endpoint {
   static String endpointVaucher = "$server/v1/soamer/vaucher";
   static String endpointVaucherPromocao = "$server/v1/soamer/vaucher/promocao";
   static String endpointConcessionaria= "$server/v1/soamer/concessionaria";
+  static String endpointExtrato= "$server/v1/soamer/extrato";
 
 }

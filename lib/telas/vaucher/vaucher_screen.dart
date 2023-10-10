@@ -1,4 +1,5 @@
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
+import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 
 class VaucherScreen extends StatefulWidget {
@@ -13,8 +14,6 @@ class VaucherScreen extends StatefulWidget {
 class _VaucherScreenState extends State<VaucherScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-    );
+    return scaffold(body: Container(), title: widget.vaucherModel.tituloVaucher ?? "");
   }
 }

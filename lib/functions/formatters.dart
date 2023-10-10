@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 String formatarCPF(String cpf) {
   if (cpf.length != 11) {
     return "CPF inválido";
@@ -32,5 +34,18 @@ DateTime formatarDDMMYYYYHHMMToDate(String dataHora) {
     }
   } catch (e) {
     throw Exception("Erro ao converter data/hora: $e");
+  }
+}
+
+String formatarData(String data) {
+  DateTime dataAtual = DateTime.now();
+  DateTime dataRecebida = DateTime.parse(data).subtract(Duration(hours: 3));
+
+  if (dataRecebida.year == dataAtual.year && dataRecebida.month == dataAtual.month && dataRecebida.day == dataAtual.day) {
+    String horaMinuto = DateFormat('HH:mm').format(dataRecebida);
+    return horaMinuto;
+  } else {
+    String dataFormatada = DateFormat('dd/MM/yyyy').format(dataRecebida);
+    return dataFormatada;
   }
 }
