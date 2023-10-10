@@ -56,6 +56,7 @@ Widget text(
           letterSpacing: letterSpacing,
           fontFamily: fontFamily ?? 'lato',
           decoration: cortado ?? false ? TextDecoration.lineThrough : null,
+
         ),
       );
     },
@@ -73,6 +74,9 @@ Widget infoColumn({
   double? width,
   bool? spacing,
   bool? ovewflowValue,
+  bool? cortarTitle,
+  bool? cortarValue,
+
 }) {
   return Builder(builder: (context) {
     return SizedBox(
@@ -81,9 +85,9 @@ Widget infoColumn({
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
         children: [
-          text(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 15),
+          text(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 15, cortado: cortarTitle),
           SizedBox(height: spacing ?? false ? 5 : 0),
-          text(value, color: valueColor ?? Colors.white, overflow: ovewflowValue ?? true, fontSize: valueSize),
+          text(value, color: valueColor ?? Colors.white, overflow: ovewflowValue ?? true, fontSize: valueSize, cortado: cortarValue),
         ],
       ),
     );

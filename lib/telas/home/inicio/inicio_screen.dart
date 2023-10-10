@@ -182,8 +182,8 @@ class _InicioScreenState extends State<InicioScreen> {
     List<Widget> cardsPromocao = [];
     cardsPromocao.add(const SizedBox(width: 10));
 
-    for (VaucherModel model in homeState.vaucherListPromocao) {
-      cardsPromocao.add(cardVaucher(model));
+    for (int i = 0; i <= homeState.vaucherListPromocao.length - 1; i++) {
+      cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.usuarioModel.pontosUsuario!));
     }
 
     return RefreshIndicator(

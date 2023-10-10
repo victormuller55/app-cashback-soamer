@@ -63,6 +63,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   }
 
   Widget _body(List<ExtratoModel> extratoModel) {
+
     List<Widget> hoje = [];
     List<Widget> ontem = [];
     List<Widget> anterior = [];

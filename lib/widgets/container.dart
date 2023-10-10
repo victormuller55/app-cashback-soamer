@@ -2,7 +2,7 @@ import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
-import 'package:app_cashback_soamer/telas/vaucher/vaucher_screen.dart';
+import 'package:app_cashback_soamer/telas/vaucher/voucher_screen.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 
@@ -45,14 +45,14 @@ Widget container({
   );
 }
 
-Widget cardVaucher(VaucherModel vaucherModel) {
+Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
   int days = formatarDDMMYYYYHHMMToDate(vaucherModel.dataFinalVaucher!).difference(DateTime.now()).inDays;
 
   return Builder(builder: (context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => open(context, screen: VaucherScreen(vaucherModel: vaucherModel)),
+          onTap: () => open(context, screen: VaucherScreen(vaucherModel: vaucherModel, heroImage: heroImage, pontos: pontos)),
           child: container(
             height: 165,
             width: 165,
@@ -61,12 +61,15 @@ Widget cardVaucher(VaucherModel vaucherModel) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                container(
-                  height: 85,
-                  width: 165,
-                  backgroundColor: Colors.grey.shade300,
-                  radius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                  image: const NetworkImage("https://i0.wp.com/flyassist.com.br/wp-content/uploads/2020/10/fly_assist_travel_voucher_possibilidades-3.jpg?fit=1920%2C1080&ssl=1"),
+                Hero(
+                  tag: heroImage,
+                  child: container(
+                    height: 85,
+                    width: 165,
+                    backgroundColor: Colors.grey.shade300,
+                    radius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    image: const NetworkImage("https://i0.wp.com/flyassist.com.br/wp-content/uploads/2020/10/fly_assist_travel_voucher_possibilidades-3.jpg?fit=1920%2C1080&ssl=1"),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, top: 7, right: 10),
