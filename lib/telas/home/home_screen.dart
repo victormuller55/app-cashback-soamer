@@ -6,33 +6,35 @@ import 'package:app_cashback_soamer/telas/home/extrato/extrato_screen.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/perfil_screen.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_bloc.dart';
-import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_event.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_screen.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  UsuarioModel usuarioModel;
 
-  HomeScreen({super.key, required this.usuarioModel});
+  final UsuarioModel usuarioModel;
+  final bool cadastrando;
+  const HomeScreen({super.key, required this.usuarioModel, required this.cadastrando});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+
 }
 
 class _HomeScreenState extends State<HomeScreen> {
 
   VaucherBloc vaucherBloc = VaucherBloc();
+
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = [];
 
   @override
   void initState() {
     _widgetOptions = <Widget>[
-      InicioScreen(usuarioModel: widget.usuarioModel),
+      const InicioScreen(),
       const RecompensasScreen(),
       const ExtratoScreen(),
-      PerfilScreen(usuarioModel: widget.usuarioModel),
+      const PerfilScreen(),
     ];
     super.initState();
   }

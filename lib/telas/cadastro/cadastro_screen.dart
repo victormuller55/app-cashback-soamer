@@ -76,6 +76,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     if (state is CadastroSuccessState) {
       open(context, screen: ApresentacaoScreen(usuarioModel: state.usuarioModel), closePrevious: true);
       saveLocalUserData(state.usuarioModel);
+      if(state.usuarioModel.nomeConcessionaria != null || state.usuarioModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.usuarioModel.nomeConcessionaria ?? "");
     }
     _focusScope.unfocus();
   }

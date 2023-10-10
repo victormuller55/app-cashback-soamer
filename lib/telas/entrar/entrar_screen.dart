@@ -49,8 +49,10 @@ class _EntrarScreenState extends State<EntrarScreen> {
   void _onChangeState(EntrarState state) {
     if (state is EntrarErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? Strings.ocorreuUmErro : state.errorModel.mensagem);
     if (state is EntrarSuccessState) {
-      open(context, screen: HomeScreen(usuarioModel: state.usuarioModel), closePrevious: true);
+      open(context, screen: HomeScreen(usuarioModel: state.usuarioModel, cadastrando: false), closePrevious: true);
       saveLocalUserData(state.usuarioModel);
+      if(state.usuarioModel.nomeConcessionaria != null || state.usuarioModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.usuarioModel.nomeConcessionaria ?? "");
+
     }
     _focusScope.unfocus();
   }

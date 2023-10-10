@@ -8,13 +8,9 @@ class InicioLoadEvent extends InicioEvent {
   InicioLoadEvent(this.email);
 }
 
-class LoadVaucherPromocaoEvent extends InicioEvent {
-  HomeModel homeModel;
-  LoadVaucherPromocaoEvent(this.homeModel);
-}
+class LoadConcessionariaEvent extends InicioEvent {}
 
-class LoadVaucherMaisTrocadosEvent extends InicioEvent {
-  HomeModel homeModel;
-  List<VaucherModel> vaucherListPromocaoModel;
-  LoadVaucherMaisTrocadosEvent( this.homeModel, this.vaucherListPromocaoModel);
+class SetConcessionariaEvent extends InicioEvent {
+  int idConcessionaria;
+  SetConcessionariaEvent(this.idConcessionaria);
 }

@@ -2,25 +2,36 @@ import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
+import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_screen.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
+import 'package:app_cashback_soamer/widgets/erro.dart';
+import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/modal.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatefulWidget {
-  UsuarioModel usuarioModel;
-
-  PerfilScreen({super.key, required this.usuarioModel});
+  const PerfilScreen({super.key});
 
   @override
   State<PerfilScreen> createState() => _PerfilScreenState();
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
+
+  Future<UsuarioModel> _loadDataLocal() async {
+    return await getModelLocal();
+  }
+
+  @override
+  void initState() {
+    _loadDataLocal();
+    super.initState();
+  }
 
   void _sair() {
     showModalEmpty(
@@ -70,7 +81,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
     );
   }
 
-  Widget _header() {
+  Widget _header(UsuarioModel usuarioModel) {
     return container(
       height: 150,
       width: MediaQuery.of(context).size.width,
@@ -83,13 +94,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Automobili Lamborghini", bold: true, fontSize: 14, color: AppColor.primaryColor),
+              text(usuarioModel.nomeConcessionaria ?? "", bold: true, fontSize: 14, color: AppColor.primaryColor),
               const SizedBox(height: 7),
-              text(formatarCPF(widget.usuarioModel.cpfUsuario!), bold: true, fontSize: 15, color: Colors.grey.shade600),
+              text(formatarCPF(usuarioModel.cpfUsuario ?? ""), bold: true, fontSize: 15, color: Colors.grey.shade600),
               const SizedBox(height: 10),
               elevatedButtonText(
                 "Editar perfil".toUpperCase(),
-                function: () => open(context, screen: EditarPerfilScreen(usuarioModel: widget.usuarioModel)),
+                function: () => open(context, screen: EditarPerfilScreen(usuarioModel: usuarioModel)),
                 width: 200,
                 height: 45,
                 borderRadius: 10,
@@ -101,9 +112,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              container(height: 90, width: 90, radius: BorderRadius.circular(10), border: Border.all(color: AppColor.primaryColor, width: 4), image: const NetworkImage("https://avatars.githubusercontent.com/u/78230801?v=4")),
+              container(height: 90, width: 90, radius: BorderRadius.circular(10), border: Border.all(color: AppColor.primaryColor, width: 2), image: const NetworkImage("https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg")),
               const SizedBox(height: 7),
-              text(widget.usuarioModel.nomeUsuario!, bold: true, fontSize: 13, color: AppColor.primaryColor),
+              text(usuarioModel.nomeUsuario ?? "", bold: true, fontSize: 13, color: AppColor.primaryColor),
             ],
           ),
         ],
@@ -111,12 +122,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
     );
   }
 
-  Widget _body() {
+  Widget _body(UsuarioModel usuarioModel) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView(
         children: [
-          _header(),
+          _header(usuarioModel),
           const SizedBox(height: 10),
           container(
             width: MediaQuery.of(context).size.width,
@@ -149,7 +160,21 @@ class _PerfilScreenState extends State<PerfilScreen> {
         centerTitle: true,
         title: text("Meu perfil".toUpperCase(), bold: true),
       ),
-      body: _body(),
+      body: FutureBuilder(
+        future: _loadDataLocal(),
+        builder: (context, snapshot) {
+
+          if(snapshot.connectionState == ConnectionState.waiting) {
+            return loading();
+          }
+
+          if(snapshot.hasError) {
+            return erro(ErrorModel(mensagem: "Ocorreu um erro ao carregar os dados de perfil"), function: () => _loadDataLocal());
+          }
+
+          return _body(snapshot.data!);
+        },
+      ),
     );
   }
 }

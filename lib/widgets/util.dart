@@ -72,6 +72,7 @@ Widget infoColumn({
   double? valueSize,
   double? width,
   bool? spacing,
+  bool? ovewflowValue,
 }) {
   return Builder(builder: (context) {
     return SizedBox(
@@ -82,7 +83,7 @@ Widget infoColumn({
         children: [
           text(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 15),
           SizedBox(height: spacing ?? false ? 5 : 0),
-          text(value, color: valueColor ?? Colors.white, overflow: true, fontSize: valueSize),
+          text(value, color: valueColor ?? Colors.white, overflow: ovewflowValue ?? true, fontSize: valueSize),
         ],
       ),
     );

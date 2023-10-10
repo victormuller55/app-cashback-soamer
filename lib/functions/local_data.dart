@@ -2,7 +2,6 @@ import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void saveLocalUserData(UsuarioModel usuarioModel) async {
-
   final SharedPreferences localData = await SharedPreferences.getInstance();
 
   localData.setInt("id", usuarioModel.idUsuario ?? 0);
@@ -10,11 +9,9 @@ void saveLocalUserData(UsuarioModel usuarioModel) async {
   localData.setString("email", usuarioModel.emailUsuario ?? "");
   localData.setString("cpf", usuarioModel.cpfUsuario ?? "");
   localData.setString("data", usuarioModel.dataUsuario ?? "");
-
 }
 
 Future<UsuarioModel> getModelLocal() async {
-
   final SharedPreferences localData = await SharedPreferences.getInstance();
 
   return UsuarioModel(
@@ -22,9 +19,9 @@ Future<UsuarioModel> getModelLocal() async {
     nomeUsuario: localData.getString("nome"),
     emailUsuario: localData.getString("email"),
     cpfUsuario: localData.getString("cpf"),
+    nomeConcessionaria: localData.getString("nome_concessionaria"),
     dataUsuario: localData.getString("data"),
   );
-
 }
 
 void clearLocalData() async {
@@ -35,4 +32,24 @@ void clearLocalData() async {
 Future<bool> temLocalData() async {
   final SharedPreferences localData = await SharedPreferences.getInstance();
   return localData.getInt("id") != null;
+}
+
+void addLocalDataString(String key, String value) async {
+  final SharedPreferences localData = await SharedPreferences.getInstance();
+  localData.setString(key, value);
+}
+
+void addLocalDataInt(String key, int value) async {
+  final SharedPreferences localData = await SharedPreferences.getInstance();
+  localData.setInt(key, value);
+}
+
+void addLocalDataDouble(String key, double value) async {
+  final SharedPreferences localData = await SharedPreferences.getInstance();
+  localData.setDouble(key, value);
+}
+
+void addLocalDataBool(String key, bool value) async {
+  final SharedPreferences localData = await SharedPreferences.getInstance();
+  localData.setBool(key, value);
 }

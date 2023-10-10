@@ -43,6 +43,9 @@ Future<Response> putHTTP({required String endpoint, Map<String, String>? paramet
   if (await thereInternetConnection()) {
     http.Response endpointResult = await http.put(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header);
     if (endpointResult.statusCode == 200) {
+      if (kDebugMode) {
+        print("API RESULT: ${endpointResult.body}");
+      }
       return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
     }
     throw ApiException(Response(statusCode: endpointResult.statusCode, body: endpointResult.body));
