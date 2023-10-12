@@ -1,11 +1,16 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
+import 'package:app_cashback_soamer/telas/home/perfil/contato/contato_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_screen.dart';
+import 'package:app_cashback_soamer/telas/home/perfil/notificacoes/notificacoes_screen.dart';
+import 'package:app_cashback_soamer/telas/home/perfil/politica_de_privacidade/politica_de_privacidade_screen.dart';
+import 'package:app_cashback_soamer/telas/home/perfil/termos_de_uso/termos_de_uso_screen.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/erro.dart';
@@ -22,7 +27,6 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
-
   Future<UsuarioModel> _loadDataLocal() async {
     return await getModelLocal();
   }
@@ -112,7 +116,16 @@ class _PerfilScreenState extends State<PerfilScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              container(height: 90, width: 90, radius: BorderRadius.circular(10), border: Border.all(color: AppColor.primaryColor, width: 2), image: const NetworkImage("https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg")),
+              Hero(
+                tag: "usuario",
+                child: container(
+                  height: 90,
+                  width: 90,
+                  radius: BorderRadius.circular(10),
+                  border: Border.all(color: AppColor.primaryColor, width: 2),
+                  image: NetworkImage(Endpoint.endpointImageUsuario(usuarioModel.idUsuario!)),
+                ),
+              ),
               const SizedBox(height: 7),
               text(usuarioModel.nomeUsuario ?? "", bold: true, fontSize: 13, color: AppColor.primaryColor),
             ],
@@ -136,10 +149,10 @@ class _PerfilScreenState extends State<PerfilScreen> {
             backgroundColor: Colors.white,
             child: Column(
               children: [
-                _option("Notificações", onTap: () => {}),
-                _option("Termos de uso", onTap: () => {}),
-                _option("Politica de privacidade", onTap: () => {}),
-                _option("Contato Soamer", onTap: () => {}),
+                _option("Notificações", onTap: () => open(context, screen: const NotificacoesScreen())),
+                _option("Termos de uso", onTap: () => open(context, screen: const TermosDeUsoScreen())),
+                _option("Politica de privacidade", onTap: () => open(context, screen: const PoliticaDePrivacidadeScreen())),
+                _option("Contato Soamer", onTap: () => open(context, screen: const ContatoSoamer())),
                 _option("Sair da conta", onTap: () => _sair(), closeAccount: true),
               ],
             ),
@@ -163,12 +176,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
       body: FutureBuilder(
         future: _loadDataLocal(),
         builder: (context, snapshot) {
-
-          if(snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return loading();
           }
 
-          if(snapshot.hasError) {
+          if (snapshot.hasError) {
             return erro(ErrorModel(mensagem: "Ocorreu um erro ao carregar os dados de perfil"), function: () => _loadDataLocal());
           }
 

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
@@ -18,12 +21,14 @@ import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditarPerfilScreen extends StatefulWidget {
-
   final UsuarioModel usuarioModel;
+
   const EditarPerfilScreen({super.key, required this.usuarioModel});
 
   @override
@@ -31,8 +36,9 @@ class EditarPerfilScreen extends StatefulWidget {
 }
 
 class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
-
   CadastroBloc cadastroBloc = CadastroBloc();
+
+  File imageFile = File("");
 
   TextEditingController controllerNome = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
@@ -45,6 +51,21 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
     controllerEmail.text = widget.usuarioModel.emailUsuario ?? "";
     controllerCPF.text = widget.usuarioModel.cpfUsuario ?? "";
     super.initState();
+  }
+
+  void pickImage() async {
+    try {
+      ImagePicker imagePicker = ImagePicker();
+      XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setState(() => imageFile = File(image.path));
+      }
+    } catch(e) {
+      if(kDebugMode) {
+        print(e);
+      }
+      showSnackbarError(context, message: "Não é possivel abrir a galeria");
+    }
   }
 
   void _salvar() {
@@ -63,7 +84,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
     if (verificaCampoVazio(controllers: [controllerNome.text, controllerEmail.text, controllerCPF.text, controllerSenha.text])) {
       if (emailValido(controllerEmail.text)) {
         if (cpfValido(controllerCPF.text)) {
-          _salvar();
+          // _salvar();
         } else {
           showSnackbarWarning(context, message: Strings.cpfInvalido);
         }
@@ -93,6 +114,39 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
             backgroundColor: Colors.grey.shade300,
             radius: BorderRadius.circular(10),
             child: Center(child: text("Edite seus dados aqui, seu CPF não é possivel alterar.", bold: true, fontSize: 14, color: Colors.grey.shade600)),
+          ),
+          sizedBoxVertical(10),
+          Column(
+            children: [
+              Hero(
+                tag: "usuario",
+                child: imageFile.path.isEmpty
+                    ? container(
+                        height: 150,
+                        width: 150,
+                        radius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColor.primaryColor, width: 2),
+                        image: NetworkImage(Endpoint.endpointImageUsuario(widget.usuarioModel.idUsuario!)),
+                      )
+                    : container(
+                        height: 150,
+                        width: 150,
+                        radius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColor.primaryColor, width: 2),
+                        image: FileImage(imageFile),
+                      ),
+              ),
+              sizedBoxVertical(10),
+              elevatedButtonText(
+                "Escolher foto".toUpperCase(),
+                function: () => pickImage(),
+                width: 200,
+                height: 45,
+                borderRadius: 10,
+                color: AppColor.primaryColor,
+                textColor: Colors.white,
+              ),
+            ],
           ),
           sizedBoxVertical(10),
           formFieldPadrao(context, controller: controllerNome, "Pedro Santana", width: 300, textInputType: TextInputType.name),

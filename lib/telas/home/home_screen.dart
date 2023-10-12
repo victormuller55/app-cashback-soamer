@@ -13,8 +13,7 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatefulWidget {
 
   final UsuarioModel usuarioModel;
-  final bool cadastrando;
-  const HomeScreen({super.key, required this.usuarioModel, required this.cadastrando});
+  const HomeScreen({super.key, required this.usuarioModel});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

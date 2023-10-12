@@ -58,7 +58,7 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
         globalBackgroundColor: Colors.grey.shade100,
         pages: screens,
         showBackButton: false,
-        onDone: () => Future.delayed(Duration.zero).then((value) => open(context, screen: HomeScreen(usuarioModel: widget.usuarioModel, cadastrando: true), closePrevious: true)),
+        onDone: () => Future.delayed(Duration.zero).then((value) => open(context, screen: HomeScreen(usuarioModel: widget.usuarioModel), closePrevious: true)),
         showSkipButton: true,
         skip: text("Pular", bold: true, color: Colors.grey, fontSize: 16),
         next: text("Proximo".toUpperCase(), bold: true, color: AppColor.primaryColor, fontSize: 16),

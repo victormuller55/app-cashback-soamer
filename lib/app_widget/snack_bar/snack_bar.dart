@@ -8,7 +8,7 @@ void showSnackbarError(BuildContext context, {String? message}) {
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     content: FlutterSnackbarContent(
-      messageFontSize: 12,
+      messageFontSize: 14,
       message: message ?? 'Ops, ocorreu um erro! Tente novamente',
       contentType: ContentType.failure,
     ),
@@ -26,7 +26,7 @@ void showSnackbarWarning(BuildContext context, {required String message}) {
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     content: FlutterSnackbarContent(
-      messageFontSize: 12,
+      messageFontSize: 14,
       message: message,
       contentType: ContentType.warning,
     ),
@@ -44,7 +44,7 @@ void showSnackbarSuccess(BuildContext context, {required String message}) {
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     content: FlutterSnackbarContent(
-      messageFontSize: 12,
+      messageFontSize: 14,
       message: message,
       contentType: ContentType.success,
     ),

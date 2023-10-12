@@ -1,8 +1,8 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
-import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_event.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_state.dart';
@@ -135,7 +135,7 @@ class _InicioScreenState extends State<InicioScreen> {
         children: [
           Row(
             children: [
-              avatar("https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"),
+              avatar(Endpoint.endpointImageUsuario(homeState.usuarioModel.idUsuario!)),
               const SizedBox(width: 20),
               infoColumn(
                 title: homeState.usuarioModel.nomeUsuario ?? "",
@@ -180,10 +180,17 @@ class _InicioScreenState extends State<InicioScreen> {
 
   Widget _body(InicioState homeState) {
     List<Widget> cardsPromocao = [];
+    List<Widget> cardsMaisTrocados = [];
+
     cardsPromocao.add(const SizedBox(width: 10));
+    cardsMaisTrocados.add(const SizedBox(width: 10));
 
     for (int i = 0; i <= homeState.vaucherListPromocao.length - 1; i++) {
       cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.usuarioModel.pontosUsuario!));
+    }
+
+    for (int i = 0; i <= homeState.vaucherListMaisTrocados.length - 1; i++) {
+      cardsMaisTrocados.add(cardVaucher(homeState.vaucherListMaisTrocados[i], "Mhero$i", homeState.usuarioModel.pontosUsuario!));
     }
 
     return RefreshIndicator(
@@ -215,6 +222,19 @@ class _InicioScreenState extends State<InicioScreen> {
               children: cardsPromocao,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, bottom: 6, top: 10),
+            child: text("Vauchers mais trocados!", bold: true, color: AppColor.primaryColor, fontSize: 14),
+          ),
+          SizedBox(
+            height: 180,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: cardsMaisTrocados,
+            ),
+          ),
+          const SizedBox(height: 50),
         ],
       ),
     );

@@ -1,24 +1,73 @@
-import 'package:app_cashback_soamer/functions/navigation.dart';
+import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
+import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
+import 'package:app_cashback_soamer/widgets/form_field.dart';
+import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 
 class VerificarCodigoScreen extends StatefulWidget {
-  const VerificarCodigoScreen({super.key});
+  final String email;
+  final String code;
+  const VerificarCodigoScreen({super.key, required this.email, required this.code});
 
   @override
   State<VerificarCodigoScreen> createState() => _VerificarCodigoScreenState();
 }
 
 class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
+
+  TextEditingController codeController = TextEditingController();
+
+  void _checkCode() {
+     if(codeController.text == widget.code) {
+       showSnackbarSuccess(context, message: "Código Correto");
+       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+     }
+  }
+
+  Widget _body() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListView(
+          children: [
+            const SizedBox(height: 40),
+            SizedBox(height: 300, child: Image.network("https://www.signiflow.com/wp-content/uploads/2021/10/SigniFlow-application-security.png")),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+              child: text("Enviamos um e-mail para ${widget.email}, confira sua caixa de entrada, spam ou promoções", textAlign: TextAlign.center, fontSize: 15),
+            ),
+            getPinCodeFormField(
+              controller: codeController,
+              activeFillColor: Colors.white,
+              inactiveFillColor: Colors.grey.shade300,
+              selectedFillColor: Colors.grey.shade100,
+              activeColor: Colors.grey,
+              selectedColor: Colors.grey.shade700,
+              inactiveColor: Colors.grey.shade300,
+            ),
+            const SizedBox(height: 20),
+            elevatedButtonText(
+              "Verificar".toUpperCase(),
+              width: MediaQuery.of(context).size.width - 30,
+              color: AppColor.primaryColor,
+              textColor: Colors.white,
+               function: () => _checkCode(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: text("VERIFICAR CÓDIGO",bold: true),
-      ),
-      body: Center(child: elevatedButtonText("PRÓXIMA PAGINA", function: () => open(context, screen: Container()))),
+    return scaffold(
+      title: "Verificar código",
+      body: _body(),
+      hideBackArrow: true,
     );
   }
 }

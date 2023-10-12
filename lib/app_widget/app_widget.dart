@@ -22,7 +22,7 @@ class _AppWidgetState extends State<AppWidget> {
     verificaLogin() async {
       UsuarioModel usuarioModel = await getModelLocal();
       if (usuarioModel.idUsuario != null && !opened) {
-        setState(() => screen = HomeScreen(usuarioModel: usuarioModel, cadastrando: false));
+        setState(() => screen = HomeScreen(usuarioModel: usuarioModel));
         opened = true;
       }
     }

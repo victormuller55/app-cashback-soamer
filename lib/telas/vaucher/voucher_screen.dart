@@ -61,17 +61,16 @@ class _VaucherScreenState extends State<VaucherScreen> {
                 children: [
                   text(voucherState.code, fontSize: 20, textAlign: TextAlign.center, bold: true, color: AppColor.primaryColor),
                   IconButton(
+                    icon: Icon(Icons.copy, color: Colors.grey.shade600),
                     onPressed: () {
                       showSnackbarSuccess(context, message: "Código copiado com sucesso");
                       Clipboard.setData(ClipboardData(text: voucherState.code));
                     },
-                    icon: Icon(Icons.copy, color: Colors.grey.shade600),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 40),
         ],
       ),
     );
@@ -237,7 +236,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
   Widget _bodyBuilder() {
     return BlocConsumer<VoucherBloc, VoucherState>(
       bloc: voucherBloc,
-      listener: (context, state) => {},
+      listener: (context, state) => setState(() {}),
       builder: (context, state) {
         switch (state.runtimeType) {
           case VoucherLoadingState:
@@ -258,7 +257,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
     return scaffold(
       body: _bodyBuilder(),
       title: widget.vaucherModel.tituloVaucher ?? "",
-      bottomNavigationBar: _buttonTrocar(),
+      bottomNavigationBar: voucherBloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
       actions: [
         infoColumn(
           title: widget.pontos.toString(),
@@ -267,5 +266,11 @@ class _VaucherScreenState extends State<VaucherScreen> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    voucherBloc.close();
+    super.dispose();
   }
 }

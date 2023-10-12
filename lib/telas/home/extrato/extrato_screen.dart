@@ -91,6 +91,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           hoje.isNotEmpty ? Center(child: text("Hoje".toUpperCase(), bold: true, color: AppColor.primaryColor)) : container(),
           const SizedBox(height: 10),
