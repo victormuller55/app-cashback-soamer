@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:app_cashback_soamer/app_widget/api_exception.dart';
 import 'package:app_cashback_soamer/functions/internet_connection.dart';
@@ -18,14 +19,42 @@ String getParametersFormatted({required Map<String, dynamic>? parameters}) {
   return "";
 }
 
-Future<Response> postHTTP({required String endpoint, required Map<String, dynamic> body, Map<String, String>? parameters}) async {
+Future<Response> postHTTP({
+  required String endpoint,
+  required Map<String, dynamic> body,
+  Map<String, String>? parameters,
+  File? file,
+}) async {
 
   if (kDebugMode) {
     print("API: $endpoint${getParametersFormatted(parameters: parameters)}");
   }
 
   if (await thereInternetConnection()) {
-    http.Response endpointResult = await http.post(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header, body: jsonEncode(body));
+
+    http.Response endpointResult = http.Response("", 500);
+
+    var request = http.MultipartRequest('POST', Uri.parse(endpoint + getParametersFormatted(parameters: parameters)));
+    request.fields.addAll(body.map((key, value) => MapEntry(key, value.toString())));
+
+    if (file != null) {
+      request.files.add(
+        http.MultipartFile(
+          'file',
+          file.readAsBytes().asStream(),
+          file.lengthSync(),
+          filename: file.path.split('/').last
+        ),
+      );
+
+      var streamedResponse = await request.send();
+      endpointResult = await http.Response.fromStream(streamedResponse);
+    }
+
+    if(file == null) {
+      endpointResult = await http.post(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header, body: jsonEncode(body));
+    }
+
     if (endpointResult.statusCode == 200) {
       return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
     }
@@ -34,18 +63,20 @@ Future<Response> postHTTP({required String endpoint, required Map<String, dynami
   throw ApiException(Response(statusCode: 502, body: noInternetConnectionError()));
 }
 
-Future<Response> putHTTP({required String endpoint, Map<String, String>? parameters}) async {
+
+Future<Response> putHTTP({required String endpoint, Map<String, String>? parameters, Map<String, dynamic>? body}) async {
 
   if (kDebugMode) {
     print("API: $endpoint${getParametersFormatted(parameters: parameters)}");
   }
 
+  if (kDebugMode) {
+    print("API SEND: ${body}");
+  }
+
   if (await thereInternetConnection()) {
-    http.Response endpointResult = await http.put(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header);
+    http.Response endpointResult = await http.put(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header, body: jsonEncode(body));
     if (endpointResult.statusCode == 200) {
-      if (kDebugMode) {
-        print("API RESULT: ${endpointResult.body}");
-      }
       return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
     }
     throw ApiException(Response(statusCode: endpointResult.statusCode, body: endpointResult.body));

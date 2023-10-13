@@ -8,7 +8,6 @@ import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/contato/contato_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_screen.dart';
-import 'package:app_cashback_soamer/telas/home/perfil/notificacoes/notificacoes_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/politica_de_privacidade/politica_de_privacidade_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/termos_de_uso/termos_de_uso_screen.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
@@ -16,6 +15,7 @@ import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/modal.dart';
+import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 
@@ -149,7 +149,6 @@ class _PerfilScreenState extends State<PerfilScreen> {
             backgroundColor: Colors.white,
             child: Column(
               children: [
-                _option("Notificações", onTap: () => open(context, screen: const NotificacoesScreen())),
                 _option("Termos de uso", onTap: () => open(context, screen: const TermosDeUsoScreen())),
                 _option("Politica de privacidade", onTap: () => open(context, screen: const PoliticaDePrivacidadeScreen())),
                 _option("Contato Soamer", onTap: () => open(context, screen: const ContatoSoamer())),
@@ -164,15 +163,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColor.primaryColor,
-        centerTitle: true,
-        title: text("Meu perfil".toUpperCase(), bold: true),
-      ),
+    return scaffold(
+      title: "Meu perfil",
       body: FutureBuilder(
         future: _loadDataLocal(),
         builder: (context, snapshot) {
@@ -187,6 +179,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           return _body(snapshot.data!);
         },
       ),
+      hideBackArrow: true,
     );
   }
 }

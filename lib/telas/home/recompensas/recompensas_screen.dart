@@ -21,9 +21,13 @@ class RecompensasScreen extends StatefulWidget {
 class _RecompensasScreeenState extends State<RecompensasScreen> {
   VaucherBloc vaucherBloc = VaucherBloc();
 
+  Future<void> _load() async {
+     vaucherBloc.add(VaucherLoadEvent());
+  }
+
   @override
   void initState() {
-    vaucherBloc.add(VaucherLoadEvent());
+    _load();
     super.initState();
   }
 
@@ -111,21 +115,24 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
   }
 
   Widget _bodyBuilder() {
-    return BlocConsumer<VaucherBloc, VaucherState>(
-      bloc: vaucherBloc,
-      listener: (context, state) => {},
-      builder: (context, state) {
-        switch (state.runtimeType) {
-          case VaucherLoadingState:
-            return loading();
-          case VaucherSuccessState:
-            return _body(state);
-          case VaucherErrorState:
-            return erro(state.errorModel, function: () => {});
-          default:
-            return container();
-        }
-      },
+    return RefreshIndicator(
+      onRefresh: _load,
+      child: BlocConsumer<VaucherBloc, VaucherState>(
+        bloc: vaucherBloc,
+        listener: (context, state) => {},
+        builder: (context, state) {
+          switch (state.runtimeType) {
+            case VaucherLoadingState:
+              return loading();
+            case VaucherSuccessState:
+              return _body(state);
+            case VaucherErrorState:
+              return erro(state.errorModel, function: () => _load());
+            default:
+              return container();
+          }
+        },
+      ),
     );
   }
 

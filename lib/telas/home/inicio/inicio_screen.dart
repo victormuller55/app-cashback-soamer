@@ -164,7 +164,7 @@ class _InicioScreenState extends State<InicioScreen> {
       value: concessionariaModel,
       child: Row(
         children: [
-          text(concessionariaModel.nomeConcessionaria ?? "aaa 3"),
+          text(concessionariaModel.nomeConcessionaria ?? ""),
           text(" (${concessionariaModel.marcaConcessionaria})", bold: true),
         ],
       ),

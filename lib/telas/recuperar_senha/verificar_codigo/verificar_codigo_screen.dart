@@ -1,5 +1,6 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
+import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
@@ -21,8 +22,9 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
 
   void _checkCode() {
      if(codeController.text == widget.code) {
-       showSnackbarSuccess(context, message: "Código Correto");
-       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  AlterarSenhaScreen(email: widget.email)));
+     } else {
+       showSnackbarWarning(context, message: "Código Incorreto");
      }
   }
 

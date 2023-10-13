@@ -3,9 +3,7 @@ import 'package:app_cashback_soamer/functions/service.dart';
 
 Future<Response> sendEmail(String email) async {
   return await getHTTP(
-    endpoint: Endpoint.endpointEntrarCadastrar,
-    parameters: {
-      "email": email,
-    },
+    endpoint: Endpoint.endpointRecuperarSenha,
+    parameters: {"email": email},
   );
 }

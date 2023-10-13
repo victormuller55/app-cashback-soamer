@@ -42,6 +42,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
   void _onChangeState(EnviarEmailState state) {
     if (state.runtimeType == EnviarEmailSuccessState) Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerificarCodigoScreen(email: controllerEmail.text, code: state.code)));
     if (state.runtimeType == EnviarEmailSuccessState) showSnackbarSuccess(context, message: "E-mail enviado");
+    if (state.runtimeType == EnviarEmailErrorState) showSnackbarError(context, message: state.errorModel.mensagem);
   }
 
   Widget _body() {
@@ -78,8 +79,6 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
         switch (state.runtimeType) {
           case EnviarEmailLoadingState:
             return loading();
-          case EnviarEmailErrorState:
-            return erro(state.errorModel, function: () => _enviarEmail());
           default:
             return _body();
         }
