@@ -39,7 +39,7 @@ DateTime formatarDDMMYYYYHHMMToDate(String dataHora) {
 
 String formatarData(String data) {
   DateTime dataAtual = DateTime.now();
-  DateTime dataRecebida = DateTime.parse(data).subtract(Duration(hours: 3));
+  DateTime dataRecebida = DateTime.parse(data).subtract(const Duration(hours: 3));
 
   if (dataRecebida.year == dataAtual.year && dataRecebida.month == dataAtual.month && dataRecebida.day == dataAtual.day) {
     String horaMinuto = DateFormat('HH:mm').format(dataRecebida);

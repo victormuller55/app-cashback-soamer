@@ -1,6 +1,5 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';

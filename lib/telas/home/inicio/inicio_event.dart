@@ -1,5 +1,3 @@
-import 'package:app_cashback_soamer/models/home_model.dart';
-import 'package:app_cashback_soamer/models/vaucher_model.dart';
 
 abstract class InicioEvent {}
 

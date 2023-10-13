@@ -4,22 +4,24 @@ import 'package:app_cashback_soamer/models/vaucher_model.dart';
 abstract class VaucherState {
   ErrorModel errorModel;
   List<VaucherModel> vaucherModelList;
+  List<VaucherModel> vaucherModelListPromocao;
+  List<VaucherModel> vaucherModelListMaisTrocados;
 
-  VaucherState({required this.vaucherModelList, required this.errorModel});
+  VaucherState({required this.vaucherModelList, required this.errorModel, required this.vaucherModelListPromocao, required this.vaucherModelListMaisTrocados});
 }
 
 class VaucherInitialState extends VaucherState {
-  VaucherInitialState({required List<VaucherModel> contaModel, required ErrorModel errorModel}) : super(vaucherModelList: contaModel, errorModel: errorModel);
+  VaucherInitialState() : super(vaucherModelList: [], errorModel: ErrorModel.empty(), vaucherModelListPromocao: [], vaucherModelListMaisTrocados: []);
 }
 
 class VaucherLoadingState extends VaucherState {
-  VaucherLoadingState({required List<VaucherModel> vaucherModel, required ErrorModel errorModel}) : super(vaucherModelList: vaucherModel, errorModel: errorModel);
+  VaucherLoadingState() : super(vaucherModelList: [], errorModel: ErrorModel.empty(), vaucherModelListPromocao: [], vaucherModelListMaisTrocados: []);
 }
 
 class VaucherSuccessState extends VaucherState {
-  VaucherSuccessState({required List<VaucherModel> vaucherModel, required ErrorModel errorModel}) : super(vaucherModelList: vaucherModel, errorModel: errorModel);
+  VaucherSuccessState({required List<VaucherModel> vaucherModel, required List<VaucherModel> vaucherModelListMaisTrocados, required List<VaucherModel> vaucherModelListPromocao}) : super(vaucherModelList: vaucherModel, errorModel: ErrorModel.empty(), vaucherModelListMaisTrocados: vaucherModelListMaisTrocados, vaucherModelListPromocao: vaucherModelListPromocao);
 }
 
 class VaucherErrorState extends VaucherState {
-  VaucherErrorState({required List<VaucherModel> vaucherModel, required ErrorModel errorModel}) : super(vaucherModelList: vaucherModel, errorModel: errorModel);
+  VaucherErrorState({required ErrorModel errorModel}) : super(vaucherModelList: [], vaucherModelListPromocao: [], vaucherModelListMaisTrocados: [], errorModel: errorModel);
 }

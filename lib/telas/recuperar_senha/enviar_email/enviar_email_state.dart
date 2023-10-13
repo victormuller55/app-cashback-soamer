@@ -1,5 +1,4 @@
 import 'package:app_cashback_soamer/models/error_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
 
 abstract class EnviarEmailState {
   ErrorModel errorModel;

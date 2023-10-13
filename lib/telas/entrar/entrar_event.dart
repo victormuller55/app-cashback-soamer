@@ -1,4 +1,3 @@
-import 'package:app_cashback_soamer/models/usuario_model.dart';
 
 abstract class EntrarEvent {}
 

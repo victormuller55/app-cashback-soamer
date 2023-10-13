@@ -2,7 +2,6 @@ import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 Widget erro(ErrorModel errorModel, {required void Function() function}) {
