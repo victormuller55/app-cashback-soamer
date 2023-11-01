@@ -225,8 +225,6 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
         switch (state.runtimeType) {
           case EditarUsuarioLoadingState:
             return loading();
-          case EditarUsuarioErrorState:
-            return erro(state.errorModel, function: () => {});
           default:
             return _body();
         }

@@ -1,4 +1,4 @@
-const String server = "http://192.168.0.188:8080";
+const String server = "http://34.228.32.167";
 
 class Endpoint {
 
@@ -17,6 +17,9 @@ class Endpoint {
   static String endpointVaucherMaisTrocados = "$server/v1/soamer/vaucher/trocados";
   static String endpointVaucherPromocao = "$server/v1/soamer/vaucher/promocao";
   static String endpointTrocarVoucher = "$server/v1/soamer/vaucher/trocar";
+
+  // PDF
+  static String endpointLoadPDF = "$server/v1/soamer/usuario/pdf/nota_exemplo_1.pdf";
 
   static String endpointImageUsuario(int idUsuario) {
     return "$server/v1/soamer/usuario/foto?id_usuario=$idUsuario";

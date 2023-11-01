@@ -1,7 +1,11 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:flutter/material.dart';
 
-Widget backgroundCadastroLogin(BuildContext context, {required Widget child, double? height}) {
+Widget backgroundCadastroLogin(
+  BuildContext context, {
+  required Widget child,
+  double? height,
+}) {
   return ListView(
     children: [
       Container(
@@ -56,7 +60,6 @@ Widget text(
           letterSpacing: letterSpacing,
           fontFamily: fontFamily ?? 'lato',
           decoration: cortado ?? false ? TextDecoration.lineThrough : null,
-
         ),
       );
     },
@@ -76,7 +79,6 @@ Widget infoColumn({
   bool? ovewflowValue,
   bool? cortarTitle,
   bool? cortarValue,
-
 }) {
   return Builder(builder: (context) {
     return SizedBox(
