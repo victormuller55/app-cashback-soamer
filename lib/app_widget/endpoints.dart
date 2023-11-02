@@ -1,4 +1,4 @@
-const String server = "http://192.168.0.106"; //    "http://34.228.32.167";
+const String server = "http://34.228.32.167"; //    "http://34.228.32.167";
 
 class Endpoint {
   // Entrar e Cadastrar

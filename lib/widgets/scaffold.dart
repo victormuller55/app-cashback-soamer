@@ -13,17 +13,13 @@ Widget scaffold({
     extendBody: true,
     backgroundColor: Colors.grey.shade200,
     appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColor.primaryColor,
-        centerTitle: true,
-        title: text(title.toUpperCase(), bold: true),
-        leading: hideBackArrow ?? false ? Container() : null,
-        actions: actions != null
-            ? [
-                ...actions,
-                const SizedBox(width: 20),
-              ]
-            : null),
+      elevation: 0,
+      backgroundColor: AppColor.primaryColor,
+      centerTitle: true,
+      title: text(title.toUpperCase(), bold: true),
+      leading: hideBackArrow ?? false ? Container() : null,
+      actions: actions != null ? [...actions, const SizedBox(width: 20)] : null,
+    ),
     body: body,
     bottomNavigationBar: bottomNavigationBar,
   );

@@ -14,7 +14,6 @@ class ContatoSoamer extends StatefulWidget {
 }
 
 class _ContatoSoamerState extends State<ContatoSoamer> {
-
   void _launchURL(String url) async {
     try {
       await launchUrl(Uri.parse(url));
@@ -35,7 +34,7 @@ class _ContatoSoamerState extends State<ContatoSoamer> {
           width: MediaQuery.of(context).size.width,
           backgroundColor: Colors.grey.shade50,
           padding: const EdgeInsets.only(left: 10, right: 10),
-          radius: BorderRadius.circular(5),
+          radius: BorderRadius.circular(20),
           child: ListTile(
             leading: Icon(icon, color: AppColor.primaryColor),
             title: text(titulo, color: Colors.grey, bold: true, fontSize: 14),
@@ -47,12 +46,15 @@ class _ContatoSoamerState extends State<ContatoSoamer> {
   }
 
   Widget _body() {
-    return ListView(
-      children: [
-        _option("Ligar para (41) 3056-7777", Icons.phone, function: () => _launchURL("tel:+554130567777")),
-        _option("E-mail para contato@ponteirasoamer.com.br", Icons.email, function: () => _launchURL("mailto:contato@ponteirasoamer.com.br")),
-        _option("WhatsApp (41) 3056-7777", Icons.phone, function: () => _launchURL("whatsapp://send?phone=4130567777")),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+      child: ListView(
+        children: [
+          _option("Ligar para (41) 3056-7777", Icons.phone, function: () => _launchURL("tel:+554130567777")),
+          _option("E-mail para contato@ponteirasoamer.com.br", Icons.email, function: () => _launchURL("mailto:contato@ponteirasoamer.com.br")),
+          _option("WhatsApp (41) 3056-7777", Icons.phone, function: () => _launchURL("whatsapp://send?phone=4130567777")),
+        ],
+      ),
     );
   }
 

@@ -32,6 +32,25 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
     super.initState();
   }
 
+  Widget _cardInfo({required String title, required String value, bool? entrada}) {
+    return container(
+      radius: BorderRadius.circular(20),
+      backgroundColor: Colors.grey.shade300,
+      width: MediaQuery.of(context).size.width / 2.2,
+      height: 80,
+      child: infoColumn(
+        title: value,
+        value: title,
+        titleSize: 25,
+        valueSize: 13,
+        spacing: true,
+        titleColor: entrada ?? false ? Colors.green : Colors.red,
+        valueColor: Colors.grey,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
+    );
+  }
+
   void _onChangeState(ExtratoState state) {}
 
   Widget _extrato(ExtratoModel extratoModel) {
@@ -46,16 +65,16 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: container(
-        height: 70,
+        height: 80,
         width: MediaQuery.of(context).size.width,
         backgroundColor: Colors.white,
-        radius: BorderRadius.circular(10),
+        radius: BorderRadius.circular(20),
         child: Center(
           child: ListTile(
             title: text(extratoModel.titulo ?? "", fontSize: 15, bold: true),
-            subtitle: text(extratoModel.descricao ?? "", fontSize: 14),
+            subtitle: text(extratoModel.descricao ?? "", fontSize: 14, overflow: true),
             trailing: trailing,
-            leading: text(formatarData(extratoModel.data.toString())),
+            leading: SizedBox(width: 40, height: 40, child: Center(child: text(formatarData(extratoModel.data.toString())))),
           ),
         ),
       ),
@@ -63,6 +82,8 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   }
 
   Widget _body(List<ExtratoModel> extratoModel) {
+    int totalEntrada = 0;
+    int totalSaida = 0;
 
     List<Widget> hoje = [];
     List<Widget> ontem = [];
@@ -80,6 +101,11 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
       } else if (dataRegistro.isBefore(dataAnterior)) {
         anterior.add(_extrato(model));
       } else {
+        if (model.entrada!) {
+          totalEntrada = totalEntrada + model.pontos!;
+        } else {
+          totalSaida = totalSaida + model.pontos!;
+        }
         hoje.add(_extrato(model));
       }
     }
@@ -93,6 +119,15 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _cardInfo(title: "Total de saídas", value: "-${totalSaida.toString()}", entrada: false),
+              _cardInfo(title: "Total de entradas", value: "+${totalEntrada.toString()}", entrada: true),
+            ],
+          ),
+          const SizedBox(height: 10),
           hoje.isNotEmpty ? Center(child: text("Hoje".toUpperCase(), bold: true, color: AppColor.primaryColor)) : container(),
           const SizedBox(height: 10),
           ...hoje.reversed,

@@ -16,7 +16,6 @@ import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfi
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_state.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
@@ -151,50 +150,60 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
       padding: const EdgeInsets.all(8.0),
       child: ListView(
         children: [
-          container(
-            padding: const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
-            backgroundColor: Colors.grey.shade300,
-            radius: BorderRadius.circular(10),
-            child: Center(
-              child: text(
-                "Edite seus dados aqui, seu CPF não é possivel alterar.",
-                bold: true,
-                fontSize: 14,
-                color: Colors.grey.shade600,
-              ),
-            ),
-          ),
+
           sizedBoxVertical(10),
-          Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  container(
+                    width: 200,
+                    padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                    backgroundColor: Colors.grey.shade300,
+                    radius: BorderRadius.circular(20),
+                    child: Center(
+                      child: text(
+                        "É possível fazer alterações nos dados do usuário, com exceção do número de CPF.",
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  elevatedButtonText(
+                    "Alterar foto".toUpperCase(),
+                    function: () => pickImage(),
+                    width: 200,
+                    height: 45,
+                    borderRadius: 30,
+                    color: AppColor.primaryColor,
+                    textColor: Colors.white,
+                  ),
+                ],
+              ),
               Hero(
                 tag: "usuario",
                 child: imageFile.path.isEmpty
                     ? container(
                         height: 150,
                         width: 150,
-                        radius: BorderRadius.circular(10),
-                        border: Border.all(color: AppColor.primaryColor, width: 2),
+                        radius: BorderRadius.circular(20),
+                        // border: Border.all(color: AppColor.primaryColor, width: 2),
                         image: NetworkImage(Endpoint.endpointImageUsuario(widget.usuarioModel.idUsuario!)),
                       )
                     : container(
                         height: 150,
                         width: 150,
-                        radius: BorderRadius.circular(10),
-                        border: Border.all(color: AppColor.primaryColor, width: 2),
+                        radius: BorderRadius.circular(20),
+                        // border: Border.all(color: AppColor.primaryColor, width: 2),
                         image: FileImage(imageFile),
                       ),
               ),
               sizedBoxVertical(10),
-              elevatedButtonText(
-                "Escolher foto".toUpperCase(),
-                function: () => pickImage(),
-                width: 200,
-                height: 45,
-                borderRadius: 10,
-                color: AppColor.primaryColor,
-                textColor: Colors.white,
-              ),
+
             ],
           ),
           sizedBoxVertical(10),

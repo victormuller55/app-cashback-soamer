@@ -110,7 +110,7 @@ class _InicioScreenState extends State<InicioScreen> {
 
   Widget _cardInfo({required String title, required String value}) {
     return container(
-      radius: BorderRadius.circular(10),
+      radius: BorderRadius.circular(20),
       backgroundColor: Colors.grey.shade300,
       width: MediaQuery.of(context).size.width / 2.2,
       height: 100,
@@ -130,6 +130,7 @@ class _InicioScreenState extends State<InicioScreen> {
     return container(
       height: MediaQuery.of(context).size.height / 6,
       backgroundColor: AppColor.primaryColor,
+      radius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -211,8 +212,8 @@ class _InicioScreenState extends State<InicioScreen> {
           ),
           const SizedBox(height: 15),
           Padding(
-            padding: const EdgeInsets.only(left: 10, bottom: 6),
-            child: text("Vauchers na promoção!", bold: true, color: AppColor.primaryColor, fontSize: 14),
+            padding: const EdgeInsets.only(left: 15),
+            child: text("PROMOÇÃO", bold: true, color: Colors.grey, fontSize: 14),
           ),
           SizedBox(
             height: 180,
@@ -223,8 +224,8 @@ class _InicioScreenState extends State<InicioScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10, bottom: 6, top: 10),
-            child: text("Vauchers mais trocados!", bold: true, color: AppColor.primaryColor, fontSize: 14),
+            padding: const EdgeInsets.only(left: 15, top: 10),
+            child: text("OS MAIS TROCADOS", bold: true, color: Colors.grey, fontSize: 14),
           ),
           SizedBox(
             height: 180,

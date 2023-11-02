@@ -22,7 +22,6 @@ class RecompensasScreen extends StatefulWidget {
 }
 
 class _RecompensasScreeenState extends State<RecompensasScreen> {
-
   VaucherBloc vaucherBloc = VaucherBloc();
   TextEditingController controllerValor = TextEditingController();
 
@@ -36,49 +35,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
     super.initState();
   }
 
-  void _popupPIX() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: container(
-              radius: BorderRadius.circular(20),
-              height: 190,
-              width: 240,
-              backgroundColor: Colors.grey.shade200,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    container(
-                      radius: BorderRadius.circular(10),
-                      padding: const EdgeInsets.all(8),
-                      backgroundColor: Colors.grey.shade700,
-                      child: text("Digite o valor que será enviado através de uma tranferencia PIX", textAlign: TextAlign.center, color: Colors.white, bold: true),
-                    ),
-                    formFieldPadrao(context, "Digite o valor", controller: controllerValor, showSenha: false),
-                    elevatedButtonText(
-                      "SALVAR",
-                      function: () => Navigator.pop(context),
-                      color: AppColor.primaryColor,
-                      textColor: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   Widget _body(VaucherState state) {
-
     List<Widget> lista1 = [];
     List<Widget> lista2 = [];
     List<Widget> lista3 = [];
@@ -102,7 +59,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
           container(
             height: 130,
             width: MediaQuery.of(context).size.width,
-            radius: BorderRadius.circular(10),
+            radius: BorderRadius.circular(20),
             backgroundColor: Colors.grey.shade300,
             padding: const EdgeInsets.all(10),
             child: Column(
@@ -113,8 +70,8 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    text("R\$${vaucherBloc.state.dadosUsuarioModel.pontosUsuario},00", fontSize: 22),
-                    elevatedButtonText("Solicitar valor".toUpperCase(), function: () => _popupPIX(), width: 230, height: 40, color: AppColor.primaryColor, textColor: Colors.white, borderRadius: 50),
+                    text("R\$${vaucherBloc.state.dadosUsuarioModel.pontosUsuario},00", fontSize: 22, bold: true, color: AppColor.primaryColor),
+                    elevatedButtonText("Solicitar valor".toUpperCase(), function: () => {}, width: 180, height: 40, color: AppColor.primaryColor, textColor: Colors.white, borderRadius: 50),
                   ],
                 )
               ],
@@ -122,7 +79,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 4, top: 15),
-            child: text("Lista de vouchers", bold: true, color: AppColor.primaryColor, fontSize: 14),
+            child: text("TODOS", bold: true, color: Colors.grey, fontSize: 14),
           ),
           SizedBox(
             height: 180,
@@ -134,7 +91,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 4, top: 5),
-            child: text("Voucher mais trocados", bold: true, color: AppColor.primaryColor, fontSize: 14),
+            child: text("MAIS TROCADOS", bold: true, color: Colors.grey, fontSize: 14),
           ),
           SizedBox(
             height: 180,
@@ -146,7 +103,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 4, top: 5),
-            child: text("Voucher em promoção", bold: true, color: AppColor.primaryColor, fontSize: 14),
+            child: text("PROMOÇÃO", bold: true, color: Colors.grey, fontSize: 14),
           ),
           SizedBox(
             height: 180,
@@ -167,7 +124,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
       onRefresh: _load,
       child: BlocConsumer<VaucherBloc, VaucherState>(
         bloc: vaucherBloc,
-        listener: (context, state) => {},
+        listener: (context, state) => state is VaucherSuccessState ? () => Future.delayed(const Duration(milliseconds: 500)).then((value) => setState(() {})) : () => {},
         builder: (context, state) {
           switch (state.runtimeType) {
             case VaucherLoadingState:
@@ -190,13 +147,6 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
       body: _bodyBuilder(),
       title: "Recompensas",
       hideBackArrow: true,
-      actions: [
-        infoColumn(
-          title: vaucherBloc.state.dadosUsuarioModel.pontosUsuario.toString(),
-          value: "Pontos",
-          crossAxisAlignment: CrossAxisAlignment.center,
-        ),
-      ]
     );
   }
 }

@@ -71,13 +71,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
           height: 40,
           width: MediaQuery.of(context).size.width,
           backgroundColor: closeAccount ?? false ? Colors.red : Colors.grey.shade50,
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          radius: BorderRadius.circular(5),
+          padding: const EdgeInsets.only(left: 30, right: 10),
+          radius: BorderRadius.circular(20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              text(titulo, color: closeAccount ?? false ? Colors.white : Colors.grey, bold: true, fontSize: 13),
-              Icon(Icons.arrow_forward_ios_sharp, color: closeAccount ?? false ? Colors.white : Colors.grey),
+              text(titulo, color: closeAccount ?? false ? Colors.white : Colors.grey, bold: false, fontSize: 13),
+              Icon(Icons.arrow_forward_ios_sharp, color: closeAccount ?? false ? Colors.white : Colors.grey, size: 12),
             ],
           ),
         ),
@@ -87,10 +87,10 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   Widget _header(UsuarioModel usuarioModel) {
     return container(
-      height: 150,
+      height: 145,
       width: MediaQuery.of(context).size.width,
       backgroundColor: Colors.white,
-      radius: BorderRadius.circular(10),
+      radius: BorderRadius.circular(20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -107,7 +107,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 function: () => open(context, screen: EditarPerfilScreen(usuarioModel: usuarioModel)),
                 width: 200,
                 height: 45,
-                borderRadius: 10,
+                borderRadius: 30,
                 color: AppColor.primaryColor,
                 textColor: Colors.white,
               ),
@@ -121,8 +121,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 child: container(
                   height: 90,
                   width: 90,
-                  radius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColor.primaryColor, width: 2),
+                  radius: BorderRadius.circular(15),
+                  // border: Border.all(color: AppColor.primaryColor, width: 2),
                   image: NetworkImage(Endpoint.endpointImageUsuario(usuarioModel.idUsuario!)),
                 ),
               ),
@@ -145,7 +145,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           container(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.all(10),
-            radius: BorderRadius.circular(10),
+            radius: BorderRadius.circular(20),
             backgroundColor: Colors.white,
             child: Column(
               children: [

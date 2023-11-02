@@ -44,14 +44,12 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
 
   Widget _body() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             children: [
-              SizedBox(width: 140, child: Image.network("https://vyaparwebsiteimages.vypcdn.in/marketing-images/images/barcode-scanner/what-is-a-barcode-scanner.webp")),
-              const SizedBox(height: 10),
               container(
                 backgroundColor: Colors.grey.shade300,
                 radius: BorderRadius.circular(10),
@@ -72,12 +70,15 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
               ),
             ],
           ),
-          elevatedButtonText(
-            "Enviar NF-E".toUpperCase(),
-            function: () => _save(),
-            color: AppColor.primaryColor,
-            textColor: Colors.white,
-            width: MediaQuery.of(context).size.width,
+          Hero(
+            tag: "floatingButton",
+            child: elevatedButtonText(
+              "Enviar NF-E".toUpperCase(),
+              function: () => _save(),
+              color: AppColor.primaryColor,
+              textColor: Colors.white,
+              width: MediaQuery.of(context).size.width,
+            ),
           ),
         ],
       ),
@@ -87,7 +88,8 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
   void _onChangeState(RegistrarVendaState state) {
     if (state is RegistrarVendaErrorState) showSnackbarError(context, message: state.errorModel.mensagem);
     if (state is RegistrarVendaSuccessState) {
-
+        showSnackbarSuccess(context, message: "NF-E registrada com sucesso");
+        Navigator.pop(context);
     }
   }
 
