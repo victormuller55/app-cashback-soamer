@@ -1,6 +1,7 @@
 import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/functions/service.dart';
+import 'package:app_cashback_soamer/models/venda_model.dart';
 
-Future<Response> getPDF() async {
-  return await getHTTP(endpoint: Endpoint.endpointLoadPDF);
+Future<Response> registrarVenda(VendaModel vendaModel) async {
+  return await postHTTP(endpoint: Endpoint.endpointVenda, body: vendaModel.toMap());
 }

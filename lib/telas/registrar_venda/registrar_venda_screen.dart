@@ -1,10 +1,18 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
-import 'package:app_cashback_soamer/telas/registrar_venda/pdf_viewer/pdf_viewer_screen.dart';
+import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
+import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_bloc.dart';
+import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_event.dart';
+import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_state.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
+import 'package:app_cashback_soamer/widgets/elevated_button.dart';
+import 'package:app_cashback_soamer/widgets/form_field.dart';
+import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegistrarVendaScreen extends StatefulWidget {
   const RegistrarVendaScreen({super.key});
@@ -14,41 +22,24 @@ class RegistrarVendaScreen extends StatefulWidget {
 }
 
 class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
-  Widget _pdf() {
-    return GestureDetector(
-      onTap: () => open(context, screen: const MyApp()),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: container(
-          height: 100,
-          width: MediaQuery.of(context).size.width,
-          backgroundColor: Colors.white,
-          radius: BorderRadius.circular(10),
-          child: Row(
-            children: [
-              container(
-                height: 100,
-                width: 100,
-                backgroundColor: Colors.grey.shade300,
-                radius: const BorderRadius.only(bottomLeft: Radius.circular(10), topLeft: Radius.circular(10)),
-                child: const Center(child: Icon(Icons.document_scanner, color: Colors.white)),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    text("0000-0000-0000-0000-0000", bold: true, color: AppColor.primaryColor, fontSize: 17, overflow: true),
-                    const SizedBox(height: 5),
-                    text("00/00/0000 00:00", color: Colors.grey, overflow: true),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+  RegistrarVendaBloc registrarVendaBloc = RegistrarVendaBloc();
+  TextEditingController nfeController = TextEditingController();
+
+  void _save() {
+    if (nfeController.text.isNotEmpty) {
+      registrarVendaBloc.add(RegistrarVendaLoadEvent(nfeController.text));
+    } else {
+      showSnackbarError(context, message: "Digite ou escaneie o código");
+    }
+  }
+
+  Future<void> scanBarcode() async {
+    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#FFFFFF', 'CANCELAR', false, ScanMode.BARCODE);
+    if (barcodeScanRes != '-1') {
+      setState(() => nfeController.text = barcodeScanRes);
+    } else {
+      showSnackbarWarning(context, message: "Não foi possivel escanear o código de barras");
+    }
   }
 
   Widget _body() {
@@ -57,41 +48,61 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Hero(
-            tag: "floatingButton",
-            child: container(
-              height: 70,
-              width: MediaQuery.of(context).size.width,
-              backgroundColor: AppColor.primaryColor,
-              radius: BorderRadius.circular(10),
-              padding: const EdgeInsets.all(8),
-              child: Center(
-                child: text(
-                  "Escolha o PDF que contem a ponteira soamer, após ser enviado os pontos podem levar de 1 a 3 dias uteis para os pontos cairem na sua conta pessoal.",
-                  textAlign: TextAlign.center,
-                  color: Colors.white,
-                  bold: true,
-                ),
+          Column(
+            children: [
+              SizedBox(width: 140, child: Image.network("https://vyaparwebsiteimages.vypcdn.in/marketing-images/images/barcode-scanner/what-is-a-barcode-scanner.webp")),
+              const SizedBox(height: 10),
+              container(
+                backgroundColor: Colors.grey.shade300,
+                radius: BorderRadius.circular(10),
+                padding: const EdgeInsets.all(10),
+                child: text('Digite o código NF-E abaixo, ou escaneie o código de barras da NF-E para registrar a venda e ganhar pontos.', textAlign: TextAlign.center),
               ),
-            ),
+              const SizedBox(height: 10),
+              formFieldPadrao(context, "Digite o número da NF-E", textInputFormatter: FormFieldFormatter.nfeFormatter, textInputType: TextInputType.number, controller: nfeController),
+              const SizedBox(height: 10),
+              text('OU', textAlign: TextAlign.center, bold: true, color: AppColor.primaryColor),
+              const SizedBox(height: 10),
+              elevatedButtonText(
+                "Escanear código de barras".toUpperCase(),
+                function: () => scanBarcode(),
+                color: AppColor.primaryColor,
+                textColor: Colors.white,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ],
           ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: ListView(
-              children: [
-                _pdf(),
-                _pdf(),
-                _pdf(),
-                _pdf(),
-                _pdf(),
-                _pdf(),
-                _pdf(),
-              ],
-            ),
+          elevatedButtonText(
+            "Enviar NF-E".toUpperCase(),
+            function: () => _save(),
+            color: AppColor.primaryColor,
+            textColor: Colors.white,
+            width: MediaQuery.of(context).size.width,
           ),
-          const SizedBox(height: 10),
         ],
       ),
+    );
+  }
+
+  void _onChangeState(RegistrarVendaState state) {
+    if (state is RegistrarVendaErrorState) showSnackbarError(context, message: state.errorModel.mensagem);
+    if (state is RegistrarVendaSuccessState) {
+
+    }
+  }
+
+  Widget _bodyBuilder() {
+    return BlocConsumer<RegistrarVendaBloc, RegistrarVendaState>(
+      bloc: registrarVendaBloc,
+      listener: (context, state) => _onChangeState(state),
+      builder: (context, state) {
+        switch (state.runtimeType) {
+          case RegistrarVendaLoadingState:
+            return loading();
+          default:
+            return _body();
+        }
+      },
     );
   }
 
@@ -99,7 +110,7 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       title: "Registrar venda",
-      body: _body(),
+      body: _bodyBuilder(),
     );
   }
 }

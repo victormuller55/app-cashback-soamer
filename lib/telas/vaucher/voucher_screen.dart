@@ -1,4 +1,5 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
@@ -39,39 +40,20 @@ class _VaucherScreenState extends State<VaucherScreen> {
   Widget _bodySuccess(VoucherState voucherState) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          avatar("https://i0.wp.com/flyassist.com.br/wp-content/uploads/2020/10/fly_assist_travel_voucher_possibilidades-3.jpg?fit=1920%2C1080&ssl=1", radius: 80),
-          const SizedBox(height: 15),
-          text("VOUCHER ADQUIRIDO \n COM SUCESSO!", bold: true, color: AppColor.primaryColor, fontSize: 17, textAlign: TextAlign.center),
-          const SizedBox(height: 10),
-          text("Aqui está o código de seu voucher", bold: true, color: Colors.grey.shade600, fontSize: 15, textAlign: TextAlign.center),
-          const SizedBox(height: 20),
-          container(
-            width: 350,
-            height: 60,
-            padding: const EdgeInsets.all(10),
-            backgroundColor: Colors.white,
-            radius: BorderRadius.circular(10),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  text(voucherState.code, fontSize: 20, textAlign: TextAlign.center, bold: true, color: AppColor.primaryColor),
-                  IconButton(
-                    icon: Icon(Icons.copy, color: Colors.grey.shade600),
-                    onPressed: () {
-                      showSnackbarSuccess(context, message: "Código copiado com sucesso");
-                      Clipboard.setData(ClipboardData(text: voucherState.code));
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            avatar(Endpoint.endpointImageVoucher(widget.vaucherModel.idVaucher!), radius: 80),
+            const SizedBox(height: 15),
+            text("VOUCHER ADQUIRIDO \n COM SUCESSO!", bold: true, color: AppColor.primaryColor, fontSize: 17, textAlign: TextAlign.center),
+            const SizedBox(height: 10),
+            text("Após adquirir o voucher, o código será enviado para o seu e-mail conectado à conta. Por favor, verifique a pasta de descontos e spam ao verificar o e-mail, pois o processo pode levar até 1 dia para ser concluído. Fique atento e aproveite seus benefícios!", bold: true, color: Colors.grey.shade600, fontSize: 15, textAlign: TextAlign.center),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
@@ -100,17 +82,22 @@ class _VaucherScreenState extends State<VaucherScreen> {
             ],
           ),
           const SizedBox(height: 5),
-          text("Após da troca: ${widget.pontos - widget.vaucherModel.pontosVaucher!} Pontos", fontSize: 15, color: Colors.grey.shade600),
+          text("Após da troca: ${widget.pontos - widget.vaucherModel.pontosVaucher! <= 0 ? 0 : widget.pontos - widget.vaucherModel.pontosVaucher!} Pontos", fontSize: 15, color: Colors.grey.shade600),
           const SizedBox(height: 20),
           elevatedButtonText(
             "TROCAR",
             width: MediaQuery.of(context).size.width,
-            function: () => {
-              voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.idVaucher!)),
-              Navigator.pop(context),
-            },
             color: Colors.green,
             textColor: Colors.white,
+            function: ()  {
+             if(widget.vaucherModel.pontosVaucher! <= widget.pontos) {
+               voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.idVaucher!));
+                Navigator.pop(context);
+             } else {
+               showSnackbarWarning(context, message: "Pontos insuficientes");
+               Navigator.pop(context);
+             }
+            },
           ),
           const SizedBox(height: 10),
           elevatedButtonText(
@@ -145,7 +132,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
             height: 200,
             width: MediaQuery.of(context).size.width,
             backgroundColor: Colors.grey.shade300,
-            image: const NetworkImage("https://i0.wp.com/flyassist.com.br/wp-content/uploads/2020/10/fly_assist_travel_voucher_possibilidades-3.jpg?fit=1920%2C1080&ssl=1"),
+            image: NetworkImage(Endpoint.endpointImageVoucher(widget.vaucherModel.idVaucher!)),
           ),
         ),
         Padding(

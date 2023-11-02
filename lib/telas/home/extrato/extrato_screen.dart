@@ -119,7 +119,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
         builder: (context, state) {
           switch (state.runtimeType) {
             case ExtratoLoadingState:
-              return loading(color: Colors.white);
+              return loading();
             case ExtratoSuccessState:
               return _body(state.extratoModel);
             case ExtratoErrorState:

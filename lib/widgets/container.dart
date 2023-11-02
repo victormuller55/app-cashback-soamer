@@ -1,4 +1,5 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
@@ -68,7 +69,7 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
                     width: 165,
                     backgroundColor: Colors.grey.shade300,
                     radius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                    image: const NetworkImage("https://i0.wp.com/flyassist.com.br/wp-content/uploads/2020/10/fly_assist_travel_voucher_possibilidades-3.jpg?fit=1920%2C1080&ssl=1"),
+                    image: NetworkImage(Endpoint.endpointImageVoucher(vaucherModel.idVaucher!)),
                   ),
                 ),
                 Padding(

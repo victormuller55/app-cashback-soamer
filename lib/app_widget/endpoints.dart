@@ -1,7 +1,6 @@
-const String server = "http://34.228.32.167";
+const String server = "http://192.168.0.106"; //    "http://34.228.32.167";
 
 class Endpoint {
-
   // Entrar e Cadastrar
   static String endpointEntrarCadastrar = "$server/v1/soamer/usuario";
   static String endpointConcessionaria = "$server/v1/soamer/concessionaria";
@@ -18,10 +17,14 @@ class Endpoint {
   static String endpointVaucherPromocao = "$server/v1/soamer/vaucher/promocao";
   static String endpointTrocarVoucher = "$server/v1/soamer/vaucher/trocar";
 
-  // PDF
-  static String endpointLoadPDF = "$server/v1/soamer/usuario/pdf/nota_exemplo_1.pdf";
+  // Venda
+  static String endpointVenda = "$server/v1/soamer/venda";
 
   static String endpointImageUsuario(int idUsuario) {
     return "$server/v1/soamer/usuario/foto?id_usuario=$idUsuario";
+  }
+
+  static String endpointImageVoucher(int idVoucher) {
+    return "$server/v1/soamer/vaucher/image?id_voucher=$idVoucher";
   }
 }
