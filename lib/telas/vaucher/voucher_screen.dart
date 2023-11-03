@@ -15,7 +15,6 @@ import 'package:app_cashback_soamer/widgets/modal.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VaucherScreen extends StatefulWidget {
@@ -48,10 +47,53 @@ class _VaucherScreenState extends State<VaucherScreen> {
           children: [
             avatar(Endpoint.endpointImageVoucher(widget.vaucherModel.idVaucher!), radius: 80),
             const SizedBox(height: 15),
-            text("VOUCHER ADQUIRIDO \n COM SUCESSO!", bold: true, color: AppColor.primaryColor, fontSize: 17, textAlign: TextAlign.center),
+            text(
+              "VOUCHER ADQUIRIDO \n COM SUCESSO!",
+              bold: true,
+              color: AppColor.primaryColor,
+              fontSize: 17,
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 10),
-            text("Após adquirir o voucher, o código será enviado para o seu e-mail conectado à conta. Por favor, verifique a pasta de descontos e spam ao verificar o e-mail, pois o processo pode levar até 1 dia para ser concluído. Fique atento e aproveite seus benefícios!", bold: true, color: Colors.grey.shade600, fontSize: 15, textAlign: TextAlign.center),
+            container(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              backgroundColor: Colors.green,
+              radius: BorderRadius.circular(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  text(
+                    "Verifique seu e-mail",
+                    color: Colors.white,
+                    fontSize: 16,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(width: 10),
+                  const Icon(Icons.email, color: Colors.white),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            container(
+              radius: BorderRadius.circular(20),
+              padding: const EdgeInsets.all(10),
+              backgroundColor: Colors.grey.shade300,
+              child: text(
+                "Após adquirir o voucher, o código será enviado para o seu e-mail conectado à conta. Por favor, verifique a pasta de descontos e spam ao verificar o e-mail, pois o processo pode levar até 1 dia para ser concluído. Fique atento e aproveite seus benefícios!",
+                color: Colors.grey.shade600,
+                fontSize: 15,
+                textAlign: TextAlign.center,
+              ),
+            ),
             const SizedBox(height: 20),
+            elevatedButtonText(
+              "CONCLUIR",
+              function: () => Navigator.pop(context),
+              color: AppColor.primaryColor,
+              textColor: Colors.white,
+              width: MediaQuery.of(context).size.width,
+            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
@@ -89,14 +131,14 @@ class _VaucherScreenState extends State<VaucherScreen> {
             width: MediaQuery.of(context).size.width,
             color: Colors.green,
             textColor: Colors.white,
-            function: ()  {
-             if(widget.vaucherModel.pontosVaucher! <= widget.pontos) {
-               voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.idVaucher!));
+            function: () {
+              if (widget.vaucherModel.pontosVaucher! <= widget.pontos) {
+                voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.idVaucher!));
                 Navigator.pop(context);
-             } else {
-               showSnackbarWarning(context, message: "Pontos insuficientes");
-               Navigator.pop(context);
-             }
+              } else {
+                showSnackbarWarning(context, message: "Pontos insuficientes");
+                Navigator.pop(context);
+              }
             },
           ),
           const SizedBox(height: 10),
@@ -155,7 +197,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
                   infoColumn(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     title: widget.vaucherModel.descontoVaucher == 0 ? "" : "${widget.vaucherModel.pontosCheioVaucher} Pontos",
-                    value: widget.vaucherModel.descontoVaucher == 0 ? "${widget.vaucherModel.pontosCheioVaucher} Pontos" :"${widget.vaucherModel.pontosVaucher} Pontos",
+                    value: widget.vaucherModel.descontoVaucher == 0 ? "${widget.vaucherModel.pontosCheioVaucher} Pontos" : "${widget.vaucherModel.pontosVaucher} Pontos",
                     titleColor: Colors.red,
                     valueColor: Colors.black,
                     titleSize: 14,
@@ -170,7 +212,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
                 padding: const EdgeInsets.all(10),
                 backgroundColor: Colors.grey.shade300,
                 radius: BorderRadius.circular(20),
-                child: Center(child: text(widget.vaucherModel.infoVaucher!, fontSize: 15)),
+                child: Center(child: text(widget.vaucherModel.infoVaucher!, fontSize: 15, textAlign: TextAlign.justify)),
               ),
             ],
           ),

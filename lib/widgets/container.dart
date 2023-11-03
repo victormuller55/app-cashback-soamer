@@ -54,18 +54,18 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
         GestureDetector(
           onTap: () => open(context, screen: VaucherScreen(vaucherModel: vaucherModel, heroImage: heroImage, pontos: pontos)),
           child: container(
-            height: 160,
-            width: 160,
+            height: 165,
+            width: 165,
             radius: BorderRadius.circular(20),
             backgroundColor: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: [ 
                 Hero(
                   tag: heroImage,
                   child: container(
                     height: 85,
-                    width: 160,
+                    width: 165,
                     backgroundColor: Colors.grey.shade300,
                     radius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                     image: NetworkImage(Endpoint.endpointImageVoucher(vaucherModel.idVaucher!)),
@@ -76,12 +76,12 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text(vaucherModel.tituloVaucher ?? "vazio", fontSize: 14, bold: true),
+                      text(vaucherModel.tituloVaucher ?? "vazio", fontSize: 14, bold: true, overflow: true),
                       const SizedBox(height: 5),
                       vaucherModel.descontoVaucher! > 0 ? text("${vaucherModel.pontosCheioVaucher} Pontos", color: Colors.red, fontSize: 13, cortado: true) : const SizedBox(),
                       const SizedBox(height: 3),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           text("${vaucherModel.pontosVaucher} Pontos", bold: true, color: Colors.black, fontSize: 14),

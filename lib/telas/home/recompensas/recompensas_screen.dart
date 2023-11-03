@@ -122,6 +122,9 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
   Widget _bodyBuilder() {
     return RefreshIndicator(
       onRefresh: _load,
+      color: Colors.white,
+      strokeWidth: 2,
+      backgroundColor: AppColor.primaryColor,
       child: BlocConsumer<VaucherBloc, VaucherState>(
         bloc: vaucherBloc,
         listener: (context, state) => state is VaucherSuccessState ? () => Future.delayed(const Duration(milliseconds: 500)).then((value) => setState(() {})) : () => {},

@@ -1,7 +1,15 @@
 import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 Widget loading({Color? color}) {
-  return Center(child: LoadingAnimationWidget.twoRotatingArc(color: color ?? AppColor.primaryColor, size: 40));
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: 80, width: 80, child: Image.asset("assets/gif/load_wheel.gif")),
+        text("Carregando...", bold: true, color: AppColor.primaryColor),
+      ],
+    ),
+  );
 }

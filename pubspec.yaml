@@ -45,6 +45,7 @@ flutter:
 
   assets:
      - assets/images/
+     - assets/gif/
 
   fonts:
     - family: lato

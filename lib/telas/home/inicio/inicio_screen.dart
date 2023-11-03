@@ -166,7 +166,8 @@ class _InicioScreenState extends State<InicioScreen> {
       child: Row(
         children: [
           text(concessionariaModel.nomeConcessionaria ?? ""),
-          text(" (${concessionariaModel.marcaConcessionaria})", bold: true),
+          text(" (${concessionariaModel.marcaConcessionaria})"),
+          SizedBox(width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.5)  ,child: text(" - ${concessionariaModel.enderecoConcessionaria}", color: Colors.grey, overflow: true)),
         ],
       ),
     );
