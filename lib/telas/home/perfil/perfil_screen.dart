@@ -139,6 +139,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView(
+        physics: const BouncingScrollPhysics(),
+
         children: [
           _header(usuarioModel),
           const SizedBox(height: 10),

@@ -49,6 +49,8 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
 
         emit(InicioSuccessState(usuarioModel: usuarioModel, vaucherListPromocao: vauchersPromocao, vaucherListMaisTrocados: vauchersMaisTrocados, concessionariaList: []));
       } catch (e) {
+        print(e);
+
         emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
       }
     });

@@ -55,6 +55,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           container(
             height: 130,

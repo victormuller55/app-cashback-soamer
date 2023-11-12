@@ -149,8 +149,8 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
-
           sizedBoxVertical(10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
