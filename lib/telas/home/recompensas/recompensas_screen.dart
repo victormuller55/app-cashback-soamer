@@ -58,7 +58,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
         physics: const BouncingScrollPhysics(),
         children: [
           container(
-            height: 130,
+            height: 110,
             width: MediaQuery.of(context).size.width,
             radius: BorderRadius.circular(20),
             backgroundColor: Colors.grey.shade300,
@@ -66,7 +66,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                text("Cashbacks via PIX podem demorar até 3 dias para serem depositados na conta do usuário, representando apenas 40% do valor dos pontos acumulados.", color: Colors.grey.shade700, textAlign: TextAlign.center),
+                text("Cashbacks via PIX podem demorar até 3 dias para serem depositados na conta do usuário.", color: Colors.grey.shade700, textAlign: TextAlign.center),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

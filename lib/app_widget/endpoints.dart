@@ -1,6 +1,7 @@
-const String server = "http://54.221.57.68"; //    "http://34.228.32.167";
+const String server = "http://3.81.228.93"; // "http://34.228.32.167";
 
 class Endpoint {
+
   // Entrar e Cadastrar
   static String endpointEntrarCadastrar = "$server/v1/soamer/usuario";
   static String endpointConcessionaria = "$server/v1/soamer/concessionaria";

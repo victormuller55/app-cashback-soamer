@@ -39,7 +39,7 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
     screens.add(
       PageViewModel(
         title: "ESPERE UM POUCO!",
-        body: "Após a leitura do código, basta esperar o nosso time validar os pontos em até 72h, após isso, você ja pode gastar seus pontos como quiser. ",
+        body: "Após a leitura do código, basta esperar o nosso time validar os pontos em até 72h, após isso, você ja pode resgatar seus pontos como quiser. ",
         image: Image.network("https://spacesinc.app/assets/images/Office%20Workers%20Sitting%20At%20Desks.png", height: 260.0),
       ),
     );
@@ -47,7 +47,7 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
     screens.add(
       PageViewModel(
         title: "VOUCHERS E PIX!",
-        body: "Você pode gastar seus pontos trocando por vouchers, ou se preferir receber um PIX direto na sua conta!",
+        body: "Você pode resgatar seus pontos trocando por vouchers, ou se preferir receber um PIX direto na sua conta!",
         image: Image.network("https://cdni.iconscout.com/illustration/premium/thumb/gift-coupon-4500808-3748802.png", height: 220.0),
       ),
     );

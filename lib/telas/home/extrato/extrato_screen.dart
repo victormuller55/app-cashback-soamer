@@ -54,27 +54,37 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   void _onChangeState(ExtratoState state) {}
 
   Widget _extrato(ExtratoModel extratoModel) {
-    Widget trailing = text("-");
+    Widget trailing = text("");
 
     if (extratoModel.entrada ?? false) {
-      trailing = text("+${extratoModel.pontos ?? 0} Pts", fontSize: 17, bold: true, color: Colors.green);
+      if (extratoModel.titulo == "Venda aceita") {
+        trailing = text("+${extratoModel.pontos ?? 0} Pts", fontSize: 17, bold: true, color: Colors.green);
+      }
     } else {
-      trailing = text("-${extratoModel.pontos ?? 0} Pts", fontSize: 17, bold: true, color: Colors.red);
+      if (extratoModel.titulo != "Venda recusada") {
+        trailing = text("-${extratoModel.pontos ?? 0} Pts", fontSize: 17, bold: true, color: Colors.red);
+      }
     }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: container(
-        height: 80,
         width: MediaQuery.of(context).size.width,
         backgroundColor: Colors.white,
         radius: BorderRadius.circular(20),
         child: Center(
-          child: ListTile(
-            title: text(extratoModel.titulo ?? "", fontSize: 15, bold: true),
-            subtitle: text(extratoModel.descricao ?? "", fontSize: 14, overflow: true),
-            trailing: trailing,
-            leading: SizedBox(width: 40, height: 40, child: Center(child: text(formatarData(extratoModel.data.toString())))),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              dense: true,
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: text(extratoModel.titulo ?? "", fontSize: 15, bold: true),
+              ),
+              subtitle: text(extratoModel.descricao ?? "", fontSize: 14),
+              trailing: trailing,
+              leading: SizedBox(width: 40, height: 40, child: Center(child: text(formatarData(extratoModel.data.toString())))),
+            ),
           ),
         ),
       ),

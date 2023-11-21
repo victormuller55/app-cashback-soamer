@@ -70,8 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             heroTag: "floatingButton",
             onPressed: () => open(context, screen: const RegistrarVendaScreen()),
             backgroundColor: AppColor.secondaryColor,
-
-            child: const Icon(Icons.qr_code_scanner, size: 30),
+            child: const Icon(Icons.camera_alt, size: 30),
           ),
         ),
       ),

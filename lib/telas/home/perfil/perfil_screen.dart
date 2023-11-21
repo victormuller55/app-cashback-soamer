@@ -96,7 +96,24 @@ class _PerfilScreenState extends State<PerfilScreen> {
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Hero(
+                tag: "usuario",
+                child: container(
+                  height: 90,
+                  width: 90,
+                  radius: BorderRadius.circular(15),
+                  // border: Border.all(color: AppColor.primaryColor, width: 2),
+                  image: NetworkImage(Endpoint.endpointImageUsuario(usuarioModel.idUsuario!)),
+                ),
+              ),
+              const SizedBox(height: 7),
+              text(usuarioModel.nomeUsuario ?? "", bold: true, fontSize: 13, color: AppColor.primaryColor),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               text(usuarioModel.nomeConcessionaria ?? "", bold: true, fontSize: 14, color: AppColor.primaryColor),
               const SizedBox(height: 7),
@@ -111,23 +128,6 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 color: AppColor.primaryColor,
                 textColor: Colors.white,
               ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Hero(
-                tag: "usuario",
-                child: container(
-                  height: 90,
-                  width: 90,
-                  radius: BorderRadius.circular(15),
-                  // border: Border.all(color: AppColor.primaryColor, width: 2),
-                  image: NetworkImage(Endpoint.endpointImageUsuario(usuarioModel.idUsuario!)),
-                ),
-              ),
-              const SizedBox(height: 7),
-              text(usuarioModel.nomeUsuario ?? "", bold: true, fontSize: 13, color: AppColor.primaryColor),
             ],
           ),
         ],

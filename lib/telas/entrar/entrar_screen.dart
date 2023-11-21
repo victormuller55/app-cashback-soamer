@@ -52,7 +52,6 @@ class _EntrarScreenState extends State<EntrarScreen> {
       open(context, screen: HomeScreen(usuarioModel: state.usuarioModel), closePrevious: true);
       saveLocalUserData(state.usuarioModel);
       if(state.usuarioModel.nomeConcessionaria != null || state.usuarioModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.usuarioModel.nomeConcessionaria ?? "");
-
     }
     _focusScope.unfocus();
   }
@@ -63,9 +62,9 @@ class _EntrarScreenState extends State<EntrarScreen> {
       child: Column(
         children: [
           sizedBoxVertical(70),
-          formFieldPadrao(context, controller: controllerEmail,  "pedrosantana@cashboost.com", width: 300, textInputType: TextInputType.emailAddress),
+          formFieldPadrao(context, controller: controllerEmail,  "E-mail", width: 300, textInputType: TextInputType.emailAddress),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerSenha, "***********", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+          formFieldPadrao(context, controller: controllerSenha, "Senha", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
           sizedBoxVertical(20),
           GestureDetector(
             onTap: () => open(context, screen: const EnviarEmailScreen()),
@@ -74,7 +73,7 @@ class _EntrarScreenState extends State<EntrarScreen> {
           sizedBoxVertical(35),
           elevatedButtonPadrao(
             function: () => _validar(),
-            text(Strings.cadastrar.toUpperCase(), color: AppColor.primaryColor, bold: true),
+            text("Entrar".toUpperCase(), color: AppColor.primaryColor, bold: true),
           ),
           sizedBoxVertical(10),
           elevatedButtonText(

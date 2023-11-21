@@ -7,17 +7,20 @@ void saveLocalUserData(UsuarioModel usuarioModel) async {
   localData.setInt("id", usuarioModel.idUsuario ?? 0);
   localData.setString("nome", usuarioModel.nomeUsuario ?? "");
   localData.setString("email", usuarioModel.emailUsuario ?? "");
+  localData.setString("celular", usuarioModel.celularUsuario ?? "");
   localData.setString("cpf", usuarioModel.cpfUsuario ?? "");
   localData.setString("data", usuarioModel.dataUsuario ?? "");
 }
 
 Future<UsuarioModel> getModelLocal() async {
+
   final SharedPreferences localData = await SharedPreferences.getInstance();
 
   return UsuarioModel(
     idUsuario: localData.getInt("id"),
     nomeUsuario: localData.getString("nome"),
     emailUsuario: localData.getString("email"),
+    celularUsuario: localData.getString("celular"),
     cpfUsuario: localData.getString("cpf"),
     nomeConcessionaria: localData.getString("nome_concessionaria"),
     dataUsuario: localData.getString("data"),

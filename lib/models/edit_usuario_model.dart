@@ -3,6 +3,7 @@ class EditUsuarioModel {
   String? newEmail;
   String? newSenha;
   String? email;
+  String? celular;
   String? senha;
   int? idConcessionaria;
 
@@ -11,6 +12,7 @@ class EditUsuarioModel {
     this.newEmail,
     this.newSenha,
     this.email,
+    this.celular,
     this.senha,
     this.idConcessionaria,
   });
@@ -21,6 +23,7 @@ class EditUsuarioModel {
     data['new_email'] = newEmail;
     data['new_senha'] = newSenha;
     data['email'] = email;
+    data['celular'] = celular;
     data['senha'] = senha;
     data['id_concessionaria'] = idConcessionaria;
     return data;

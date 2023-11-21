@@ -17,7 +17,7 @@ class RegistrarVendaBloc extends Bloc<RegistrarVendaEvent, RegistrarVendaState> 
       try {
         UsuarioModel usuarioModel = await getModelLocal();
         VendaModel vendaModel = VendaModel(idUsuario: usuarioModel.idUsuario!, vendaNfeCode: event.nfc);
-        await registrarVenda(vendaModel);
+        await registrarVenda(vendaModel, event.ponteira);
         emit(RegistrarVendaSuccessState());
       } catch (e) {
         emit(RegistrarVendaErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));

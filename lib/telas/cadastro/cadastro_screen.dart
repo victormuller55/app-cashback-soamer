@@ -35,6 +35,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   TextEditingController controllerNome = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerCelular = TextEditingController();
   TextEditingController controllerCPF = TextEditingController();
   TextEditingController controllerSenha = TextEditingController();
 
@@ -44,6 +45,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     UsuarioModel usuarioModel = UsuarioModel(
       nomeUsuario: controllerNome.text,
       emailUsuario: controllerEmail.text,
+      celularUsuario: controllerCelular.text,
       cpfUsuario: controllerCPF.text.replaceAll(".", "").replaceAll("-", ""),
       senhaUsuario: controllerSenha.text,
     );
@@ -87,13 +89,15 @@ class _CadastroScreenState extends State<CadastroScreen> {
       child: Column(
         children: [
           sizedBoxVertical(70),
-          formFieldPadrao(context, controller: controllerNome, "Pedro Santana", width: 300, textInputType: TextInputType.name),
+          formFieldPadrao(context, controller: controllerNome, "Nome", width: 300, textInputType: TextInputType.name),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerEmail, "pedrosantana@cashboost.com", width: 300, textInputType: TextInputType.emailAddress),
+          formFieldPadrao(context, controller: controllerEmail, "E-mail", width: 300, textInputType: TextInputType.emailAddress),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerCPF, "322.123.543-98", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter),
+          formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.celularFormatter),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerSenha, "***********", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+          formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter),
+          sizedBoxVertical(10),
+          formFieldPadrao(context, controller: controllerSenha, "Senha", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
           sizedBoxVertical(20),
           SizedBox(
             width: 330,

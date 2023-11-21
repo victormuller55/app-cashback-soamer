@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:app_cashback_soamer/app_widget/api_exception.dart';
 import 'package:app_cashback_soamer/functions/internet_connection.dart';
 import 'package:flutter/foundation.dart';
@@ -40,10 +39,10 @@ Future<Response> postHTTP({
     if (file != null) {
       request.files.add(
         http.MultipartFile(
-          'file',
-          file.readAsBytes().asStream(),
-          file.lengthSync(),
-          filename: file.path.split('/').last
+            'file',
+            file.readAsBytes().asStream(),
+            file.lengthSync(),
+            filename: file.path.split('/').last
         ),
       );
 
@@ -51,12 +50,14 @@ Future<Response> postHTTP({
       endpointResult = await http.Response.fromStream(streamedResponse);
     }
 
-    if(file == null) {
+    if (file == null) {
       endpointResult = await http.post(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header, body: jsonEncode(body));
     }
 
     if (endpointResult.statusCode == 200) {
-      return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
+      String decodedBody = utf8.decode(endpointResult.bodyBytes); // Decodifica para UTF-8
+
+      return Response(statusCode: endpointResult.statusCode, body: decodedBody);
     }
     throw ApiException(Response(statusCode: endpointResult.statusCode, body: endpointResult.body));
   }
@@ -71,13 +72,15 @@ Future<Response> putHTTP({required String endpoint, Map<String, String>? paramet
   }
 
   if (kDebugMode) {
-    print("API SEND: ${body}");
+    print("API SEND: $body");
   }
 
   if (await thereInternetConnection()) {
     http.Response endpointResult = await http.put(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header, body: jsonEncode(body));
     if (endpointResult.statusCode == 200) {
-      return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
+      String decodedBody = utf8.decode(endpointResult.bodyBytes); // Decodifica para UTF-8
+
+      return Response(statusCode: endpointResult.statusCode, body: decodedBody);
     }
     throw ApiException(Response(statusCode: endpointResult.statusCode, body: endpointResult.body));
   }
@@ -93,13 +96,32 @@ Future<Response> getHTTP({required String endpoint, Map<String, String>? paramet
   if (await thereInternetConnection()) {
     http.Response endpointResult = await http.get(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header);
     if (endpointResult.statusCode == 200) {
-      return Response(statusCode: endpointResult.statusCode, body: endpointResult.body);
+      String decodedBody = utf8.decode(endpointResult.bodyBytes);
+
+      return Response(statusCode: endpointResult.statusCode, body: decodedBody);
     }
     throw ApiException(Response(statusCode: endpointResult.statusCode, body: endpointResult.body));
   }
   throw ApiException(Response(statusCode: 502, body: noInternetConnectionError()));
 }
 
+Future<Response> deleteHTTP({required String endpoint, Map<String, String>? parameters}) async {
+
+  if (kDebugMode) {
+    print("API: $endpoint${getParametersFormatted(parameters: parameters)}");
+  }
+
+  if (await thereInternetConnection()) {
+    http.Response endpointResult = await http.delete(Uri.parse(endpoint + getParametersFormatted(parameters: parameters)), headers: header);
+    if (endpointResult.statusCode == 200) {
+      String decodedBody = utf8.decode(endpointResult.bodyBytes); // Decodifica para UTF-8
+
+      return Response(statusCode: endpointResult.statusCode, body: decodedBody);
+    }
+    throw ApiException(Response(statusCode: endpointResult.statusCode, body: endpointResult.body));
+  }
+  throw ApiException(Response(statusCode: 502, body: noInternetConnectionError()));
+}
 class Response {
   int statusCode;
   String body;

@@ -41,6 +41,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
 
   TextEditingController controllerNome = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerCelular = TextEditingController();
   TextEditingController controllerCPF = TextEditingController();
   TextEditingController controllerSenha = TextEditingController();
   TextEditingController controllerNovaSenha = TextEditingController();
@@ -50,6 +51,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
     controllerNome.text = widget.usuarioModel.nomeUsuario ?? "";
     controllerEmail.text = widget.usuarioModel.emailUsuario ?? "";
     controllerCPF.text = widget.usuarioModel.cpfUsuario ?? "";
+    controllerCelular.text = widget.usuarioModel.celularUsuario ?? "";
     super.initState();
   }
 
@@ -72,6 +74,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
     EditUsuarioModel usuarioModel = EditUsuarioModel(
       nome: controllerNome.text == widget.usuarioModel.nomeUsuario ? "" : controllerNome.text,
       email: widget.usuarioModel.emailUsuario,
+      celular: widget.usuarioModel.celularUsuario,
       newEmail: controllerEmail.text == widget.usuarioModel.emailUsuario ? "" : controllerEmail.text,
       senha: controllerSenha.text,
       newSenha: controllerNovaSenha.text,
@@ -207,11 +210,13 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
             ],
           ),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerNome, "Pedro Santana", width: 300, textInputType: TextInputType.name),
+          formFieldPadrao(context, controller: controllerNome, "Nome", width: 300, textInputType: TextInputType.name),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerEmail, "pedrosantana@cashboost.com", width: 300, textInputType: TextInputType.emailAddress),
+          formFieldPadrao(context, controller: controllerEmail, "E-mail", width: 300, textInputType: TextInputType.emailAddress),
           sizedBoxVertical(10),
-          formFieldPadrao(context, controller: controllerCPF, "322.123.543-98", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter, enable: false),
+          formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.celularFormatter),
+          sizedBoxVertical(10),
+          formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter, enable: false),
           sizedBoxVertical(10),
           formFieldPadrao(context, controller: controllerNovaSenha, "Digite sua nova senha", width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
           sizedBoxVertical(10),
