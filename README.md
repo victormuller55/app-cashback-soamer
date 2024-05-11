@@ -27,5 +27,5 @@ git clone https://github.com/victormuller55/app-ferramentas-troy.git
 3. Open the Project: Open the project folder in your preferred IDE or text editor.
 4. Run the App: Use Flutter commands to run the application on a simulator or physical device.
 
-Contact:
+## Contact:
 For inquiries or further information about the mobile application, you can reach out via email at your-email@example.com.
