@@ -7,10 +7,10 @@ The Automotive Pointer Sellers Mobile App is a specialized tool tailored for aut
 
 ## Key Features:
 
-Easy to Use: This application is easily usable by any user.
-Get Points: The seller must register the sales note for the tip, which will receive points.
-Get PIX (Money): It is possible to exchange the points acquired for real money (PIX).
-Get Vouchers: It is possible to exchange points purchased as vouchers that can be used for discounts and exchanges.
+- Easy to Use: This application is easily usable by any user.
+- Get Points: The seller must register the sales note for the tip, which will receive points.
+- Get PIX (Money): It is possible to exchange the points acquired for real money (PIX).
+- Get Vouchers: It is possible to exchange points purchased as vouchers that can be used for discounts and exchanges.
 
 ## Technologies Used:
 
