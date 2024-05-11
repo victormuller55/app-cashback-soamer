@@ -21,7 +21,7 @@ The Automotive Pointer Sellers Mobile App is a specialized tool tailored for aut
 1. Clone the Repository:
 
 ```bash
-git clone https://github.com/victormuller55/app-ferramentas-troy.git
+git clone https://github.com/victormuller55/app-cashboost.git
 ```
 2. Install the software to run the application: Install Android Studio (or VS Code) and Flutter.
 3. Open the Project: Open the project folder in your preferred IDE or text editor.
