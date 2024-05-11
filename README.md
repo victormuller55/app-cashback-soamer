@@ -28,4 +28,4 @@ git clone https://github.com/victormuller55/app-cashboost.git
 4. Run the App: Use Flutter commands to run the application on a simulator or physical device.
 
 ## Contact:
-For inquiries or further information about the mobile application, you can reach out via email at your-email@example.com.
+For inquiries or further information about the mobile application, you can reach out via email at victormuller050@gmail.com.
