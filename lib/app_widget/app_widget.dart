@@ -18,7 +18,6 @@ class AppWidget extends StatefulWidget {
 class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
-
     verificaLogin() async {
       UsuarioModel usuarioModel = await getModelLocal();
       if (usuarioModel.idUsuario != null && !opened) {
@@ -30,9 +29,12 @@ class _AppWidgetState extends State<AppWidget> {
     verificaLogin();
 
     return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColor.primaryColor,
+        useMaterial3: false,
+      ),
       debugShowCheckedModeBanner: false,
       home: screen,
-      theme: ThemeData(scaffoldBackgroundColor: AppColor.primaryColor),
     );
   }
 }

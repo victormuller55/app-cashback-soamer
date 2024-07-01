@@ -7,7 +7,7 @@ void saveLocalUserData(UsuarioModel usuarioModel) async {
   localData.setInt("id", usuarioModel.idUsuario ?? 0);
   localData.setString("nome", usuarioModel.nomeUsuario ?? "");
   localData.setString("email", usuarioModel.emailUsuario ?? "");
-  localData.setString("celular", usuarioModel.celularUsuario ?? "");
+  localData.setString("celular", usuarioModel.celularUsuario.toString() ?? "");
   localData.setString("cpf", usuarioModel.cpfUsuario ?? "");
   localData.setString("data", usuarioModel.dataUsuario ?? "");
 }

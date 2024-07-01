@@ -3,6 +3,7 @@ import 'package:app_cashback_soamer/app_widget/endpoints.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_event.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_state.dart';
@@ -78,22 +79,24 @@ class _InicioScreenState extends State<InicioScreen> {
             child: text("Escolha a concessionaria que você trabalha, utilizamos essa informação para a melhor experiencia dos usuarios no aplicativo.", bold: true, fontSize: 15, color: Colors.white, textAlign: TextAlign.center),
           ),
           const SizedBox(height: 20),
-          DropdownButtonFormField<ConcessionariaModel>(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-              border: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
-              enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
-              disabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(40)),
-              focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
-              hintText: "Escolha uma opção",
-              hintStyle: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.grey),
-            ),
-            value: dropdownValue,
-            onChanged: (ConcessionariaModel? value) => setState(() => dropdownValue = value!),
-            items: list,
-          ),
+          list.isNotEmpty
+              ? DropdownButtonFormField<ConcessionariaModel>(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+                    border: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
+                    enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
+                    disabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(40)),
+                    focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
+                    hintText: "Escolha uma opção",
+                    hintStyle: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.grey),
+                  ),
+                  value: dropdownValue,
+                  onChanged: (ConcessionariaModel? value) => setState(() => dropdownValue = value!),
+                  items: list,
+                )
+              : text("Não foi encontrado nenhuma concessionaria"),
           const SizedBox(height: 20),
           elevatedButtonText(
             "SALVAR",
@@ -167,25 +170,51 @@ class _InicioScreenState extends State<InicioScreen> {
         children: [
           text(concessionariaModel.nomeConcessionaria ?? ""),
           text(" (${concessionariaModel.marcaConcessionaria})"),
-          SizedBox(width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.5)  ,child: text(" - ${concessionariaModel.enderecoConcessionaria}", color: Colors.grey, overflow: true)),
+          SizedBox(width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.5), child: text(" - ${concessionariaModel.enderecoConcessionaria}", color: Colors.grey, overflow: true)),
         ],
       ),
     );
   }
 
+  Widget componenteVoucher({required String title, required List<Widget> lista}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 15, top: 10),
+          child: text(title, bold: true, color: Colors.grey, fontSize: 14),
+        ),
+        SizedBox(
+          height: lista.isNotEmpty ? 180 : 100,
+          child: lista.isNotEmpty ? Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: lista,
+            ),
+          ): Center(child: text("Nenhum Voucher Encontrado", color: Colors.grey))
+        ),
+      ],
+    );
+  }
+
   void _onChangeState(InicioState state) async {
+
     UsuarioModel usuarioModel = await getModelLocal();
-    if (usuarioModel.nomeConcessionaria == null || usuarioModel.nomeConcessionaria == "" && !salvouConcessionaria) {
-      _showModalConcessionaria(state);
+
+    if (usuarioModel.nomeConcessionaria == null || usuarioModel.nomeConcessionaria == "") {
+      if (state.concessionariaList.isNotEmpty) {
+        if (!salvouConcessionaria) {
+          _showModalConcessionaria(state);
+        }
+      }
     }
   }
 
   Widget _body(InicioState homeState) {
     List<Widget> cardsPromocao = [];
     List<Widget> cardsMaisTrocados = [];
-
-    cardsPromocao.add(const SizedBox(width: 10));
-    cardsMaisTrocados.add(const SizedBox(width: 10));
 
     for (int i = 0; i <= homeState.vaucherListPromocao.length - 1; i++) {
       cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.usuarioModel.pontosUsuario!));
@@ -212,30 +241,8 @@ class _InicioScreenState extends State<InicioScreen> {
             ],
           ),
           const SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: text("PROMOÇÃO", bold: true, color: Colors.grey, fontSize: 14),
-          ),
-          SizedBox(
-            height: 180,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: cardsPromocao,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15, top: 10),
-            child: text("OS MAIS TROCADOS", bold: true, color: Colors.grey, fontSize: 14),
-          ),
-          SizedBox(
-            height: 180,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: cardsMaisTrocados,
-            ),
-          ),
+          componenteVoucher(title: "PROMOÇÃO", lista: cardsPromocao),
+          componenteVoucher(title: "OS MAIS TROCADOS", lista: cardsMaisTrocados),
           const SizedBox(height: 50),
         ],
       ),

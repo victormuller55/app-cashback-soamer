@@ -3,6 +3,7 @@ import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
+import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
@@ -29,7 +30,6 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
-
   CadastroBloc cadastroBloc = CadastroBloc();
   final FocusScopeNode _focusScope = FocusScopeNode();
 
@@ -45,7 +45,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     UsuarioModel usuarioModel = UsuarioModel(
       nomeUsuario: controllerNome.text,
       emailUsuario: controllerEmail.text,
-      celularUsuario: controllerCelular.text,
+      celularUsuario: somenteNumeros(controllerCelular.text),
       cpfUsuario: controllerCPF.text.replaceAll(".", "").replaceAll("-", ""),
       senhaUsuario: controllerSenha.text,
     );
@@ -78,7 +78,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     if (state is CadastroSuccessState) {
       open(context, screen: ApresentacaoScreen(usuarioModel: state.usuarioModel), closePrevious: true);
       saveLocalUserData(state.usuarioModel);
-      if(state.usuarioModel.nomeConcessionaria != null || state.usuarioModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.usuarioModel.nomeConcessionaria ?? "");
+      if (state.usuarioModel.nomeConcessionaria != null || state.usuarioModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.usuarioModel.nomeConcessionaria ?? "");
     }
     _focusScope.unfocus();
   }
@@ -88,17 +88,17 @@ class _CadastroScreenState extends State<CadastroScreen> {
       node: _focusScope,
       child: Column(
         children: [
-          sizedBoxVertical(70),
+          appSizedBoxHeight(70),
           formFieldPadrao(context, controller: controllerNome, "Nome", width: 300, textInputType: TextInputType.name),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerEmail, "E-mail", width: 300, textInputType: TextInputType.emailAddress),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.celularFormatter),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerSenha, "Senha", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
-          sizedBoxVertical(20),
+          appSizedBoxHeight(20),
           SizedBox(
             width: 330,
             child: CheckboxListTile(
@@ -109,24 +109,23 @@ class _CadastroScreenState extends State<CadastroScreen> {
               fillColor: MaterialStateProperty.all<Color>(Colors.white),
             ),
           ),
-          sizedBoxVertical(20),
+          appSizedBoxHeight(20),
           elevatedButtonPadrao(
             function: () => _validar(),
             text(Strings.cadastrar.toUpperCase(), color: AppColor.primaryColor, bold: true, fontSize: 12),
           ),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           elevatedButtonText(
             Strings.jaTenhoConta.toUpperCase(),
             color: AppColor.primaryColor.withOpacity(0.5),
             textColor: Colors.white,
             function: () => open(context, screen: const EntrarScreen(), closePrevious: true),
           ),
-          sizedBoxVertical(20),
+          appSizedBoxHeight(20),
         ],
       ),
     );
   }
-
 
   Widget _bodyBuilder() {
     return BlocConsumer<CadastroBloc, CadastroState>(
@@ -145,6 +144,11 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: backgroundCadastroLogin(context, child: _bodyBuilder()));
+    return Scaffold(
+      body: backgroundCadastroLogin(
+        context,
+        child: _bodyBuilder(),
+      ),
+    );
   }
 }

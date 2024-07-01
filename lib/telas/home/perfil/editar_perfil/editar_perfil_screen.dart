@@ -7,6 +7,7 @@ import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
+import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
 import 'package:app_cashback_soamer/models/edit_usuario_model.dart';
@@ -51,7 +52,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
     controllerNome.text = widget.usuarioModel.nomeUsuario ?? "";
     controllerEmail.text = widget.usuarioModel.emailUsuario ?? "";
     controllerCPF.text = widget.usuarioModel.cpfUsuario ?? "";
-    controllerCelular.text = widget.usuarioModel.celularUsuario ?? "";
+    controllerCelular.text = celularFormatado(widget.usuarioModel.celularUsuario.toString());
     super.initState();
   }
 
@@ -154,7 +155,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -205,21 +206,21 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                         image: FileImage(imageFile),
                       ),
               ),
-              sizedBoxVertical(10),
+              appSizedBoxHeight(10),
 
             ],
           ),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerNome, "Nome", width: 300, textInputType: TextInputType.name),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerEmail, "E-mail", width: 300, textInputType: TextInputType.emailAddress),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.celularFormatter),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter, enable: false),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerNovaSenha, "Digite sua nova senha", width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           elevatedButtonText(
             "Salvar".toUpperCase(),
             color: AppColor.primaryColor,

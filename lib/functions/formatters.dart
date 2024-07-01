@@ -49,3 +49,26 @@ String formatarData(String data) {
     return dataFormatada;
   }
 }
+
+String somenteNumeros(String str) {
+  RegExp regExp = RegExp(r'\d+');
+  Iterable<RegExpMatch> matches = regExp.allMatches(str);
+  String numbers = matches.map((match) => match.group(0)).join();
+
+  if (numbers.isEmpty) {
+    return "";
+  }
+
+  return int.parse(numbers).toString();
+}
+
+String celularFormatado(String phoneNumber) {
+  String digitsOnly = phoneNumber.replaceAll(RegExp(r'\D'), '');
+
+  if (digitsOnly.length != 11) {
+    return 'Número inválido';
+  }
+
+  String formattedNumber = '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 7)}-${digitsOnly.substring(7)}';
+  return formattedNumber;
+}

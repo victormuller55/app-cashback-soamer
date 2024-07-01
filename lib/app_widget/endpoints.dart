@@ -1,4 +1,4 @@
-const String server = "http://3.81.228.93"; // "http://34.228.32.167";
+const String server = "http://localhost:5000"; // "44.201.116.140:5000";
 
 class Endpoint {
 

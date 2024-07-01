@@ -18,6 +18,7 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
     on<InicioLoadEvent>((event, emit) async {
       emit(InicioLoadingState());
       try {
+
         List<VaucherModel> vauchersPromocao = [];
         List<VaucherModel> vauchersMaisTrocados = [];
 
@@ -44,13 +45,11 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
 
         // Set valores do usuario
         usuarioModel.valorPix = homeModel.valorPix;
+
         usuarioModel.pontosPedentesUsuario = homeModel.pontosPedentesUsuario;
         usuarioModel.pontosUsuario = homeModel.pontosUsuario;
-
         emit(InicioSuccessState(usuarioModel: usuarioModel, vaucherListPromocao: vauchersPromocao, vaucherListMaisTrocados: vauchersMaisTrocados, concessionariaList: []));
       } catch (e) {
-        print(e);
-
         emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
       }
     });

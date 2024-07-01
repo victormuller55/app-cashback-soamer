@@ -156,7 +156,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
 
   Widget _bodyBuilder() {
     return RefreshIndicator(
-      color: Colors.white,
+      color: AppColor.white,
       strokeWidth: 2,
       backgroundColor: AppColor.primaryColor,
       onRefresh: _loadExtrato,

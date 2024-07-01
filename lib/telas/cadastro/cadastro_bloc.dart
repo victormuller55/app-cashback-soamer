@@ -13,13 +13,12 @@ class CadastroBloc extends Bloc<CadastroEvent, CadastroState> {
   CadastroBloc() : super(CadastroInitialState()) {
     on<CadastroSalvarEvent>((event, emit) async {
       emit(CadastroLoadingState());
-      try {
+      // try {
         Response response = await postUser(event.usuarioModel);
         emit(CadastroSuccessState(usuarioModel: UsuarioModel.fromMap(jsonDecode(response.body))));
-      } catch (e) {
-        print(e);
-        emit(CadastroErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
-      }
+      // } catch (e) {
+        // emit(CadastroErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+      // }
     });
   }
 }

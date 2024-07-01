@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:app_cashback_soamer/app_widget/colors.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_event.dart';
@@ -7,9 +5,9 @@ import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_state.dar
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/erro.dart';
-import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
+import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +33,26 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
     super.initState();
   }
 
+  Widget componenteVoucher({required String title, required List<Widget> lista}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        appSizedBoxHeight(10),
+        text(title, bold: true, color: Colors.grey, fontSize: 14),
+        SizedBox(
+          height: lista.isNotEmpty ? 180 : 100,
+          child: lista.isNotEmpty
+              ? ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: lista,
+                )
+              : Center(child: text("Nenhum Voucher Encontrado", color: Colors.grey)),
+        ),
+      ],
+    );
+  }
+
   Widget _body(VaucherState state) {
     List<Widget> lista1 = [];
     List<Widget> lista2 = [];
@@ -58,7 +76,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
         physics: const BouncingScrollPhysics(),
         children: [
           container(
-            height: 110,
+            height: 130,
             width: MediaQuery.of(context).size.width,
             radius: BorderRadius.circular(20),
             backgroundColor: Colors.grey.shade300,
@@ -78,42 +96,9 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4, top: 15),
-            child: text("TODOS", bold: true, color: Colors.grey, fontSize: 14),
-          ),
-          SizedBox(
-            height: 180,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: lista1,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4, top: 5),
-            child: text("MAIS TROCADOS", bold: true, color: Colors.grey, fontSize: 14),
-          ),
-          SizedBox(
-            height: 180,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: lista2,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4, top: 5),
-            child: text("PROMOÇÃO", bold: true, color: Colors.grey, fontSize: 14),
-          ),
-          SizedBox(
-            height: 180,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: lista3,
-            ),
-          ),
+          componenteVoucher(title: "TODOS", lista: lista1),
+          componenteVoucher(title: "MAIS TROCADOS", lista: lista2),
+          componenteVoucher(title: "PROMOÇÃO", lista: lista3),
           const SizedBox(height: 30),
         ],
       ),

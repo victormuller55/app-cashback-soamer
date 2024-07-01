@@ -61,28 +61,28 @@ class _EntrarScreenState extends State<EntrarScreen> {
       node: _focusScope,
       child: Column(
         children: [
-          sizedBoxVertical(70),
+          appSizedBoxHeight(70),
           formFieldPadrao(context, controller: controllerEmail,  "E-mail", width: 300, textInputType: TextInputType.emailAddress),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerSenha, "Senha", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
-          sizedBoxVertical(20),
+          appSizedBoxHeight(20),
           GestureDetector(
             onTap: () => open(context, screen: const EnviarEmailScreen()),
             child: text(Strings.esqueciMinhaSenha, color: Colors.white, bold: true),
           ),
-          sizedBoxVertical(35),
+          appSizedBoxHeight(35),
           elevatedButtonPadrao(
             function: () => _validar(),
             text("Entrar".toUpperCase(), color: AppColor.primaryColor, bold: true),
           ),
-          sizedBoxVertical(10),
+          appSizedBoxHeight(10),
           elevatedButtonText(
             Strings.naoTenhoConta.toUpperCase(),
             color: AppColor.primaryColor.withOpacity(0.5),
             textColor: Colors.white,
             function: () => open(context, screen: const CadastroScreen(), closePrevious: true),
           ),
-          sizedBoxVertical(20),
+          appSizedBoxHeight(20),
         ],
       ),
     );

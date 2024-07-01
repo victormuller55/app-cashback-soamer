@@ -16,7 +16,7 @@ Widget scaffold({
       elevation: 0,
       backgroundColor: AppColor.primaryColor,
       centerTitle: true,
-      title: text(title.toUpperCase(), bold: true),
+      title: text(title.toUpperCase(), bold: true, color: AppColor.white),
       leading: hideBackArrow ?? false ? Container() : null,
       actions: actions != null ? [...actions, const SizedBox(width: 20)] : null,
     ),
