@@ -22,7 +22,7 @@ class RegistrarVendaScreen extends StatefulWidget {
   State<RegistrarVendaScreen> createState() => _RegistrarVendaScreenState();
 }
 
-class _RegistrarVendaScreenState extends State<RegistrarVendaScreen>{
+class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
   RegistrarVendaBloc bloc = RegistrarVendaBloc();
   TextEditingController formNFCE = TextEditingController();
 
@@ -35,7 +35,10 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen>{
 
   void _save() {
     if (formNFCE.text.isNotEmpty) {
-      return bloc.add(RegistrarVendaLoadEvent(formNFCE.text, selected.toString()));
+      if (selected != -1) {
+        return bloc.add(RegistrarVendaLoadEvent(formNFCE.text, selected));
+      }
+      return showSnackbarError(context, message: "Selecione uma ponteira");
     }
 
     return showSnackbarError(context, message: "Digite ou escaneie o código");

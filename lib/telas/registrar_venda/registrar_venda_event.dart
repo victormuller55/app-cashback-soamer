@@ -4,6 +4,6 @@ abstract class RegistrarVendaEvent {}
 
 class RegistrarVendaLoadEvent extends RegistrarVendaEvent {
   String nfc;
-  String ponteira;
-  RegistrarVendaLoadEvent(this.nfc, this.ponteira);
+  int idPonteira;
+  RegistrarVendaLoadEvent(this.nfc, this.idPonteira);
 }
