@@ -57,7 +57,7 @@ void showSnackbarSuccess({required String message}) {
     ..hideCurrentSnackBar()
     ..showSnackBar(
       appSnackBar(
-        icon: AppIcons.warning,
+        icon: AppIcons.check,
         mensagem: message,
         background: AppColors.green,
       ),

@@ -60,7 +60,7 @@ class _EntrarScreenState extends State<EntrarScreen> {
           appText(AppStrings.entrar.toUpperCase(), color: AppColors.primaryColor, bold: true),
         ),
         appSizedBoxHeight(AppSpacing.normal),
-        elevatedButtonText(
+        appElevatedButtonText(
           AppStrings.naoTenhoConta.toUpperCase(),
           color: AppColors.primaryColor.withOpacity(0.5),
           textColor: AppColors.white,

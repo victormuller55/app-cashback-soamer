@@ -90,7 +90,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     appText("R\$${vaucherBloc.state.dadosVendedorModel.pontos},00", fontSize: 22, bold: true, color: AppColors.primaryColor),
-                    elevatedButtonText("Solicitar valor".toUpperCase(), function: () => {}, width: 180, height: 40, color: AppColors.primaryColor, textColor: Colors.white, borderRadius: 50),
+                    appElevatedButtonText("Solicitar valor".toUpperCase(), function: () => {}, width: 180, height: 40, color: AppColors.primaryColor, textColor: Colors.white, borderRadius: 50),
                   ],
                 )
               ],

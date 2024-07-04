@@ -59,7 +59,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
           ),
           formFieldPadrao(context, hint: "Digite seu e-mail", controller: controllerEmail),
           const SizedBox(height: 10),
-          elevatedButtonText(
+          appElevatedButtonText(
             "Enviar Código".toUpperCase(),
             color: AppColors.primaryColor,
             textColor: Colors.white,

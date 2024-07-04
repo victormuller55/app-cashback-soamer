@@ -31,8 +31,8 @@ class VaucherBloc extends Bloc<VaucherEvent, VaucherState> {
         Response responseVaucherMaisTrocados = await getVaucherMaisTrocados();
 
         for (var voucher in jsonDecode(response.body)) {
-          var vaucherModel = VaucherModel.fromMap(voucher);
-          lista.add(vaucherModel);
+          var voucherModel = VaucherModel.fromMap(voucher);
+          lista.add(voucherModel);
         }
 
         for (var voucher in jsonDecode(responseVaucherPromocao.body)) {

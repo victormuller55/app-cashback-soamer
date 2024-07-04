@@ -1,3 +1,4 @@
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
@@ -23,7 +24,7 @@ class _TermosDeUsoScreenState extends State<TermosDeUsoScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _body(),
-      title: "Termos de uso",
+      title: AppStrings.termosDeUso,
     );
   }
 }

@@ -58,7 +58,7 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
           const SizedBox(height: 10),
           formFieldPadrao(context, hint: "Confirme sua nova senha", showSenha: false, controller: confirmarSenha),
           const SizedBox(height: 10),
-          elevatedButtonText(
+          appElevatedButtonText(
             "Salvar e entrar".toUpperCase(),
             function: () => _entrarESalvar(),
             color: AppColors.primaryColor,

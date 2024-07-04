@@ -99,7 +99,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
           appText(AppStrings.cadastrar.toUpperCase(), color: AppColors.primaryColor, bold: true, fontSize: AppFontSizes.small),
         ),
         appSizedBoxHeight(AppSpacing.normal),
-        elevatedButtonText(
+        appElevatedButtonText(
           AppStrings.jaTenhoConta.toUpperCase(),
           color: AppColors.primaryColor.withOpacity(0.5),
           textColor: Colors.white,

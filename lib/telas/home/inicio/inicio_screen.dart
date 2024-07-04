@@ -97,7 +97,7 @@ class _InicioScreenState extends State<InicioScreen> {
                 )
               : appText("Não foi encontrado nenhuma concessionaria"),
           const SizedBox(height: 20),
-          elevatedButtonText(
+          appElevatedButtonText(
             "SALVAR",
             function: () => _saveConcessionaria(dropdownValue),
             width: MediaQuery.of(context).size.width,

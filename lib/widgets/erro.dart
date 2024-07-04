@@ -15,7 +15,7 @@ Widget erro(ErrorModel errorModel, {required void Function() function}) {
         const SizedBox(height: 10),
         appText(errorModel.mensagem ?? "Tente novamente mais tarde"),
         const SizedBox(height: 20),
-        elevatedButtonText("Tentar novamente".toUpperCase(), function: function, width: 250)
+        appElevatedButtonText("Tentar novamente".toUpperCase(), function: function, width: 250)
       ],
     ),
   );

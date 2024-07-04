@@ -50,7 +50,7 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
               inactiveColor: Colors.grey.shade300,
             ),
             const SizedBox(height: 20),
-            elevatedButtonText(
+            appElevatedButtonText(
               "Verificar".toUpperCase(),
               width: MediaQuery.of(context).size.width - 30,
               color: AppColors.primaryColor,

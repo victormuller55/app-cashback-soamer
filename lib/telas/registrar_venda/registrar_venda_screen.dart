@@ -107,7 +107,7 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
           appSizedBoxHeight(10),
           appText('OU', textAlign: TextAlign.center, bold: true, color: AppColors.primaryColor),
           appSizedBoxHeight(10),
-          elevatedButtonText(
+          appElevatedButtonText(
             "Escanear código de barras".toUpperCase(),
             function: () => scanBarcode(),
             color: AppColors.primaryColor,
@@ -138,7 +138,7 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
             ],
           ),
           appSizedBoxHeight(20),
-          elevatedButtonText(
+          appElevatedButtonText(
             "Enviar NF-E".toUpperCase(),
             function: () => _save(),
             color: AppColors.primaryColor,

@@ -2,23 +2,16 @@ const String server = "http://44.201.116.140:5000"; // "44.201.116.140:5000";
 
 class AppEndpoints {
 
-  // Entrar e Cadastrar
   static String endpointEntrarCadastrar = "$server/v1/soamer/usuario";
   static String endpointConcessionaria = "$server/v1/soamer/concessionaria";
-
-  // Dados do usuarios
   static String endpointHome = "$server/v1/soamer/usuario/home";
   static String endpointEditarVendedor = "$server/v1/soamer/usuario/edit";
   static String endpointExtrato = "$server/v1/soamer/extrato";
   static String endpointRecuperarSenha = "$server/v1/soamer/senha/recuperar";
-
-  // Voucher
   static String endpointVaucher = "$server/v1/soamer/vaucher";
   static String endpointVaucherMaisTrocados = "$server/v1/soamer/vaucher/trocados";
   static String endpointVaucherPromocao = "$server/v1/soamer/vaucher/promocao";
   static String endpointTrocarVoucher = "$server/v1/soamer/vaucher/trocar";
-
-  // Venda
   static String endpointVenda = "$server/v1/soamer/venda";
 
   static String endpointImageVendedor(int idVendedor) {

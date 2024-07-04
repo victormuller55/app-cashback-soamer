@@ -1,5 +1,22 @@
 class AppStrings {
   static const String vazio = "";
+  static const String naoFoiPossivelAbrirOLink = "Não foi possivel abrir o link.";
+  static const String novaSenha = "Nova Senha (Não obrigatório)";
+  static const String salvar = "Salvar";
+  static const String contatoSoamer = "Contato Soamer";
+  static const String cancelar = "Cancelar";
+  static const String alterarFoto = "Alterar foto";
+  static const String mensagensEditarDados = "É possível fazer alterações nos dados do usuário, com exceção do número de CPF.";
+  static const String naoEPossivelAbrirAGaleria = "Não é possivel abrir a galeria";
+  static const String termosDeUso = "Termos de uso";
+  static const String digiteSuaSenhaEditarDados = "Digite sua senha para a alteração dos dados da conta, por favor.";
+  static const String salvoComSucesso = "Salvo com sucesso";
+  static const String politicasDePrivacidades = "Politica de privacidade";
+  static const String sairDaConta = "Sair da conta";
+  static const String meuPerfil = "Meu perfil";
+  static const String voceRealmenteDesejaSairDaConta = "Você realmete deseja sair da conta?";
+  static const String simSairDaConta = "Sim, sair da conta";
+  static const String naoCancelar = "Não, Cancelar";
   static const String nenhumRegistroEncontrado = "Nenhum registro encontrado\nComece registrando uma venda!";
   static const String nome = "Nome";
   static const String totalSaidasHoje = "Total de saídas (Hoje)";
@@ -7,6 +24,7 @@ class AppStrings {
   static const String hoje = "Hoje";
   static const String anterior = "Anterior";
   static const String extrato = "Extrato";
+  static const String editarPerfil = "Editar perfil";
   static const String ontem = "Ontem";
   static const String email = "Email";
   static const String celular = "Celular";

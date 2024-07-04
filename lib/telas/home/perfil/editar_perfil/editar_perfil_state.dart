@@ -18,7 +18,7 @@ class EditarVendedorLoadingState extends EditarVendedorState {
 }
 
 class EditarVendedorSuccessState extends EditarVendedorState {
-  EditarVendedorSuccessState({required VendedorModel vendedorModel, required List<ConcessionariaModel> concessionariaModelList}) : super(vendedorModel: vendedorModel, errorModel: ErrorModel.empty());
+  EditarVendedorSuccessState({required VendedorModel vendedorModel}) : super(vendedorModel: vendedorModel, errorModel: ErrorModel.empty());
 }
 
 class EditarVendedorErrorState extends EditarVendedorState {

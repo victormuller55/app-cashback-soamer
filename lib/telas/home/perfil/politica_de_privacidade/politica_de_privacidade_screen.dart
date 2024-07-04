@@ -1,3 +1,4 @@
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
@@ -24,7 +25,7 @@ class _PoliticaDePrivacidadeScreenState extends State<PoliticaDePrivacidadeScree
   Widget build(BuildContext context) {
     return scaffold(
       body: _body(),
-      title: "POLITICA DE PRIVACIDADE",
+      title: AppStrings.politicasDePrivacidades,
     );
   }
 }

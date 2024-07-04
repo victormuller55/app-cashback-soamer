@@ -86,7 +86,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            elevatedButtonText(
+            appElevatedButtonText(
               "CONCLUIR",
               function: () => Navigator.pop(context),
               color: AppColors.primaryColor,
@@ -126,7 +126,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
           const SizedBox(height: 5),
           appText("Após da troca: ${widget.pontos - widget.vaucherModel.pontos! <= 0 ? 0 : widget.pontos - widget.vaucherModel.pontos!} Pontos", fontSize: 15, color: Colors.grey.shade600),
           const SizedBox(height: 20),
-          elevatedButtonText(
+          appElevatedButtonText(
             "TROCAR",
             width: MediaQuery.of(context).size.width,
             color: Colors.green,
@@ -142,7 +142,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
             },
           ),
           const SizedBox(height: 10),
-          elevatedButtonText(
+          appElevatedButtonText(
             "CANCELAR",
             width: MediaQuery.of(context).size.width,
             function: () => Navigator.pop(context),
@@ -156,7 +156,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
   Widget _buttonTrocar() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: elevatedButtonText(
+      child: appElevatedButtonText(
         "TROCAR CUPOM",
         function: () => _showModal(),
         color: AppColors.primaryColor,

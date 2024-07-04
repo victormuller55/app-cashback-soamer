@@ -1,6 +1,10 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
-import 'package:app_cashback_soamer/functions/formatters.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_icons.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
@@ -16,6 +20,7 @@ import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/modal.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
+import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +32,7 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
+
   Future<VendedorModel> _loadDataLocal() async {
     return await getModelLocal();
   }
@@ -44,13 +50,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const SizedBox(height: 20),
-          appText("Você realmete deseja sair da conta?", bold: true, fontSize: 15, color: Colors.grey.shade600),
-          const SizedBox(height: 20),
-          elevatedButtonText("Sim, sair da conta".toUpperCase(), function: () => _exit(), width: MediaQuery.of(context).size.width, color: Colors.red, textColor: Colors.white),
-          const SizedBox(height: 10),
-          elevatedButtonText("Não, Cancelar".toUpperCase(), function: () => Navigator.pop(context), width: MediaQuery.of(context).size.width),
-          const SizedBox(height: 10),
+          appSizedBoxHeight(AppSpacing.medium),
+          appText(AppStrings.voceRealmenteDesejaSairDaConta, bold: true, fontSize: AppFontSizes.normal, color: AppColors.grey600),
+          appSizedBoxHeight(AppSpacing.medium),
+          appElevatedButtonText(AppStrings.simSairDaConta.toUpperCase(), function: () => _exit(), width: MediaQuery.of(context).size.width, color: AppColors.red, textColor: AppColors.white),
+          appSizedBoxHeight(AppSpacing.normal),
+          appElevatedButtonText(AppStrings.naoCancelar.toUpperCase(), function: () => Navigator.pop(context), width: MediaQuery.of(context).size.width),
+          appSizedBoxHeight(AppSpacing.normal),
         ],
       ),
     );
@@ -62,22 +68,21 @@ class _PerfilScreenState extends State<PerfilScreen> {
   }
 
   Widget _option(String titulo, {required void Function() onTap, bool? closeAccount}) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      hoverColor: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(top: 5),
+        padding: EdgeInsets.only(top: AppSpacing.small),
         child: appContainer(
-          height: 40,
+          height: 50,
           width: MediaQuery.of(context).size.width,
-          backgroundColor: closeAccount ?? false ? Colors.red : Colors.grey.shade50,
-          padding: const EdgeInsets.only(left: 30, right: 10),
-          radius: BorderRadius.circular(20),
+          backgroundColor: closeAccount ?? false ? AppColors.red : AppColors.grey100,
+          padding: EdgeInsets.only(left: AppSpacing.big, right: AppSpacing.big),
+          radius: BorderRadius.circular(AppRadius.normal),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              appText(titulo, color: closeAccount ?? false ? Colors.white : Colors.grey, bold: false, fontSize: 13),
-              Icon(Icons.arrow_forward_ios_sharp, color: closeAccount ?? false ? Colors.white : Colors.grey, size: 12),
+              appText(titulo, color: closeAccount ?? false ? AppColors.white : AppColors.grey600, bold: false, fontSize: AppFontSizes.normal),
+              Icon(AppIcons.arrowRight, color: closeAccount ?? false ? AppColors.white : AppColors.grey, size: 30),
             ],
           ),
         ),
@@ -87,48 +92,57 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   Widget _header(VendedorModel vendedorModel) {
     return appContainer(
-      height: 145,
+      height: 140,
       width: MediaQuery.of(context).size.width,
-      backgroundColor: Colors.white,
-      radius: BorderRadius.circular(20),
+      backgroundColor: AppColors.white,
+      padding: EdgeInsets.only(
+        top: AppSpacing.normal,
+        bottom: AppSpacing.normal,
+        left: AppSpacing.medium,
+        right: AppSpacing.normal,
+      ),
+      radius: BorderRadius.circular(AppRadius.medium),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Hero(
-                tag: "usuario",
-                child: appContainer(
-                  height: 90,
-                  width: 90,
-                  radius: BorderRadius.circular(15),
-                  // border: Border.all(color: AppColor.primaryColor, width: 2),
-                  image: NetworkImage(AppEndpoints.endpointImageVendedor(vendedorModel.id!)),
-                ),
+              appText(
+                vendedorModel.nome ?? AppStrings.vazio,
+                bold: true,
+                fontSize: AppFontSizes.medium,
+                color: AppColors.primaryColor,
               ),
-              const SizedBox(height: 7),
-              appText(vendedorModel.nome ?? "", bold: true, fontSize: 13, color: AppColors.primaryColor),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              appText(vendedorModel.nomeConcessionaria ?? "", bold: true, fontSize: 14, color: AppColors.primaryColor),
-              const SizedBox(height: 7),
-              appText(formataCPF(vendedorModel.cpf ?? ""), bold: true, fontSize: 15, color: Colors.grey.shade600),
-              const SizedBox(height: 10),
-              elevatedButtonText(
-                "Editar perfil".toUpperCase(),
+              appSizedBoxHeight(AppSpacing.normal),
+              appText(
+                vendedorModel.nomeConcessionaria ?? AppStrings.vazio,
+                bold: true,
+                fontSize: AppFontSizes.small,
+                color: AppColors.grey600,
+              ),
+              appSizedBoxHeight(AppSpacing.normal),
+              appElevatedButtonText(
+                AppStrings.editarPerfil.toUpperCase(),
                 function: () => open(screen: EditarPerfilScreen(vendedorModel: vendedorModel)),
                 width: 200,
                 height: 45,
-                borderRadius: 30,
+                borderRadius: AppRadius.normal,
                 color: AppColors.primaryColor,
-                textColor: Colors.white,
+                textColor: AppColors.white,
               ),
             ],
+          ),
+          Hero(
+            tag: "usuario",
+            child: appContainer(
+              height: 120,
+              width: 120,
+              radius: BorderRadius.circular(AppRadius.normal),
+              border: Border.all(color: AppColors.primaryColor, width: 2),
+              image: NetworkImage(AppEndpoints.endpointImageVendedor(vendedorModel.id!)),
+            ),
           ),
         ],
       ),
@@ -137,24 +151,23 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
   Widget _body(VendedorModel vendedorModel) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(AppSpacing.normal),
       child: ListView(
         physics: const BouncingScrollPhysics(),
-
         children: [
           _header(vendedorModel),
-          const SizedBox(height: 10),
+          appSizedBoxHeight(AppSpacing.normal),
           appContainer(
             width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(10),
-            radius: BorderRadius.circular(20),
-            backgroundColor: Colors.white,
+            padding: EdgeInsets.all(AppSpacing.normal),
+            radius: BorderRadius.circular(AppRadius.medium),
+            backgroundColor: AppColors.white,
             child: Column(
               children: [
-                _option("Termos de uso", onTap: () => open( screen: const TermosDeUsoScreen())),
-                _option("Politica de privacidade", onTap: () => open(screen: const PoliticaDePrivacidadeScreen())),
-                _option("Contato Soamer", onTap: () => open( screen: const ContatoSoamer())),
-                _option("Sair da conta", onTap: () => _sair(), closeAccount: true),
+                _option(AppStrings.termosDeUso, onTap: () => open(screen: const TermosDeUsoScreen())),
+                _option(AppStrings.politicasDePrivacidades, onTap: () => open(screen: const PoliticaDePrivacidadeScreen())),
+                _option(AppStrings.contatoSoamer, onTap: () => open(screen: const ContatoSoamer())),
+                _option(AppStrings.sairDaConta, onTap: () => _sair(), closeAccount: true),
               ],
             ),
           ),
@@ -166,7 +179,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   @override
   Widget build(BuildContext context) {
     return scaffold(
-      title: "Meu perfil",
+      title: AppStrings.meuPerfil,
       body: FutureBuilder(
         future: _loadDataLocal(),
         builder: (context, snapshot) {
@@ -175,7 +188,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           }
 
           if (snapshot.hasError) {
-            return erro(ErrorModel(mensagem: "Ocorreu um erro ao carregar os dados de perfil"), function: () => _loadDataLocal());
+            return erro(ErrorModel(mensagem: AppStrings.ocorreuUmErro), function: () => _loadDataLocal());
           }
 
           return _body(snapshot.data!);
