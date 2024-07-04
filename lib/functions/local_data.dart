@@ -1,29 +1,29 @@
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void saveLocalUserData(UsuarioModel usuarioModel) async {
+void saveLocalUserData(VendedorModel usuarioModel) async {
   final SharedPreferences localData = await SharedPreferences.getInstance();
 
-  localData.setInt("id", usuarioModel.idUsuario ?? 0);
-  localData.setString("nome", usuarioModel.nomeUsuario ?? "");
-  localData.setString("email", usuarioModel.emailUsuario ?? "");
-  localData.setString("celular", usuarioModel.celularUsuario.toString() ?? "");
-  localData.setString("cpf", usuarioModel.cpfUsuario ?? "");
-  localData.setString("data", usuarioModel.dataUsuario ?? "");
+  localData.setInt("id", usuarioModel.id ?? 0);
+  localData.setString("nome", usuarioModel.nome ?? "");
+  localData.setString("email", usuarioModel.email ?? "");
+  localData.setString("celular", usuarioModel.celular.toString() ?? "");
+  localData.setString("cpf", usuarioModel.cpf ?? "");
+  localData.setString("data", usuarioModel.data ?? "");
 }
 
-Future<UsuarioModel> getModelLocal() async {
+Future<VendedorModel> getModelLocal() async {
 
   final SharedPreferences localData = await SharedPreferences.getInstance();
 
-  return UsuarioModel(
-    idUsuario: localData.getInt("id"),
-    nomeUsuario: localData.getString("nome"),
-    emailUsuario: localData.getString("email"),
-    celularUsuario: localData.getString("celular"),
-    cpfUsuario: localData.getString("cpf"),
+  return VendedorModel(
+    id: localData.getInt("id"),
+    nome: localData.getString("nome"),
+    email: localData.getString("email"),
+    celular: localData.getString("celular"),
+    cpf: localData.getString("cpf"),
     nomeConcessionaria: localData.getString("nome_concessionaria"),
-    dataUsuario: localData.getString("data"),
+    data: localData.getString("data"),
   );
 }
 

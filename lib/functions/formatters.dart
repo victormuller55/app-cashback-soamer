@@ -1,13 +1,14 @@
+import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
 import 'package:intl/intl.dart';
 
-String formatarCPF(String cpf) {
+String formataCPF(String cpf) {
   if (cpf.length != 11) {
-    return "CPF inválido";
+    return AppStrings.cpfInvalido;
   }
   return '${cpf.substring(0, 3)}.${cpf.substring(3, 6)}.${cpf.substring(6, 9)}-${cpf.substring(9, 11)}';
 }
 
-DateTime formatarDDMMYYYYHHMMToDate(String dataHora) {
+DateTime formataDDMMYYYYHHMMParaDateTime(String dataHora) {
   try {
     List<String> partes = dataHora.split(' ');
 
@@ -27,17 +28,17 @@ DateTime formatarDDMMYYYYHHMMToDate(String dataHora) {
 
         return DateTime(ano, mes, dia, hora, minuto);
       } else {
-        throw Exception("Formato de data/hora inválido.");
+        throw Exception(AppStrings.formatoDataHoraInvalido);
       }
     } else {
-      throw Exception("Formato de data/hora inválido.");
+      throw Exception(AppStrings.formatoDataHoraInvalido);
     }
   } catch (e) {
     throw Exception("Erro ao converter data/hora: $e");
   }
 }
 
-String formatarData(String data) {
+String formatarDataApi(String data) {
   DateTime dataAtual = DateTime.now();
   DateTime dataRecebida = DateTime.parse(data).subtract(const Duration(hours: 3));
 
@@ -56,17 +57,17 @@ String somenteNumeros(String str) {
   String numbers = matches.map((match) => match.group(0)).join();
 
   if (numbers.isEmpty) {
-    return "";
+    return AppStrings.vazio;
   }
 
   return int.parse(numbers).toString();
 }
 
-String celularFormatado(String phoneNumber) {
+String formataCelular(String phoneNumber) {
   String digitsOnly = phoneNumber.replaceAll(RegExp(r'\D'), '');
 
   if (digitsOnly.length != 11) {
-    return 'Número inválido';
+    return AppStrings.numeroInvalido;
   }
 
   String formattedNumber = '(${digitsOnly.substring(0, 2)}) ${digitsOnly.substring(2, 7)}-${digitsOnly.substring(7)}';

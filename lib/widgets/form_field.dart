@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 formFieldPadrao(
-  BuildContext context,
-  String text, {
+  BuildContext context, {
+  required String hint,
   double? width,
   bool? showSenha,
   bool? enable,
@@ -14,29 +14,32 @@ formFieldPadrao(
   TextInputFormatter? textInputFormatter,
   Icon? icon,
 }) {
-  return SizedBox(
-    width: width,
-    child: TextFormField(
-      controller: controller,
-      obscureText: showSenha != null ? !showSenha : false,
-      style: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.black),
-      keyboardType: textInputType ?? TextInputType.name,
-      onEditingComplete: () => FocusScope.of(context).nextFocus(),
-      validator: validator,
-      enabled: enable,
-      inputFormatters: textInputFormatter != null ? [textInputFormatter] : null,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-        border: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
-        enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, strokeAlign: 5), borderRadius: BorderRadius.circular(40)),
-        disabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(40)),
-        focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, strokeAlign: 5), borderRadius: BorderRadius.circular(40)),
-        focusedErrorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red), borderRadius: BorderRadius.circular(40)),
-        errorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red), borderRadius: BorderRadius.circular(40)),
-        hintText: text,
-        hintStyle: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.grey),
+  return Padding(
+    padding: const EdgeInsets.only(top: 10),
+    child: SizedBox(
+      width: width,
+      child: TextFormField(
+        controller: controller,
+        obscureText: showSenha != null ? !showSenha : false,
+        style: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.black),
+        keyboardType: textInputType ?? TextInputType.name,
+        onEditingComplete: () => FocusScope.of(context).nextFocus(),
+        validator: validator,
+        enabled: enable,
+        inputFormatters: textInputFormatter != null ? [textInputFormatter] : null,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+          border: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, width: 0.5), borderRadius: BorderRadius.circular(40)),
+          enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, strokeAlign: 5), borderRadius: BorderRadius.circular(40)),
+          disabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(40)),
+          focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent, strokeAlign: 5), borderRadius: BorderRadius.circular(40)),
+          focusedErrorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red), borderRadius: BorderRadius.circular(40)),
+          errorBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.red), borderRadius: BorderRadius.circular(40)),
+          hintText: hint,
+          hintStyle: const TextStyle(fontFamily: 'lato', fontSize: 13, color: Colors.grey),
+        ),
       ),
     ),
   );
@@ -96,4 +99,3 @@ Widget getPinCodeFormField({
     },
   );
 }
-

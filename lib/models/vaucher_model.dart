@@ -1,45 +1,47 @@
+import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+
 class VaucherModel {
-  int? idVaucher;
-  String? tituloVaucher;
-  String? infoVaucher;
-  String? dataComecoVaucher;
-  String? dataFinalVaucher;
-  int? pontosCheioVaucher;
-  int? descontoVaucher;
-  int? pontosVaucher;
+  int? id;
+  String? titulo;
+  String? info;
+  String? dataInicio;
+  String? dataFinal;
+  int? pontosCheio;
+  int? desconto;
+  int? pontos;
 
   VaucherModel({
-    this.idVaucher,
-    this.tituloVaucher,
-    this.infoVaucher,
-    this.dataComecoVaucher,
-    this.dataFinalVaucher,
-    this.pontosCheioVaucher,
-    this.descontoVaucher,
-    this.pontosVaucher,
+    this.id,
+    this.titulo,
+    this.info,
+    this.dataInicio,
+    this.dataFinal,
+    this.pontosCheio,
+    this.desconto,
+    this.pontos,
   });
 
   factory VaucherModel.empty() {
     return VaucherModel(
-      idVaucher: 0,
-      tituloVaucher: "",
-      infoVaucher: "",
-      dataComecoVaucher: "",
-      dataFinalVaucher: "",
-      pontosCheioVaucher: 0,
-      descontoVaucher: 0,
-      pontosVaucher: 0,
+      id: 0,
+      titulo: AppStrings.vazio,
+      info: AppStrings.vazio,
+      dataInicio: AppStrings.vazio,
+      dataFinal: AppStrings.vazio,
+      pontosCheio: 0,
+      desconto: 0,
+      pontos: 0,
     );
   }
 
   VaucherModel.fromMap(Map<String, dynamic> json) {
-    idVaucher = json['id_vaucher'];
-    tituloVaucher = json['titulo_vaucher'];
-    infoVaucher = json['info_vaucher'];
-    dataComecoVaucher = json['data_comeco_vaucher'];
-    dataFinalVaucher = json['data_final_vaucher'];
-    pontosCheioVaucher = json['pontos_cheio_vaucher'];
-    descontoVaucher = json['desconto_vaucher'];
-    pontosVaucher = json['pontos_vaucher'];
+    id = json['id_vaucher'];
+    titulo = json['titulo_vaucher'];
+    info = json['info_vaucher'];
+    dataInicio = json['data_comeco_vaucher'];
+    dataFinal = json['data_final_vaucher'];
+    pontosCheio = json['pontos_cheio_vaucher'];
+    desconto = json['desconto_vaucher'];
+    pontos = json['pontos_vaucher'];
   }
 }

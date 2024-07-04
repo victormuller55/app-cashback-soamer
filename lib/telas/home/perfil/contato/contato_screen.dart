@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
@@ -36,7 +36,7 @@ class _ContatoSoamerState extends State<ContatoSoamer> {
           padding: const EdgeInsets.only(left: 10, right: 10),
           radius: BorderRadius.circular(20),
           child: ListTile(
-            leading: Icon(icon, color: AppColor.primaryColor),
+            leading: Icon(icon, color: AppColors.primaryColor),
             title: text(titulo, color: Colors.grey, bold: true, fontSize: 14),
             trailing: const Icon(Icons.launch),
           ),

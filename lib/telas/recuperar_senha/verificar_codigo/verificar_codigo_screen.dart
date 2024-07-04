@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
@@ -53,7 +53,7 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
             elevatedButtonText(
               "Verificar".toUpperCase(),
               width: MediaQuery.of(context).size.width - 30,
-              color: AppColor.primaryColor,
+              color: AppColors.primaryColor,
               textColor: Colors.white,
                function: () => _checkCode(),
             ),

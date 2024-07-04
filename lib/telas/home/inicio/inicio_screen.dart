@@ -1,5 +1,5 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
@@ -37,20 +37,20 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 
   void _saveConcessionaria(ConcessionariaModel value) {
-    bloc.add(SetConcessionariaEvent(value.idConcessionaria!));
-    addLocalDataString("nome_concessionaria", value.nomeConcessionaria!);
+    bloc.add(SetConcessionariaEvent(value.id!));
+    addLocalDataString("nome_concessionaria", value.nome!);
     salvouConcessionaria = true;
     Navigator.pop(context);
     _loadHome();
   }
 
   Future<void> _loadHome() async {
-    UsuarioModel usuarioModel = await getModelLocal();
-    bloc.add(InicioLoadEvent(usuarioModel.emailUsuario!));
+    VendedorModel usuarioModel = await getModelLocal();
+    bloc.add(InicioLoadEvent(usuarioModel.email!));
   }
 
   void _loadConcessionaria() async {
-    UsuarioModel usuarioModel = await getModelLocal();
+    VendedorModel usuarioModel = await getModelLocal();
     if (usuarioModel.nomeConcessionaria == null || usuarioModel.nomeConcessionaria == "") {
       bloc.add(LoadConcessionariaEvent());
     }
@@ -102,7 +102,7 @@ class _InicioScreenState extends State<InicioScreen> {
             "SALVAR",
             function: () => _saveConcessionaria(dropdownValue),
             width: MediaQuery.of(context).size.width,
-            color: AppColor.primaryColor,
+            color: AppColors.primaryColor,
             textColor: Colors.white,
           ),
           const SizedBox(height: 20),
@@ -122,7 +122,7 @@ class _InicioScreenState extends State<InicioScreen> {
         value: title,
         titleSize: 25,
         valueSize: 13,
-        titleColor: AppColor.primaryColor,
+        titleColor: AppColors.primaryColor,
         valueColor: Colors.grey.shade600,
         crossAxisAlignment: CrossAxisAlignment.center,
       ),
@@ -132,17 +132,17 @@ class _InicioScreenState extends State<InicioScreen> {
   Widget _header(InicioState homeState) {
     return container(
       height: MediaQuery.of(context).size.height / 6,
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColors.primaryColor,
       radius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Row(
             children: [
-              avatar(Endpoint.endpointImageUsuario(homeState.usuarioModel.idUsuario!)),
+              avatar(AppEndpoints.endpointImageUsuario(homeState.usuarioModel.id!)),
               const SizedBox(width: 20),
               infoColumn(
-                title: homeState.usuarioModel.nomeUsuario ?? "",
+                title: homeState.usuarioModel.nome ?? "",
                 value: homeState.usuarioModel.nomeConcessionaria ?? "",
                 width: MediaQuery.of(context).size.width / 3,
                 titleSize: 17,
@@ -152,7 +152,7 @@ class _InicioScreenState extends State<InicioScreen> {
             ],
           ),
           infoColumn(
-            title: homeState.usuarioModel.pontosUsuario.toString(),
+            title: homeState.usuarioModel.pontos.toString(),
             value: "Pontos",
             titleSize: 25,
             valueSize: 13,
@@ -168,9 +168,9 @@ class _InicioScreenState extends State<InicioScreen> {
       value: concessionariaModel,
       child: Row(
         children: [
-          text(concessionariaModel.nomeConcessionaria ?? ""),
-          text(" (${concessionariaModel.marcaConcessionaria})"),
-          SizedBox(width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.5), child: text(" - ${concessionariaModel.enderecoConcessionaria}", color: Colors.grey, overflow: true)),
+          text(concessionariaModel.nome ?? ""),
+          text(" (${concessionariaModel.marca})"),
+          SizedBox(width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.5), child: text(" - ${concessionariaModel.endereco}", color: Colors.grey, overflow: true)),
         ],
       ),
     );
@@ -201,7 +201,7 @@ class _InicioScreenState extends State<InicioScreen> {
 
   void _onChangeState(InicioState state) async {
 
-    UsuarioModel usuarioModel = await getModelLocal();
+    VendedorModel usuarioModel = await getModelLocal();
 
     if (usuarioModel.nomeConcessionaria == null || usuarioModel.nomeConcessionaria == "") {
       if (state.concessionariaList.isNotEmpty) {
@@ -217,16 +217,16 @@ class _InicioScreenState extends State<InicioScreen> {
     List<Widget> cardsMaisTrocados = [];
 
     for (int i = 0; i <= homeState.vaucherListPromocao.length - 1; i++) {
-      cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.usuarioModel.pontosUsuario!));
+      cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.usuarioModel.pontos!));
     }
 
     for (int i = 0; i <= homeState.vaucherListMaisTrocados.length - 1; i++) {
-      cardsMaisTrocados.add(cardVaucher(homeState.vaucherListMaisTrocados[i], "Mhero$i", homeState.usuarioModel.pontosUsuario!));
+      cardsMaisTrocados.add(cardVaucher(homeState.vaucherListMaisTrocados[i], "Mhero$i", homeState.usuarioModel.pontos!));
     }
 
     return RefreshIndicator(
       color: Colors.white,
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColors.primaryColor,
       strokeWidth: 2,
       onRefresh: _loadHome,
       child: ListView(

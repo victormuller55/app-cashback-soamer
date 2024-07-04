@@ -1,6 +1,6 @@
 const String server = "http://44.201.116.140:5000"; // "44.201.116.140:5000";
 
-class Endpoint {
+class AppEndpoints {
 
   // Entrar e Cadastrar
   static String endpointEntrarCadastrar = "$server/v1/soamer/usuario";

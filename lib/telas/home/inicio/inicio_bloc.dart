@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/app_widget/api_exception.dart';
+import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/service.dart';
+import 'package:app_cashback_soamer/functions/api_connection.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/home_model.dart';
@@ -26,7 +26,7 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
         Response responseUsuario = await getHome(event.email);
         Response responseVaucherPromocao = await getVaucherPromocao();
         Response responseVaucherMaisTrocados = await getVaucherMaisTrocados();
-        UsuarioModel usuarioModel = await getModelLocal();
+        VendedorModel usuarioModel = await getModelLocal();
 
         // Transforma json em model (Voucher em promoção)
         for (var voucher in jsonDecode(responseVaucherPromocao.body)) {
@@ -46,8 +46,8 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
         // Set valores do usuario
         usuarioModel.valorPix = homeModel.valorPix;
 
-        usuarioModel.pontosPedentesUsuario = homeModel.pontosPedentesUsuario;
-        usuarioModel.pontosUsuario = homeModel.pontosUsuario;
+        usuarioModel.pontosPedentesUsuario = homeModel.pontosPendentes;
+        usuarioModel.pontos = homeModel.pontos;
         emit(InicioSuccessState(usuarioModel: usuarioModel, vaucherListPromocao: vauchersPromocao, vaucherListMaisTrocados: vauchersMaisTrocados, concessionariaList: []));
       } catch (e) {
         emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
@@ -65,7 +65,7 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
           itens.add(vaucherModel);
         }
 
-        emit(InicioSuccessState(usuarioModel: UsuarioModel.empty(), vaucherListPromocao: [], vaucherListMaisTrocados: [], concessionariaList: itens));
+        emit(InicioSuccessState(usuarioModel: VendedorModel.empty(), vaucherListPromocao: [], vaucherListMaisTrocados: [], concessionariaList: itens));
       } catch (e) {
         emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
       }
@@ -75,7 +75,7 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
       emit(InicioLoadingState());
       try {
         await setConcessionaria(event.idConcessionaria);
-        emit(InicioSuccessState(usuarioModel: UsuarioModel.empty(), vaucherListPromocao: [], concessionariaList: [], vaucherListMaisTrocados: []));
+        emit(InicioSuccessState(usuarioModel: VendedorModel.empty(), vaucherListPromocao: [], concessionariaList: [], vaucherListMaisTrocados: []));
       } catch (e) {
         emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
       }

@@ -1,4 +1,4 @@
-bool validatorEmpty(String value) {
+bool validaVazio(String value) {
   if (value.isEmpty) {
     return false;
   }
@@ -6,7 +6,7 @@ bool validatorEmpty(String value) {
   return true;
 }
 
-bool emailValido(String value) {
+bool validaEmail(String value) {
   final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
   if (value.isEmpty) {
     return false;
@@ -15,7 +15,7 @@ bool emailValido(String value) {
   }
   return true;
 }
-bool cpfValido(String value) {
+bool validaCPF(String value) {
 
   if (value.isEmpty) {
     return false;

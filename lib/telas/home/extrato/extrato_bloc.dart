@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/app_widget/api_exception.dart';
+import 'package:app_cashback_soamer/api/api_connection.dart';
+import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/service.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/extrato_model.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
@@ -17,9 +17,9 @@ class ExtratoBloc extends Bloc<ExtratoEvent, ExtratoState> {
       emit(ExtratoLoadingState());
       try {
 
-        UsuarioModel usuarioModel = await getModelLocal();
+        VendedorModel usuarioModel = await getModelLocal();
 
-        Response response = await getExtrato(usuarioModel.idUsuario ?? 0);
+        Response response = await getExtrato(usuarioModel.id ?? 0);
         List<ExtratoModel> extrato = [];
 
         for (var voucher in jsonDecode(response.body)) {
@@ -29,7 +29,7 @@ class ExtratoBloc extends Bloc<ExtratoEvent, ExtratoState> {
 
         emit(ExtratoSuccessState(extratoModel: extrato));
       } catch (e) {
-        emit(ExtratoErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+        emit(ExtratoErrorState(errorModel: ApiException.errorModel(e)));
       }
     });
   }

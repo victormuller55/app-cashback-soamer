@@ -1,3 +1,5 @@
+import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+
 class ExtratoModel {
   int? id;
   String? titulo;
@@ -23,11 +25,11 @@ class ExtratoModel {
     return ExtratoModel(
       id: 0,
       idVaucher: 0,
-      titulo: "",
-      descricao: "",
+      titulo: AppStrings.vazio,
+      descricao: AppStrings.vazio,
       pontos: 0,
       idUsuario: 0,
-      data: "",
+      data: AppStrings.vazio,
       entrada: false,
     );
   }

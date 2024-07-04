@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
@@ -61,7 +61,7 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
           elevatedButtonText(
             "Salvar e entrar".toUpperCase(),
             function: () => _entrarESalvar(),
-            color: AppColor.primaryColor,
+            color: AppColors.primaryColor,
             textColor: Colors.white,
           )
         ],

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/app_widget/api_exception.dart';
+import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/service.dart';
+import 'package:app_cashback_soamer/functions/api_connection.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/home_model.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
@@ -19,13 +19,13 @@ class VaucherBloc extends Bloc<VaucherEvent, VaucherState> {
       emit(VaucherLoadingState());
       try {
 
-        UsuarioModel usuarioModel = await getModelLocal();
+        VendedorModel usuarioModel = await getModelLocal();
 
         List<VaucherModel> lista = [];
         List<VaucherModel> lista2 = [];
         List<VaucherModel> lista3 = [];
 
-        Response responseUsuario = await getDadosRecompensa(usuarioModel.emailUsuario!);
+        Response responseUsuario = await getDadosRecompensa(usuarioModel.email!);
         Response response = await getVaucher();
         Response responseVaucherPromocao = await getVaucherPromocao();
         Response responseVaucherMaisTrocados = await getVaucherMaisTrocados();

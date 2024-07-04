@@ -1,5 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_screen.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
 
-  final UsuarioModel usuarioModel;
+  final VendedorModel usuarioModel;
   const HomeScreen({super.key, required this.usuarioModel});
 
   @override
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.defaultEdge,
         onTap: (index) => setState(() => _selectedIndex = index),
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: AppColors.primaryColor,
         iconSize: 30,
         notchMargin: 5,
         splashSpeedInMilliseconds: 0,
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: FloatingActionButton(
             heroTag: "floatingButton",
             onPressed: () => open(context, screen: const RegistrarVendaScreen()),
-            backgroundColor: AppColor.secondaryColor,
+            backgroundColor: AppColors.secondaryColor,
             child: const Icon(Icons.camera_alt, size: 30),
           ),
         ),

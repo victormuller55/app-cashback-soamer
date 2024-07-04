@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_event.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_state.dart';
@@ -59,15 +59,15 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
     List<Widget> lista3 = [];
 
     for (int i = 0; i <= state.vaucherModelList.length - 1; i++) {
-      lista1.add(cardVaucher(state.vaucherModelList[i], "1hero$i", vaucherBloc.state.dadosUsuarioModel.pontosUsuario!));
+      lista1.add(cardVaucher(state.vaucherModelList[i], "1hero$i", vaucherBloc.state.dadosUsuarioModel.pontos!));
     }
 
     for (int i = 0; i <= state.vaucherModelListMaisTrocados.length - 1; i++) {
-      lista2.add(cardVaucher(state.vaucherModelListMaisTrocados[i], "2hero$i", vaucherBloc.state.dadosUsuarioModel.pontosUsuario!));
+      lista2.add(cardVaucher(state.vaucherModelListMaisTrocados[i], "2hero$i", vaucherBloc.state.dadosUsuarioModel.pontos!));
     }
 
     for (int i = 0; i <= state.vaucherModelListPromocao.length - 1; i++) {
-      lista3.add(cardVaucher(state.vaucherModelListPromocao[i], "3hero$i", vaucherBloc.state.dadosUsuarioModel.pontosUsuario!));
+      lista3.add(cardVaucher(state.vaucherModelListPromocao[i], "3hero$i", vaucherBloc.state.dadosUsuarioModel.pontos!));
     }
 
     return Padding(
@@ -89,8 +89,8 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    text("R\$${vaucherBloc.state.dadosUsuarioModel.pontosUsuario},00", fontSize: 22, bold: true, color: AppColor.primaryColor),
-                    elevatedButtonText("Solicitar valor".toUpperCase(), function: () => {}, width: 180, height: 40, color: AppColor.primaryColor, textColor: Colors.white, borderRadius: 50),
+                    text("R\$${vaucherBloc.state.dadosUsuarioModel.pontos},00", fontSize: 22, bold: true, color: AppColors.primaryColor),
+                    elevatedButtonText("Solicitar valor".toUpperCase(), function: () => {}, width: 180, height: 40, color: AppColors.primaryColor, textColor: Colors.white, borderRadius: 50),
                   ],
                 )
               ],
@@ -110,7 +110,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
       onRefresh: _load,
       color: Colors.white,
       strokeWidth: 2,
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColors.primaryColor,
       child: BlocConsumer<VaucherBloc, VaucherState>(
         bloc: vaucherBloc,
         listener: (context, state) => state is VaucherSuccessState ? () => Future.delayed(const Duration(milliseconds: 500)).then((value) => setState(() {})) : () => {},

@@ -1,7 +1,7 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/app_widget/strings.dart';
+import 'package:app_cashback_soamer/app_widget/app_strings.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_bloc.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_event.dart';
@@ -45,12 +45,12 @@ class _VaucherScreenState extends State<VaucherScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            avatar(Endpoint.endpointImageVoucher(widget.vaucherModel.idVaucher!), radius: 80),
+            avatar(AppEndpoints.endpointImageVoucher(widget.vaucherModel.id!), radius: 80),
             const SizedBox(height: 15),
             text(
               "VOUCHER ADQUIRIDO \n COM SUCESSO!",
               bold: true,
-              color: AppColor.primaryColor,
+              color: AppColors.primaryColor,
               fontSize: 17,
               textAlign: TextAlign.center,
             ),
@@ -89,7 +89,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
             elevatedButtonText(
               "CONCLUIR",
               function: () => Navigator.pop(context),
-              color: AppColor.primaryColor,
+              color: AppColors.primaryColor,
               textColor: Colors.white,
               width: MediaQuery.of(context).size.width,
             ),
@@ -106,14 +106,14 @@ class _VaucherScreenState extends State<VaucherScreen> {
       height: 350,
       child: Column(
         children: [
-          text(widget.vaucherModel.tituloVaucher!, fontSize: 18, bold: true),
+          text(widget.vaucherModel.titulo!, fontSize: 18, bold: true),
           const SizedBox(height: 10),
           container(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.all(10),
             backgroundColor: Colors.grey.shade300,
             radius: BorderRadius.circular(10),
-            child: Center(child: text("Você realmente deseja trocar ${widget.vaucherModel.pontosVaucher} pontos deste vaucher?", fontSize: 15, textAlign: TextAlign.center)),
+            child: Center(child: text("Você realmente deseja trocar ${widget.vaucherModel.pontos} pontos deste vaucher?", fontSize: 15, textAlign: TextAlign.center)),
           ),
           const SizedBox(height: 20),
           Row(
@@ -124,7 +124,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
             ],
           ),
           const SizedBox(height: 5),
-          text("Após da troca: ${widget.pontos - widget.vaucherModel.pontosVaucher! <= 0 ? 0 : widget.pontos - widget.vaucherModel.pontosVaucher!} Pontos", fontSize: 15, color: Colors.grey.shade600),
+          text("Após da troca: ${widget.pontos - widget.vaucherModel.pontos! <= 0 ? 0 : widget.pontos - widget.vaucherModel.pontos!} Pontos", fontSize: 15, color: Colors.grey.shade600),
           const SizedBox(height: 20),
           elevatedButtonText(
             "TROCAR",
@@ -132,8 +132,8 @@ class _VaucherScreenState extends State<VaucherScreen> {
             color: Colors.green,
             textColor: Colors.white,
             function: () {
-              if (widget.vaucherModel.pontosVaucher! <= widget.pontos) {
-                voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.idVaucher!));
+              if (widget.vaucherModel.pontos! <= widget.pontos) {
+                voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.id!));
                 Navigator.pop(context);
               } else {
                 showSnackbarWarning(context, message: "Pontos insuficientes");
@@ -159,7 +159,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
       child: elevatedButtonText(
         "TROCAR CUPOM",
         function: () => _showModal(),
-        color: AppColor.primaryColor,
+        color: AppColors.primaryColor,
         textColor: Colors.white,
       ),
     );
@@ -174,7 +174,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
             height: 200,
             width: MediaQuery.of(context).size.width,
             backgroundColor: Colors.grey.shade300,
-            image: NetworkImage(Endpoint.endpointImageVoucher(widget.vaucherModel.idVaucher!)),
+            image: NetworkImage(AppEndpoints.endpointImageVoucher(widget.vaucherModel.id!)),
           ),
         ),
         Padding(
@@ -186,8 +186,8 @@ class _VaucherScreenState extends State<VaucherScreen> {
                 children: [
                   infoColumn(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    title: widget.vaucherModel.tituloVaucher ?? "",
-                    value: "Até ${widget.vaucherModel.dataFinalVaucher}",
+                    title: widget.vaucherModel.titulo ?? "",
+                    value: "Até ${widget.vaucherModel.dataFinal}",
                     titleColor: Colors.black,
                     valueColor: Colors.grey.shade600,
                     titleSize: 18,
@@ -196,8 +196,8 @@ class _VaucherScreenState extends State<VaucherScreen> {
                   ),
                   infoColumn(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    title: widget.vaucherModel.descontoVaucher == 0 ? "" : "${widget.vaucherModel.pontosCheioVaucher} Pontos",
-                    value: widget.vaucherModel.descontoVaucher == 0 ? "${widget.vaucherModel.pontosCheioVaucher} Pontos" : "${widget.vaucherModel.pontosVaucher} Pontos",
+                    title: widget.vaucherModel.desconto == 0 ? "" : "${widget.vaucherModel.pontosCheio} Pontos",
+                    value: widget.vaucherModel.desconto == 0 ? "${widget.vaucherModel.pontosCheio} Pontos" : "${widget.vaucherModel.pontos} Pontos",
                     titleColor: Colors.red,
                     valueColor: Colors.black,
                     titleSize: 14,
@@ -212,7 +212,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
                 padding: const EdgeInsets.all(10),
                 backgroundColor: Colors.grey.shade300,
                 radius: BorderRadius.circular(20),
-                child: Center(child: text(widget.vaucherModel.infoVaucher!, fontSize: 15, textAlign: TextAlign.justify)),
+                child: Center(child: text(widget.vaucherModel.info!, fontSize: 15, textAlign: TextAlign.justify)),
               ),
             ],
           ),
@@ -285,7 +285,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      title: widget.vaucherModel.tituloVaucher ?? "",
+      title: widget.vaucherModel.titulo ?? "",
       bottomNavigationBar: voucherBloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
       actions: [
         infoColumn(

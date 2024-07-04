@@ -1,5 +1,5 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
@@ -27,7 +27,7 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
-  Future<UsuarioModel> _loadDataLocal() async {
+  Future<VendedorModel> _loadDataLocal() async {
     return await getModelLocal();
   }
 
@@ -85,7 +85,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
     );
   }
 
-  Widget _header(UsuarioModel usuarioModel) {
+  Widget _header(VendedorModel usuarioModel) {
     return container(
       height: 145,
       width: MediaQuery.of(context).size.width,
@@ -104,20 +104,20 @@ class _PerfilScreenState extends State<PerfilScreen> {
                   width: 90,
                   radius: BorderRadius.circular(15),
                   // border: Border.all(color: AppColor.primaryColor, width: 2),
-                  image: NetworkImage(Endpoint.endpointImageUsuario(usuarioModel.idUsuario!)),
+                  image: NetworkImage(AppEndpoints.endpointImageUsuario(usuarioModel.id!)),
                 ),
               ),
               const SizedBox(height: 7),
-              text(usuarioModel.nomeUsuario ?? "", bold: true, fontSize: 13, color: AppColor.primaryColor),
+              text(usuarioModel.nome ?? "", bold: true, fontSize: 13, color: AppColors.primaryColor),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              text(usuarioModel.nomeConcessionaria ?? "", bold: true, fontSize: 14, color: AppColor.primaryColor),
+              text(usuarioModel.nomeConcessionaria ?? "", bold: true, fontSize: 14, color: AppColors.primaryColor),
               const SizedBox(height: 7),
-              text(formatarCPF(usuarioModel.cpfUsuario ?? ""), bold: true, fontSize: 15, color: Colors.grey.shade600),
+              text(formataCPF(usuarioModel.cpf ?? ""), bold: true, fontSize: 15, color: Colors.grey.shade600),
               const SizedBox(height: 10),
               elevatedButtonText(
                 "Editar perfil".toUpperCase(),
@@ -125,7 +125,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 width: 200,
                 height: 45,
                 borderRadius: 30,
-                color: AppColor.primaryColor,
+                color: AppColors.primaryColor,
                 textColor: Colors.white,
               ),
             ],
@@ -135,7 +135,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
     );
   }
 
-  Widget _body(UsuarioModel usuarioModel) {
+  Widget _body(VendedorModel usuarioModel) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView(

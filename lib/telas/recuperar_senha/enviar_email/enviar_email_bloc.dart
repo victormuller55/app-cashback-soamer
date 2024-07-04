@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/app_widget/api_exception.dart';
-import 'package:app_cashback_soamer/functions/service.dart';
+import 'package:app_cashback_soamer/api/api_exception.dart';
+import 'package:app_cashback_soamer/functions/api_connection.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_event.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_service.dart';

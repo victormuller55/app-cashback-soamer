@@ -1,25 +1,25 @@
 class HomeModel {
-  int? pontosUsuario;
-  int? pontosPedentesUsuario;
+  int? pontos;
+  int? pontosPendentes;
   int? valorPix;
 
   HomeModel({
-    this.pontosUsuario,
-    this.pontosPedentesUsuario,
+    this.pontos,
+    this.pontosPendentes,
     this.valorPix,
   });
 
   factory HomeModel.empty() {
     return HomeModel(
-      pontosUsuario: 0,
-      pontosPedentesUsuario: 0,
+      pontos: 0,
+      pontosPendentes: 0,
       valorPix: 0,
     );
   }
 
   HomeModel.fromMap(Map<String, dynamic> json) {
-    pontosUsuario = json['pontos_usuario'];
-    pontosPedentesUsuario = json['pontos_pedentes_usuario'];
+    pontos = json['pontos_usuario'];
+    pontosPendentes = json['pontos_pedentes_usuario'];
     valorPix = json['valor_pix'];
   }
 }

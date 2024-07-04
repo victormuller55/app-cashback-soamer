@@ -1,34 +1,34 @@
-import 'package:app_cashback_soamer/app_widget/endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/service.dart';
+import 'package:app_cashback_soamer/functions/api_connection.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 
 Future<Response> getHome(String email) async {
   return await getHTTP(
-    endpoint: Endpoint.endpointHome,
+    endpoint: AppEndpoints.endpointHome,
     parameters: {"email": email},
   );
 }
 
 Future<Response> getVaucherPromocao() async {
-  return await getHTTP(endpoint: Endpoint.endpointVaucherPromocao);
+  return await getHTTP(endpoint: AppEndpoints.endpointVaucherPromocao);
 }
 
 Future<Response> getVaucherMaisTrocados() async {
-  return await getHTTP(endpoint: Endpoint.endpointVaucherMaisTrocados);
+  return await getHTTP(endpoint: AppEndpoints.endpointVaucherMaisTrocados);
 }
 
 Future<Response> getConcessionarias() async {
-  return await getHTTP(endpoint: Endpoint.endpointConcessionaria);
+  return await getHTTP(endpoint: AppEndpoints.endpointConcessionaria);
 }
 
 Future<Response> setConcessionaria(int idConcessionaria) async {
-  UsuarioModel usuarioModel = await getModelLocal();
+  VendedorModel usuarioModel = await getModelLocal();
   return await putHTTP(
-    endpoint: Endpoint.endpointConcessionaria,
+    endpoint: AppEndpoints.endpointConcessionaria,
     parameters: {
       "id_concessionaria": idConcessionaria.toString(),
-      "id_usuario": usuarioModel.idUsuario.toString(),
+      "id_usuario": usuarioModel.id.toString(),
     }
   );
 }

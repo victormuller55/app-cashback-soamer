@@ -1,9 +1,10 @@
+import 'package:app_cashback_soamer/app_widget/consts/app_context.dart';
 import 'package:flutter/material.dart';
 
-void open(BuildContext context, {required Widget screen, bool? closePrevious}) {
+void open({required Widget screen, bool? closePrevious}) {
   if (closePrevious ?? false) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => screen));
+    Navigator.pushReplacement(AppContext.context, MaterialPageRoute(builder: (context) => screen));
   } else {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+    Navigator.push(AppContext.context, MaterialPageRoute(builder: (context) => screen));
   }
 }

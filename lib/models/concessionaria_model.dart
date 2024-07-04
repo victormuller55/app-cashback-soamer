@@ -1,33 +1,35 @@
+import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+
 class ConcessionariaModel {
-  int? idConcessionaria;
-  String? marcaConcessionaria;
-  String? nomeConcessionaria;
-  String? cnpjConcessionaria;
-  String? enderecoConcessionaria;
+  int? id;
+  String? marca;
+  String? nome;
+  String? cnpj;
+  String? endereco;
 
   ConcessionariaModel({
-    this.idConcessionaria,
-    this.marcaConcessionaria,
-    this.nomeConcessionaria,
-    this.cnpjConcessionaria,
-    this.enderecoConcessionaria,
+    this.id,
+    this.marca,
+    this.nome,
+    this.cnpj,
+    this.endereco,
   });
 
   factory ConcessionariaModel.empty() {
     return ConcessionariaModel(
-      idConcessionaria: 0,
-      nomeConcessionaria: "",
-      cnpjConcessionaria: "",
-      marcaConcessionaria: "",
-      enderecoConcessionaria: "",
+      id: 0,
+      nome: AppStrings.vazio,
+      cnpj: AppStrings.vazio,
+      marca: AppStrings.vazio,
+      endereco: AppStrings.vazio,
     );
   }
 
   ConcessionariaModel.fromMap(Map<String, dynamic> json) {
-    idConcessionaria = json['id_concessionaria'];
-    marcaConcessionaria = json['marca_concessionaria'];
-    nomeConcessionaria = json['nome_concessionaria'];
-    cnpjConcessionaria = json['cnpj_concessionaria'];
-    enderecoConcessionaria = json['endereco_concessionaria'];
+    id = json['id_concessionaria'];
+    marca = json['marca_concessionaria'];
+    nome = json['nome_concessionaria'];
+    cnpj = json['cnpj_concessionaria'];
+    endereco = json['endereco_concessionaria'];
   }
 }

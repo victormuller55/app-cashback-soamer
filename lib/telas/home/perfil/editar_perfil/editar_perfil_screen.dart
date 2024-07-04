@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/endpoints.dart';
-import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_form_formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/app_widget/strings.dart';
+import 'package:app_cashback_soamer/app_widget/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
@@ -28,7 +28,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditarPerfilScreen extends StatefulWidget {
-  final UsuarioModel usuarioModel;
+  final VendedorModel usuarioModel;
 
   const EditarPerfilScreen({super.key, required this.usuarioModel});
 
@@ -49,10 +49,10 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
 
   @override
   void initState() {
-    controllerNome.text = widget.usuarioModel.nomeUsuario ?? "";
-    controllerEmail.text = widget.usuarioModel.emailUsuario ?? "";
-    controllerCPF.text = widget.usuarioModel.cpfUsuario ?? "";
-    controllerCelular.text = celularFormatado(widget.usuarioModel.celularUsuario.toString());
+    controllerNome.text = widget.usuarioModel.nome ?? "";
+    controllerEmail.text = widget.usuarioModel.email ?? "";
+    controllerCPF.text = widget.usuarioModel.cpf ?? "";
+    controllerCelular.text = formataCelular(widget.usuarioModel.celular.toString());
     super.initState();
   }
 
@@ -73,10 +73,10 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
 
   void _salvar() {
     EditUsuarioModel usuarioModel = EditUsuarioModel(
-      nome: controllerNome.text == widget.usuarioModel.nomeUsuario ? "" : controllerNome.text,
-      email: widget.usuarioModel.emailUsuario,
-      celular: widget.usuarioModel.celularUsuario,
-      newEmail: controllerEmail.text == widget.usuarioModel.emailUsuario ? "" : controllerEmail.text,
+      nome: controllerNome.text == widget.usuarioModel.nome ? "" : controllerNome.text,
+      email: widget.usuarioModel.email,
+      celular: widget.usuarioModel.celular,
+      newEmail: controllerEmail.text == widget.usuarioModel.email ? "" : controllerEmail.text,
       senha: controllerSenha.text,
       newSenha: controllerNovaSenha.text,
     );
@@ -85,8 +85,8 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
   }
 
   void _validar() {
-    if (verificaCampoVazio(controllers: [controllerNome.text, controllerEmail.text, controllerCPF.text, controllerSenha.text])) {
-      if (emailValido(controllerEmail.text)) {
+    if (verificaCampoFormVazio(controllers: [controllerNome.text, controllerEmail.text, controllerCPF.text, controllerSenha.text])) {
+      if (validaEmail(controllerEmail.text)) {
         _salvar();
       } else {
         showSnackbarWarning(context, message: Strings.emailInvalido);
@@ -136,7 +136,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                         _validar();
                         Navigator.pop(context);
                       },
-                      color: AppColor.primaryColor,
+                      color: AppColors.primaryColor,
                       textColor: Colors.white,
                     ),
                   ],
@@ -183,7 +183,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                     width: 200,
                     height: 45,
                     borderRadius: 30,
-                    color: AppColor.primaryColor,
+                    color: AppColors.primaryColor,
                     textColor: Colors.white,
                   ),
                 ],
@@ -196,7 +196,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                         width: 150,
                         radius: BorderRadius.circular(20),
                         // border: Border.all(color: AppColor.primaryColor, width: 2),
-                        image: NetworkImage(Endpoint.endpointImageUsuario(widget.usuarioModel.idUsuario!)),
+                        image: NetworkImage(AppEndpoints.endpointImageUsuario(widget.usuarioModel.id!)),
                       )
                     : container(
                         height: 150,
@@ -215,15 +215,15 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
           appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerEmail, "E-mail", width: 300, textInputType: TextInputType.emailAddress),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.celularFormatter),
+          formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter, enable: false),
+          formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter, enable: false),
           appSizedBoxHeight(10),
           formFieldPadrao(context, controller: controllerNovaSenha, "Digite sua nova senha", width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
           appSizedBoxHeight(10),
           elevatedButtonText(
             "Salvar".toUpperCase(),
-            color: AppColor.primaryColor,
+            color: AppColors.primaryColor,
             textColor: Colors.white,
             function: () => {_askPasswordPopup()},
           ),

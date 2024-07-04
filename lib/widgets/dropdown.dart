@@ -7,8 +7,8 @@ DropdownMenuItem<ConcessionariaModel> _menuItem(ConcessionariaModel concessionar
     value: concessionariaModel,
     child: Row(
       children: [
-        text(concessionariaModel.nomeConcessionaria!),
-        text(" (${concessionariaModel.marcaConcessionaria})", bold: true),
+        text(concessionariaModel.nome!),
+        text(" (${concessionariaModel.marca})", bold: true),
       ],
     ),
   );

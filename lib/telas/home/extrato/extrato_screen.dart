@@ -1,4 +1,7 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_font_sizes.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_radius.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_spacing.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/models/extrato_model.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_bloc.dart';
@@ -20,10 +23,10 @@ class ExtratoScreen extends StatefulWidget {
 }
 
 class _ExtratoScreenState extends State<ExtratoScreen> {
-  ExtratoBloc extratoBloc = ExtratoBloc();
+  ExtratoBloc bloc = ExtratoBloc();
 
   Future<void> _loadExtrato() async {
-    extratoBloc.add(ExtratoLoadEvent());
+    bloc.add(ExtratoLoadEvent());
   }
 
   @override
@@ -32,58 +35,59 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
     super.initState();
   }
 
-  Widget _cardInfo({required String title, required String value, bool? entrada}) {
+  Widget _cardEntradaSaida({required String title, required String value, bool? entrada}) {
     return container(
-      radius: BorderRadius.circular(20),
-      backgroundColor: Colors.grey.shade300,
+      radius: BorderRadius.circular(AppRadius.medium),
+      backgroundColor: AppColors.grey300,
       width: MediaQuery.of(context).size.width / 2.2,
       height: 80,
       child: infoColumn(
         title: value,
         value: title,
-        titleSize: 25,
-        valueSize: 13,
+        titleSize: AppFontSizes.big,
+        valueSize: AppFontSizes.small,
         spacing: true,
-        titleColor: entrada ?? false ? Colors.green : Colors.red,
-        valueColor: Colors.grey,
+        titleColor: entrada ?? false ? AppColors.green : AppColors.red,
+        valueColor: AppColors.grey,
         crossAxisAlignment: CrossAxisAlignment.center,
       ),
     );
   }
 
-  void _onChangeState(ExtratoState state) {}
+  Widget _cardExtrato(ExtratoModel extratoModel) {
 
-  Widget _extrato(ExtratoModel extratoModel) {
     Widget trailing = text("");
 
     if (extratoModel.entrada ?? false) {
-      if (extratoModel.titulo == "Venda aceita") {
-        trailing = text("+${extratoModel.pontos ?? 0} Pts", fontSize: 17, bold: true, color: Colors.green);
-      }
-    } else {
-      if (extratoModel.titulo != "Venda recusada") {
-        trailing = text("-${extratoModel.pontos ?? 0} Pts", fontSize: 17, bold: true, color: Colors.red);
+      if (extratoModel.titulo!.contains("Venda Aprovada")) {
+        trailing = text("+${extratoModel.pontos ?? 0} Pts", fontSize: AppFontSizes.normal, bold: true, color: AppColors.green);
       }
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: EdgeInsets.only(bottom: AppSpacing.small),
       child: container(
         width: MediaQuery.of(context).size.width,
-        backgroundColor: Colors.white,
-        radius: BorderRadius.circular(20),
+        backgroundColor: AppColors.white,
+        radius: BorderRadius.circular(AppRadius.medium),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(AppRadius.normal),
             child: ListTile(
               dense: true,
               title: Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: text(extratoModel.titulo ?? "", fontSize: 15, bold: true),
+                padding: EdgeInsets.only(bottom: AppRadius.small),
+                child: text(extratoModel.titulo ?? "", fontSize: AppFontSizes.small, bold: true),
               ),
-              subtitle: text(extratoModel.descricao ?? "", fontSize: 14),
+              subtitle: text(extratoModel.descricao ?? "", fontSize: AppFontSizes.small),
               trailing: trailing,
-              leading: SizedBox(width: 40, height: 40, child: Center(child: text(formatarData(extratoModel.data.toString())))),
+              leading: SizedBox(
+                width: 40,
+                height: 40,
+                child: Center(
+                  child: text(formatarDataApi(extratoModel.data.toString())),
+                ),
+              ),
             ),
           ),
         ),
@@ -92,6 +96,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   }
 
   Widget _body(List<ExtratoModel> extratoModel) {
+
     int totalEntrada = 0;
     int totalSaida = 0;
 
@@ -107,16 +112,16 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
       DateTime dataRegistro = DateTime.parse(model.data!).subtract(const Duration(hours: 3));
 
       if (dataRegistro.isBefore(dataOntem)) {
-        ontem.add(_extrato(model));
+        ontem.add(_cardExtrato(model));
       } else if (dataRegistro.isBefore(dataAnterior)) {
-        anterior.add(_extrato(model));
+        anterior.add(_cardExtrato(model));
       } else {
         if (model.entrada!) {
           totalEntrada = totalEntrada + model.pontos!;
         } else {
           totalSaida = totalSaida + model.pontos!;
         }
-        hoje.add(_extrato(model));
+        hoje.add(_cardExtrato(model));
       }
     }
 
@@ -133,20 +138,20 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _cardInfo(title: "Total de saídas (Hoje)", value: "-${totalSaida.toString()}", entrada: false),
-              _cardInfo(title: "Total de entradas (Hoje)", value: "+${totalEntrada.toString()}", entrada: true),
+              _cardEntradaSaida(title: "Total de saídas (Hoje)", value: "-${totalSaida.toString()}", entrada: false),
+              _cardEntradaSaida(title: "Total de entradas (Hoje)", value: "+${totalEntrada.toString()}", entrada: true),
             ],
           ),
           const SizedBox(height: 10),
-          hoje.isNotEmpty ? Center(child: text("Hoje".toUpperCase(), bold: true, color: AppColor.primaryColor)) : container(),
+          hoje.isNotEmpty ? Center(child: text("Hoje".toUpperCase(), bold: true, color: AppColors.primaryColor)) : container(),
           const SizedBox(height: 10),
           ...hoje.reversed,
           const SizedBox(height: 5),
-          ontem.isNotEmpty ? Center(child: text("Ontem".toUpperCase(), bold: true, color: AppColor.primaryColor)) : container(),
+          ontem.isNotEmpty ? Center(child: text("Ontem".toUpperCase(), bold: true, color: AppColors.primaryColor)) : container(),
           const SizedBox(height: 10),
           ...ontem.reversed,
           const SizedBox(height: 5),
-          anterior.isNotEmpty ? Center(child: text("Anterior".toUpperCase(), bold: true, color: AppColor.primaryColor)) : container(),
+          anterior.isNotEmpty ? Center(child: text("Anterior".toUpperCase(), bold: true, color: AppColors.primaryColor)) : container(),
           const SizedBox(height: 10),
           ...anterior.reversed,
         ],
@@ -156,13 +161,12 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
 
   Widget _bodyBuilder() {
     return RefreshIndicator(
-      color: AppColor.white,
+      color: AppColors.white,
       strokeWidth: 2,
-      backgroundColor: AppColor.primaryColor,
+      backgroundColor: AppColors.primaryColor,
       onRefresh: _loadExtrato,
-      child: BlocConsumer<ExtratoBloc, ExtratoState>(
-        bloc: extratoBloc,
-        listener: (context, state) => _onChangeState(state),
+      child: BlocBuilder<ExtratoBloc, ExtratoState>(
+        bloc: bloc,
         builder: (context, state) {
           switch (state.runtimeType) {
             case ExtratoLoadingState:
@@ -181,6 +185,16 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return scaffold(body: _bodyBuilder(), title: "Extrato", hideBackArrow: true);
+    return scaffold(
+      body: _bodyBuilder(),
+      title: "Extrato",
+      hideBackArrow: true,
+    );
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 }

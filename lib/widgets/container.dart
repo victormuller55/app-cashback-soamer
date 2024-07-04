@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
@@ -46,7 +46,7 @@ Widget container({
 }
 
 Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
-  int days = formatarDDMMYYYYHHMMToDate(vaucherModel.dataFinalVaucher!).difference(DateTime.now()).inDays;
+  int days = formataDDMMYYYYHHMMParaDateTime(vaucherModel.dataFinal!).difference(DateTime.now()).inDays;
 
   return Builder(builder: (context) {
     return Row(
@@ -68,7 +68,7 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
                     width: 165,
                     backgroundColor: Colors.grey.shade300,
                     radius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-                    image: NetworkImage(Endpoint.endpointImageVoucher(vaucherModel.idVaucher!)),
+                    image: NetworkImage(AppEndpoints.endpointImageVoucher(vaucherModel.id!)),
                   ),
                 ),
                 Padding(
@@ -76,15 +76,15 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text(vaucherModel.tituloVaucher ?? "vazio", fontSize: 14, bold: true, overflow: true),
+                      text(vaucherModel.titulo ?? "vazio", fontSize: 14, bold: true, overflow: true),
                       const SizedBox(height: 5),
-                      vaucherModel.descontoVaucher! > 0 ? text("${vaucherModel.pontosCheioVaucher} Pontos", color: Colors.red, fontSize: 13, cortado: true) : const SizedBox(),
+                      vaucherModel.desconto! > 0 ? text("${vaucherModel.pontosCheio} Pontos", color: Colors.red, fontSize: 13, cortado: true) : const SizedBox(),
                       const SizedBox(height: 3),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          text("${vaucherModel.pontosVaucher} Pontos", bold: true, color: Colors.black, fontSize: 14),
+                          text("${vaucherModel.pontos} Pontos", bold: true, color: Colors.black, fontSize: 14),
                           Row(
                             children: [
                               const Icon(Icons.timer_sharp, size: 20, color: Colors.grey),

@@ -1,14 +1,14 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_font_sizes.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_form_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/app_widget/strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
-import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
-import 'package:app_cashback_soamer/telas/apresentacao/apresentacao_screen.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_bloc.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
@@ -30,107 +30,89 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
-  CadastroBloc cadastroBloc = CadastroBloc();
-  final FocusScopeNode _focusScope = FocusScopeNode();
 
-  TextEditingController controllerNome = TextEditingController();
-  TextEditingController controllerEmail = TextEditingController();
-  TextEditingController controllerCelular = TextEditingController();
-  TextEditingController controllerCPF = TextEditingController();
-  TextEditingController controllerSenha = TextEditingController();
+  CadastroBloc bloc = CadastroBloc();
+
+  TextEditingController nome = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController celular = TextEditingController();
+  TextEditingController cpf = TextEditingController();
+  TextEditingController senha = TextEditingController();
 
   bool termosAceitos = false;
 
   void _salvar() {
-    UsuarioModel usuarioModel = UsuarioModel(
-      nomeUsuario: controllerNome.text,
-      emailUsuario: controllerEmail.text,
-      celularUsuario: somenteNumeros(controllerCelular.text),
-      cpfUsuario: controllerCPF.text.replaceAll(".", "").replaceAll("-", ""),
-      senhaUsuario: controllerSenha.text,
+
+    VendedorModel usuarioModel = VendedorModel(
+      nome: nome.text,
+      email: email.text,
+      celular: somenteNumeros(celular.text),
+      cpf: somenteNumeros(cpf.text),
+      senha: senha.text,
     );
 
-    cadastroBloc.add(CadastroSalvarEvent(usuarioModel));
+    bloc.add(CadastroSalvarEvent(usuarioModel));
   }
 
   void _validar() {
-    if (verificaCampoVazio(controllers: [controllerNome.text, controllerEmail.text, controllerCPF.text, controllerSenha.text])) {
-      if (emailValido(controllerEmail.text)) {
-        if (cpfValido(controllerCPF.text)) {
+    if (verificaCampoFormVazio(controllers: [nome, email, cpf, senha])) {
+      if (validaEmail(email.text)) {
+        if (validaCPF(cpf.text)) {
           if (termosAceitos) {
             _salvar();
           } else {
-            showSnackbarWarning(context, message: Strings.concordeComOsTermosDeUsoEPoliticaDePrivacidade);
+            showSnackbarWarning(message: AppStrings.concordeComOsTermosDeUsoEPoliticaDePrivacidade);
           }
         } else {
-          showSnackbarWarning(context, message: Strings.cpfInvalido);
+          showSnackbarWarning( message: AppStrings.cpfInvalido);
         }
       } else {
-        showSnackbarWarning(context, message: Strings.emailInvalido);
+        showSnackbarWarning(message: AppStrings.emailInvalido);
       }
     } else {
-      showSnackbarWarning(context, message: Strings.todosOsCamposSaoObrigatorios);
+      showSnackbarWarning(message: AppStrings.todosOsCamposSaoObrigatorios);
     }
-  }
-
-  void _onChangeState(CadastroState state) {
-    if (state is CadastroErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? "Ocorreu um erro, tente novamente mais tarde." : state.errorModel.mensagem);
-    if (state is CadastroSuccessState) {
-      open(context, screen: ApresentacaoScreen(usuarioModel: state.usuarioModel), closePrevious: true);
-      saveLocalUserData(state.usuarioModel);
-      if (state.usuarioModel.nomeConcessionaria != null || state.usuarioModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.usuarioModel.nomeConcessionaria ?? "");
-    }
-    _focusScope.unfocus();
   }
 
   Widget _body() {
-    return FocusScope(
-      node: _focusScope,
-      child: Column(
-        children: [
-          appSizedBoxHeight(70),
-          formFieldPadrao(context, controller: controllerNome, "Nome", width: 300, textInputType: TextInputType.name),
-          appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerEmail, "E-mail", width: 300, textInputType: TextInputType.emailAddress),
-          appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.celularFormatter),
-          appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: FormFieldFormatter.cpfFormatter),
-          appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerSenha, "Senha", width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
-          appSizedBoxHeight(20),
-          SizedBox(
-            width: 330,
-            child: CheckboxListTile(
-              value: termosAceitos,
-              title: text(Strings.concordoTermosPoliticas, color: Colors.white, bold: false),
-              onChanged: (value) => setState(() => termosAceitos = !termosAceitos),
-              checkColor: AppColor.primaryColor,
-              fillColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
+    return Column(
+      children: [
+        appSizedBoxHeight(70),
+        formFieldPadrao(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
+        formFieldPadrao(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
+        formFieldPadrao(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
+        formFieldPadrao(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter),
+        formFieldPadrao(context, controller: senha, hint: AppStrings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+        SizedBox(
+          width: 330,
+          child: CheckboxListTile(
+            value: termosAceitos,
+            title: text(AppStrings.concordoTermosPoliticas, color: Colors.white, bold: false),
+            onChanged: (value) => setState(() => termosAceitos = !termosAceitos),
+            checkColor: AppColors.primaryColor,
+            fillColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
-          appSizedBoxHeight(20),
-          elevatedButtonPadrao(
-            function: () => _validar(),
-            text(Strings.cadastrar.toUpperCase(), color: AppColor.primaryColor, bold: true, fontSize: 12),
-          ),
-          appSizedBoxHeight(10),
-          elevatedButtonText(
-            Strings.jaTenhoConta.toUpperCase(),
-            color: AppColor.primaryColor.withOpacity(0.5),
-            textColor: Colors.white,
-            function: () => open(context, screen: const EntrarScreen(), closePrevious: true),
-          ),
-          appSizedBoxHeight(20),
-        ],
-      ),
+        ),
+        appSizedBoxHeight(AppSpacing.medium),
+        elevatedButtonPadrao(
+          function: () => _validar(),
+          text(AppStrings.cadastrar.toUpperCase(), color: AppColors.primaryColor, bold: true, fontSize: AppFontSizes.small),
+        ),
+        appSizedBoxHeight(AppSpacing.normal),
+        elevatedButtonText(
+          AppStrings.jaTenhoConta.toUpperCase(),
+          color: AppColors.primaryColor.withOpacity(0.5),
+          textColor: Colors.white,
+          function: () => open(screen: const EntrarScreen(), closePrevious: true),
+        ),
+        appSizedBoxHeight(AppSpacing.medium),
+      ],
     );
   }
 
   Widget _bodyBuilder() {
-    return BlocConsumer<CadastroBloc, CadastroState>(
-      bloc: cadastroBloc,
-      listener: (context, state) => _onChangeState(state),
+    return BlocBuilder<CadastroBloc, CadastroState>(
+      bloc: bloc,
       builder: (context, state) {
         switch (state.runtimeType) {
           case CadastroLoadingState:
@@ -150,5 +132,11 @@ class _CadastroScreenState extends State<CadastroScreen> {
         child: _bodyBuilder(),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 }

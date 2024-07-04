@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
 import 'package:flutter/material.dart';
 
 Widget backgroundCadastroLogin(
@@ -15,8 +15,8 @@ Widget backgroundCadastroLogin(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColor.primaryColor,
-              AppColor.secondaryColor,
+              AppColors.primaryColor,
+              AppColors.secondaryColor,
             ],
           ),
         ),

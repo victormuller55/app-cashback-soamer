@@ -1,5 +1,5 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
-import 'package:app_cashback_soamer/app_widget/form_field_formatters/form_field_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_form_formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_bloc.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_event.dart';
@@ -68,9 +68,9 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
     return GestureDetector(
       onTap: () => selectContainer(index),
       child: container(
-        backgroundColor: selected == index ? AppColor.primaryColor : Colors.grey.shade300,
+        backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300,
         radius: BorderRadius.circular(20),
-        border: Border.all(color: selected == index ? AppColor.primaryColor : Colors.grey.shade300, width: 3),
+        border: Border.all(color: selected == index ? AppColors.primaryColor : Colors.grey.shade300, width: 3),
         child: Column(
           children: [
             container(
@@ -79,7 +79,7 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
               radius: const BorderRadius.only(topLeft: Radius.circular(18), topRight: Radius.circular(18)),
               image: AssetImage("assets/images/ponteiras/$image"),
             ),
-            container(height: 2, backgroundColor: selected == index ? AppColor.primaryColor : Colors.grey.shade300, width: 160),
+            container(height: 2, backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300, width: 160),
             appSizedBoxHeight(5),
             text(nome, color: selected == index ? Colors.white : Colors.grey),
             appSizedBoxHeight(5),
@@ -103,14 +103,14 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
             child: text('Digite o código NF-E abaixo, ou escaneie o código de barras da NF-E para registrar a venda e ganhar pontos.', textAlign: TextAlign.center),
           ),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, "Digite o número da NF-E", textInputFormatter: FormFieldFormatter.nfeFormatter, textInputType: TextInputType.number, controller: formNFCE),
+          formFieldPadrao(context, "Digite o número da NF-E", textInputFormatter: AppFormFormatters.nfeFormatter, textInputType: TextInputType.number, controller: formNFCE),
           appSizedBoxHeight(10),
-          text('OU', textAlign: TextAlign.center, bold: true, color: AppColor.primaryColor),
+          text('OU', textAlign: TextAlign.center, bold: true, color: AppColors.primaryColor),
           appSizedBoxHeight(10),
           elevatedButtonText(
             "Escanear código de barras".toUpperCase(),
             function: () => scanBarcode(),
-            color: AppColor.primaryColor,
+            color: AppColors.primaryColor,
             textColor: Colors.white,
             width: MediaQuery.of(context).size.width,
           ),
@@ -141,7 +141,7 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
           elevatedButtonText(
             "Enviar NF-E".toUpperCase(),
             function: () => _save(),
-            color: AppColor.primaryColor,
+            color: AppColors.primaryColor,
             textColor: Colors.white,
             width: MediaQuery.of(context).size.width,
           ),

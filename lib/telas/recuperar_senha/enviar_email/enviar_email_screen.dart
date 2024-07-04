@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/colors.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_bloc.dart';
@@ -29,7 +29,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
 
   void _enviarEmail() {
     if (controllerEmail.text.isNotEmpty) {
-      if (emailValido(controllerEmail.text)) {
+      if (validaEmail(controllerEmail.text)) {
         emailBloc.add(EnviarEmailSendEvent(controllerEmail.text));
       } else {
         showSnackbarWarning(context, message: "E-mail inválido");
@@ -51,7 +51,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
       child: ListView(
         children: [
           container(
-            border: Border.all(color: AppColor.primaryColor),
+            border: Border.all(color: AppColors.primaryColor),
             radius: BorderRadius.circular(10),
             padding: const EdgeInsets.all(10),
             backgroundColor: Colors.white,
@@ -62,7 +62,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
           const SizedBox(height: 10),
           elevatedButtonText(
             "Enviar Código".toUpperCase(),
-            color: AppColor.primaryColor,
+            color: AppColors.primaryColor,
             textColor: Colors.white,
             function: () => _enviarEmail(),
           ),

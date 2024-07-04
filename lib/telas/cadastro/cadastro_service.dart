@@ -1,13 +1,10 @@
-import 'package:app_cashback_soamer/app_widget/endpoints.dart';
-import 'package:app_cashback_soamer/functions/service.dart';
+import 'package:app_cashback_soamer/api/api_connection.dart';
+import 'package:app_cashback_soamer/app_widget/consts/app_endpoints.dart';
 import 'package:app_cashback_soamer/models/usuario_model.dart';
 
-Future<Response> postUser(UsuarioModel clienteModel) async {
-
-  print(clienteModel.toMap());
-
+Future<Response> postUser(VendedorModel clienteModel) async {
   return await postHTTP(
-    endpoint: Endpoint.endpointEntrarCadastrar,
+    endpoint: AppEndpoints.endpointEntrarCadastrar,
     body: clienteModel.toMap(),
   );
 }
