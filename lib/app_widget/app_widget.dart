@@ -27,8 +27,7 @@ class _AppWidgetState extends State<AppWidget> {
       VendedorModel vendedorModel = await getModelLocal();
 
       if (vendedorModel.id != null && !opened) {
-        setState(() => screen = ApresentacaoScreen(vendedorModel: VendedorModel.empty()));
-        // setState(() => screen = HomeScreen(vendedorModel: vendedorModel));
+        setState(() => screen = HomeScreen(vendedorModel: vendedorModel));
         opened = true;
       }
 
