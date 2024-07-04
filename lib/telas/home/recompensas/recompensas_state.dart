@@ -4,30 +4,30 @@ import 'package:app_cashback_soamer/models/vaucher_model.dart';
 
 abstract class VaucherState {
   ErrorModel errorModel;
-  HomeModel dadosUsuarioModel;
+  HomeModel dadosVendedorModel;
   List<VaucherModel> vaucherModelList;
   List<VaucherModel> vaucherModelListPromocao;
   List<VaucherModel> vaucherModelListMaisTrocados;
 
-  VaucherState({required this.vaucherModelList, required this.errorModel, required this.vaucherModelListPromocao, required this.vaucherModelListMaisTrocados, required this.dadosUsuarioModel});
+  VaucherState({required this.vaucherModelList, required this.errorModel, required this.vaucherModelListPromocao, required this.vaucherModelListMaisTrocados, required this.dadosVendedorModel});
 }
 
 class VaucherInitialState extends VaucherState {
-  VaucherInitialState() : super(vaucherModelList: [], errorModel: ErrorModel.empty(), vaucherModelListPromocao: [], vaucherModelListMaisTrocados: [], dadosUsuarioModel: HomeModel.empty());
+  VaucherInitialState() : super(vaucherModelList: [], errorModel: ErrorModel.empty(), vaucherModelListPromocao: [], vaucherModelListMaisTrocados: [], dadosVendedorModel: HomeModel.empty());
 }
 
 class VaucherLoadingState extends VaucherState {
-  VaucherLoadingState() : super(vaucherModelList: [], errorModel: ErrorModel.empty(), vaucherModelListPromocao: [], vaucherModelListMaisTrocados: [], dadosUsuarioModel: HomeModel.empty());
+  VaucherLoadingState() : super(vaucherModelList: [], errorModel: ErrorModel.empty(), vaucherModelListPromocao: [], vaucherModelListMaisTrocados: [], dadosVendedorModel: HomeModel.empty());
 }
 
 class VaucherSuccessState extends VaucherState {
   VaucherSuccessState({
-    required HomeModel dadosUsuarioModel,
+    required HomeModel dadosVendedorModel,
     required List<VaucherModel> vaucherModel,
     required List<VaucherModel> vaucherModelListMaisTrocados,
     required List<VaucherModel> vaucherModelListPromocao,
   }) : super(
-          dadosUsuarioModel: dadosUsuarioModel,
+          dadosVendedorModel: dadosVendedorModel,
           vaucherModelList: vaucherModel,
           vaucherModelListMaisTrocados: vaucherModelListMaisTrocados,
           vaucherModelListPromocao: vaucherModelListPromocao,
@@ -36,5 +36,5 @@ class VaucherSuccessState extends VaucherState {
 }
 
 class VaucherErrorState extends VaucherState {
-  VaucherErrorState({required ErrorModel errorModel}) : super(vaucherModelList: [], vaucherModelListPromocao: [], vaucherModelListMaisTrocados: [], errorModel: errorModel, dadosUsuarioModel: HomeModel.empty());
+  VaucherErrorState({required ErrorModel errorModel}) : super(vaucherModelList: [], vaucherModelListPromocao: [], vaucherModelListMaisTrocados: [], errorModel: errorModel, dadosVendedorModel: HomeModel.empty());
 }

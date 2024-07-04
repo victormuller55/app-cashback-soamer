@@ -1,17 +1,17 @@
 class VendaModel {
-  int? idUsuario;
+  int? idVendedor;
   String? nfeCode;
   int? idPonteira;
 
   VendaModel({
-    this.idUsuario,
+    this.idVendedor,
     this.nfeCode,
     this.idPonteira,
   });
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id_usuario'] = idUsuario;
+    data['id_usuario'] = idVendedor;
     data['venda_nfe_code'] = nfeCode;
     data['id_ponteira'] = idPonteira;
     return data;

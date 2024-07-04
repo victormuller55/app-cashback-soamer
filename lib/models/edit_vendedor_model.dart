@@ -1,4 +1,4 @@
-class EditUsuarioModel {
+class EditVendedorModel {
   String? nome;
   String? newEmail;
   String? newSenha;
@@ -7,7 +7,7 @@ class EditUsuarioModel {
   String? senha;
   int? idConcessionaria;
 
-  EditUsuarioModel({
+  EditVendedorModel({
     this.nome,
     this.newEmail,
     this.newSenha,

@@ -1,17 +1,17 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_form_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_form_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/app_widget/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
-import 'package:app_cashback_soamer/models/edit_usuario_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/edit_vendedor_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_event.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_state.dart';
@@ -28,16 +28,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditarPerfilScreen extends StatefulWidget {
-  final VendedorModel usuarioModel;
+  final VendedorModel vendedorModel;
 
-  const EditarPerfilScreen({super.key, required this.usuarioModel});
+  const EditarPerfilScreen({super.key, required this.vendedorModel});
 
   @override
   State<EditarPerfilScreen> createState() => _EditarPerfilScreenState();
 }
 
 class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
-  EditarUsuarioBloc editarUsuarioBloc = EditarUsuarioBloc();
+  EditarVendedorBloc bloc = EditarVendedorBloc();
   File imageFile = File("");
 
   TextEditingController controllerNome = TextEditingController();
@@ -49,10 +49,10 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
 
   @override
   void initState() {
-    controllerNome.text = widget.usuarioModel.nome ?? "";
-    controllerEmail.text = widget.usuarioModel.email ?? "";
-    controllerCPF.text = widget.usuarioModel.cpf ?? "";
-    controllerCelular.text = formataCelular(widget.usuarioModel.celular.toString());
+    controllerNome.text = widget.vendedorModel.nome ?? "";
+    controllerEmail.text = widget.vendedorModel.email ?? "";
+    controllerCPF.text = widget.vendedorModel.cpf ?? "";
+    controllerCelular.text = formataCelular(widget.vendedorModel.celular.toString());
     super.initState();
   }
 
@@ -67,41 +67,41 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
       if (kDebugMode) {
         print(e);
       }
-      showSnackbarError(context, message: "Não é possivel abrir a galeria");
+      showSnackbarError(message: "Não é possivel abrir a galeria");
     }
   }
 
   void _salvar() {
-    EditUsuarioModel usuarioModel = EditUsuarioModel(
-      nome: controllerNome.text == widget.usuarioModel.nome ? "" : controllerNome.text,
-      email: widget.usuarioModel.email,
-      celular: widget.usuarioModel.celular,
-      newEmail: controllerEmail.text == widget.usuarioModel.email ? "" : controllerEmail.text,
+    EditVendedorModel vendedorModel = EditVendedorModel(
+      nome: controllerNome.text == widget.vendedorModel.nome ? "" : controllerNome.text,
+      email: widget.vendedorModel.email,
+      celular: widget.vendedorModel.celular,
+      newEmail: controllerEmail.text == widget.vendedorModel.email ? "" : controllerEmail.text,
       senha: controllerSenha.text,
       newSenha: controllerNovaSenha.text,
     );
 
-    editarUsuarioBloc.add(EditarUsuarioSalvarEvent(usuarioModel, imageFile));
+    bloc.add(EditarVendedorSalvarEvent(vendedorModel, imageFile));
   }
 
   void _validar() {
-    if (verificaCampoFormVazio(controllers: [controllerNome.text, controllerEmail.text, controllerCPF.text, controllerSenha.text])) {
+    if (verificaCampoFormVazio(controllers: [controllerNome, controllerEmail, controllerCPF, controllerSenha])) {
       if (validaEmail(controllerEmail.text)) {
         _salvar();
       } else {
-        showSnackbarWarning(context, message: Strings.emailInvalido);
+        showSnackbarWarning(message: AppStrings.emailInvalido);
       }
     } else {
-      showSnackbarWarning(context, message: Strings.todosOsCamposSaoObrigatorios);
+      showSnackbarWarning(message: AppStrings.todosOsCamposSaoObrigatorios);
     }
   }
 
-  void _onChangeState(EditarUsuarioState state) {
-    if (state is EditarUsuarioErrorState) showSnackbarError(context, message: state.errorModel.mensagem!.isEmpty ? "Ocorreu um erro, tente novamente mais tarde." : state.errorModel.mensagem);
-    if (state is EditarUsuarioSuccessState) {
-      saveLocalUserData(state.usuarioModel);
+  void _onChangeState(EditarVendedorState state) {
+    if (state is EditarVendedorErrorState) showSnackbarError(message: state.errorModel.mensagem!.isEmpty ? "Ocorreu um erro, tente novamente mais tarde." : state.errorModel.mensagem);
+    if (state is EditarVendedorSuccessState) {
+      saveLocalUserData(state.vendedorModel);
       Navigator.pop(context);
-      showSnackbarSuccess(context, message: "Salvo com sucesso");
+      showSnackbarSuccess(message: "Salvo com sucesso");
     }
   }
 
@@ -113,7 +113,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
           backgroundColor: Colors.transparent,
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: container(
+            child: appContainer(
               radius: BorderRadius.circular(20),
               height: 190,
               width: 240,
@@ -123,13 +123,13 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    container(
+                    appContainer(
                       radius: BorderRadius.circular(10),
                       padding: const EdgeInsets.all(8),
                       backgroundColor: Colors.grey.shade700,
-                      child: text("Digite sua senha para a alteração dos dados da conta, por favor.", textAlign: TextAlign.center, color: Colors.white, bold: true),
+                      child: appText("Digite sua senha para a alteração dos dados da conta, por favor.", textAlign: TextAlign.center, color: Colors.white, bold: true),
                     ),
-                    formFieldPadrao(context, "Digite sua senha", controller: controllerSenha, showSenha: false),
+                    formFieldPadrao(context, hint: "Digite sua senha", controller: controllerSenha, showSenha: false),
                     elevatedButtonText(
                       "SALVAR",
                       function: () {
@@ -162,13 +162,13 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  container(
+                  appContainer(
                     width: 200,
                     padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                     backgroundColor: Colors.grey.shade300,
                     radius: BorderRadius.circular(20),
                     child: Center(
-                      child: text(
+                      child: appText(
                         "É possível fazer alterações nos dados do usuário, com exceção do número de CPF.",
                         fontSize: 14,
                         color: Colors.grey.shade600,
@@ -191,14 +191,14 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
               Hero(
                 tag: "usuario",
                 child: imageFile.path.isEmpty
-                    ? container(
+                    ? appContainer(
                         height: 150,
                         width: 150,
                         radius: BorderRadius.circular(20),
                         // border: Border.all(color: AppColor.primaryColor, width: 2),
-                        image: NetworkImage(AppEndpoints.endpointImageUsuario(widget.usuarioModel.id!)),
+                        image: NetworkImage(AppEndpoints.endpointImageVendedor(widget.vendedorModel.id!)),
                       )
-                    : container(
+                    : appContainer(
                         height: 150,
                         width: 150,
                         radius: BorderRadius.circular(20),
@@ -211,15 +211,15 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
             ],
           ),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerNome, "Nome", width: 300, textInputType: TextInputType.name),
+          formFieldPadrao(context, controller: controllerNome, hint: "Nome", width: 300, textInputType: TextInputType.name),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerEmail, "E-mail", width: 300, textInputType: TextInputType.emailAddress),
+          formFieldPadrao(context, controller: controllerEmail, hint: "E-mail", width: 300, textInputType: TextInputType.emailAddress),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerCelular, "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
+          formFieldPadrao(context, controller: controllerCelular, hint: "Celular", width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerCPF, "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter, enable: false),
+          formFieldPadrao(context, controller: controllerCPF,hint: "CPF", width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter, enable: false),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, controller: controllerNovaSenha, "Digite sua nova senha", width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
+          formFieldPadrao(context, controller: controllerNovaSenha,hint: "Digite sua nova senha", width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
           appSizedBoxHeight(10),
           elevatedButtonText(
             "Salvar".toUpperCase(),
@@ -233,12 +233,12 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
   }
 
   Widget _bodyBuilder() {
-    return BlocConsumer<EditarUsuarioBloc, EditarUsuarioState>(
-      bloc: editarUsuarioBloc,
+    return BlocConsumer<EditarVendedorBloc, EditarVendedorState>(
+      bloc: bloc,
       listener: (context, state) => _onChangeState(state),
       builder: (context, state) {
         switch (state.runtimeType) {
-          case EditarUsuarioLoadingState:
+          case EditarVendedorLoadingState:
             return loading();
           default:
             return _body();
@@ -254,7 +254,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
 
   @override
   void dispose() {
-    editarUsuarioBloc.close();
+    bloc.close();
     super.dispose();
   }
 }

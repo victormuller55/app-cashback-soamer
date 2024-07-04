@@ -1,7 +1,8 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_radius.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/models/extrato_model.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
+import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +38,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   }
 
   Widget _cardEntradaSaida({required String title, required String value, bool? entrada}) {
-    return container(
+    return appContainer(
       radius: BorderRadius.circular(AppRadius.medium),
       backgroundColor: AppColors.grey300,
       width: MediaQuery.of(context).size.width / 2.2,
@@ -55,18 +57,17 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   }
 
   Widget _cardExtrato(ExtratoModel extratoModel) {
-
-    Widget trailing = text("");
+    Widget trailing = appText("");
 
     if (extratoModel.entrada ?? false) {
       if (extratoModel.titulo!.contains("Venda Aprovada")) {
-        trailing = text("+${extratoModel.pontos ?? 0} Pts", fontSize: AppFontSizes.normal, bold: true, color: AppColors.green);
+        trailing = appText("+${extratoModel.pontos ?? 0} Pts", fontSize: AppFontSizes.normal, bold: true, color: AppColors.green);
       }
     }
 
     return Padding(
       padding: EdgeInsets.only(bottom: AppSpacing.small),
-      child: container(
+      child: appContainer(
         width: MediaQuery.of(context).size.width,
         backgroundColor: AppColors.white,
         radius: BorderRadius.circular(AppRadius.medium),
@@ -77,15 +78,15 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
               dense: true,
               title: Padding(
                 padding: EdgeInsets.only(bottom: AppRadius.small),
-                child: text(extratoModel.titulo ?? "", fontSize: AppFontSizes.small, bold: true),
+                child: appText(extratoModel.titulo ?? "", fontSize: AppFontSizes.small, bold: true),
               ),
-              subtitle: text(extratoModel.descricao ?? "", fontSize: AppFontSizes.small),
+              subtitle: appText(extratoModel.descricao ?? "", fontSize: AppFontSizes.small),
               trailing: trailing,
-              leading: SizedBox(
+              leading: appContainer(
                 width: 40,
                 height: 40,
                 child: Center(
-                  child: text(formatarDataApi(extratoModel.data.toString())),
+                  child: appText(formatarDataApi(extratoModel.data.toString())),
                 ),
               ),
             ),
@@ -96,64 +97,74 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   }
 
   Widget _body(List<ExtratoModel> extratoModel) {
-
     int totalEntrada = 0;
     int totalSaida = 0;
+
+    DateTime dataAtual = DateTime.now();
+    DateTime dataOntem = dataAtual.subtract(const Duration(days: 1));
+    DateTime dataAnterior = dataAtual.subtract(const Duration(days: 2));
 
     List<Widget> hoje = [];
     List<Widget> ontem = [];
     List<Widget> anterior = [];
 
-    DateTime dataAtual = DateTime.now();
-    DateTime dataOntem = DateTime.now().subtract(Duration(hours: dataAtual.hour - 1));
-    DateTime dataAnterior = DateTime.now().subtract(const Duration(days: 2));
-
-    for (ExtratoModel model in extratoModel) {
-      DateTime dataRegistro = DateTime.parse(model.data!).subtract(const Duration(hours: 3));
-
+    void addCardToList(DateTime dataRegistro, ExtratoModel extratoModel) {
       if (dataRegistro.isBefore(dataOntem)) {
-        ontem.add(_cardExtrato(model));
+        ontem.add(_cardExtrato(extratoModel));
       } else if (dataRegistro.isBefore(dataAnterior)) {
-        anterior.add(_cardExtrato(model));
+        anterior.add(_cardExtrato(extratoModel));
       } else {
-        if (model.entrada!) {
-          totalEntrada = totalEntrada + model.pontos!;
+        if (extratoModel.entrada!) {
+          totalEntrada += extratoModel.pontos!;
         } else {
-          totalSaida = totalSaida + model.pontos!;
+          totalSaida += extratoModel.pontos!;
         }
-        hoje.add(_cardExtrato(model));
+        hoje.add(_cardExtrato(extratoModel));
       }
     }
 
+    for (ExtratoModel model in extratoModel) {
+      DateTime dataRegistro = DateTime.parse(model.data!).subtract(const Duration(hours: 3));
+      addCardToList(dataRegistro, model);
+    }
+
     if (hoje.isEmpty && ontem.isEmpty && anterior.isEmpty) {
-      return Center(child: text("Nenhum registro encontrato \n Começe a registrando uma venda!", textAlign: TextAlign.center, fontSize: 15));
+      return Center(child: appText(AppStrings.nenhumRegistroEncontrado, textAlign: TextAlign.center, fontSize: AppFontSizes.normal));
+    }
+
+    Widget buildSection(String title, List<Widget> items) {
+      if (items.isNotEmpty) {
+        return Column(
+          children: [
+            Center(child: appText(title.toUpperCase(), bold: true, color: AppColors.primaryColor)),
+            appSizedBoxHeight(AppSpacing.normal),
+            ...items.reversed,
+          ],
+        );
+      }
+
+      return appContainer();
     }
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(AppSpacing.normal),
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          const SizedBox(height: 10),
+          appSizedBoxHeight(AppSpacing.normal),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _cardEntradaSaida(title: "Total de saídas (Hoje)", value: "-${totalSaida.toString()}", entrada: false),
-              _cardEntradaSaida(title: "Total de entradas (Hoje)", value: "+${totalEntrada.toString()}", entrada: true),
+              _cardEntradaSaida(title: AppStrings.totalSaidasHoje, value: "-$totalSaida", entrada: false),
+              _cardEntradaSaida(title: AppStrings.totalEntradasHoje, value: "+$totalEntrada", entrada: true),
             ],
           ),
-          const SizedBox(height: 10),
-          hoje.isNotEmpty ? Center(child: text("Hoje".toUpperCase(), bold: true, color: AppColors.primaryColor)) : container(),
-          const SizedBox(height: 10),
-          ...hoje.reversed,
-          const SizedBox(height: 5),
-          ontem.isNotEmpty ? Center(child: text("Ontem".toUpperCase(), bold: true, color: AppColors.primaryColor)) : container(),
-          const SizedBox(height: 10),
-          ...ontem.reversed,
-          const SizedBox(height: 5),
-          anterior.isNotEmpty ? Center(child: text("Anterior".toUpperCase(), bold: true, color: AppColors.primaryColor)) : container(),
-          const SizedBox(height: 10),
-          ...anterior.reversed,
+          appSizedBoxHeight(AppSpacing.normal),
+          buildSection(AppStrings.hoje, hoje),
+          appSizedBoxHeight(AppSpacing.small),
+          buildSection(AppStrings.ontem, ontem),
+          appSizedBoxHeight(AppSpacing.small),
+          buildSection(AppStrings.anterior, anterior),
         ],
       ),
     );
@@ -176,7 +187,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
             case ExtratoErrorState:
               return erro(state.errorModel, function: () => _loadExtrato());
             default:
-              return container();
+              return appContainer();
           }
         },
       ),
@@ -187,7 +198,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      title: "Extrato",
+      title: AppStrings.extrato,
       hideBackArrow: true,
     );
   }

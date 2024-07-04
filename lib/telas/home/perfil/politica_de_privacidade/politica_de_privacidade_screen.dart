@@ -13,9 +13,9 @@ class PoliticaDePrivacidadeScreen extends StatefulWidget {
 class _PoliticaDePrivacidadeScreenState extends State<PoliticaDePrivacidadeScreen> {
 
   Widget _body() {
-    return container(
+    return appContainer(
       child: Center(
-        child: text("Aqui vai a politica de privacidade"),
+        child: appText("Aqui vai a politica de privacidade"),
       ),
     );
   }

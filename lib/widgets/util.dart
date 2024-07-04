@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:flutter/material.dart';
 
 Widget backgroundCadastroLogin(
@@ -36,7 +36,7 @@ Widget backgroundCadastroLogin(
   );
 }
 
-Widget text(
+Widget appText(
   String text, {
   Color? color,
   double? fontSize,
@@ -87,9 +87,9 @@ Widget infoColumn({
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
         children: [
-          text(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 15, cortado: cortarTitle),
+          appText(title, bold: true, color: titleColor ?? Colors.white, fontSize: titleSize ?? 15, cortado: cortarTitle),
           SizedBox(height: spacing ?? false ? 5 : 0),
-          text(value, color: valueColor ?? Colors.white, overflow: ovewflowValue ?? true, fontSize: valueSize, cortado: cortarValue),
+          appText(value, color: valueColor ?? Colors.white, overflow: ovewflowValue ?? true, fontSize: valueSize, cortado: cortarValue),
         ],
       ),
     );

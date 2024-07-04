@@ -1,25 +1,25 @@
 import 'package:app_cashback_soamer/models/error_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 
 abstract class CadastroState {
   ErrorModel errorModel;
-  VendedorModel usuarioModel;
+  VendedorModel vendedorModel;
 
-  CadastroState({required this.usuarioModel, required this.errorModel});
+  CadastroState({required this.vendedorModel, required this.errorModel});
 }
 
 class CadastroInitialState extends CadastroState {
-  CadastroInitialState() : super(usuarioModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
+  CadastroInitialState() : super(vendedorModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
 }
 
 class CadastroLoadingState extends CadastroState {
-  CadastroLoadingState() : super(usuarioModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
+  CadastroLoadingState() : super(vendedorModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
 }
 
 class CadastroSuccessState extends CadastroState {
-  CadastroSuccessState({required VendedorModel usuarioModel}) : super(usuarioModel: usuarioModel, errorModel: ErrorModel.empty());
+  CadastroSuccessState({required VendedorModel vendedorModel}) : super(vendedorModel: vendedorModel, errorModel: ErrorModel.empty());
 }
 
 class CadastroErrorState extends CadastroState {
-  CadastroErrorState({required ErrorModel errorModel}) : super(usuarioModel: VendedorModel.empty(), errorModel: errorModel);
+  CadastroErrorState({required ErrorModel errorModel}) : super(vendedorModel: VendedorModel.empty(), errorModel: errorModel);
 }

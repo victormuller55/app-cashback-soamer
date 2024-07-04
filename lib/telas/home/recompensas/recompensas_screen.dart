@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_event.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_state.dart';
@@ -38,7 +38,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         appSizedBoxHeight(10),
-        text(title, bold: true, color: Colors.grey, fontSize: 14),
+        appText(title, bold: true, color: Colors.grey, fontSize: 14),
         SizedBox(
           height: lista.isNotEmpty ? 180 : 100,
           child: lista.isNotEmpty
@@ -47,7 +47,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
                   scrollDirection: Axis.horizontal,
                   children: lista,
                 )
-              : Center(child: text("Nenhum Voucher Encontrado", color: Colors.grey)),
+              : Center(child: appText("Nenhum Voucher Encontrado", color: Colors.grey)),
         ),
       ],
     );
@@ -59,15 +59,15 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
     List<Widget> lista3 = [];
 
     for (int i = 0; i <= state.vaucherModelList.length - 1; i++) {
-      lista1.add(cardVaucher(state.vaucherModelList[i], "1hero$i", vaucherBloc.state.dadosUsuarioModel.pontos!));
+      lista1.add(cardVaucher(state.vaucherModelList[i], "1hero$i", vaucherBloc.state.dadosVendedorModel.pontos!));
     }
 
     for (int i = 0; i <= state.vaucherModelListMaisTrocados.length - 1; i++) {
-      lista2.add(cardVaucher(state.vaucherModelListMaisTrocados[i], "2hero$i", vaucherBloc.state.dadosUsuarioModel.pontos!));
+      lista2.add(cardVaucher(state.vaucherModelListMaisTrocados[i], "2hero$i", vaucherBloc.state.dadosVendedorModel.pontos!));
     }
 
     for (int i = 0; i <= state.vaucherModelListPromocao.length - 1; i++) {
-      lista3.add(cardVaucher(state.vaucherModelListPromocao[i], "3hero$i", vaucherBloc.state.dadosUsuarioModel.pontos!));
+      lista3.add(cardVaucher(state.vaucherModelListPromocao[i], "3hero$i", vaucherBloc.state.dadosVendedorModel.pontos!));
     }
 
     return Padding(
@@ -75,7 +75,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          container(
+          appContainer(
             height: 130,
             width: MediaQuery.of(context).size.width,
             radius: BorderRadius.circular(20),
@@ -84,12 +84,12 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                text("Cashbacks via PIX podem demorar até 3 dias para serem depositados na conta do usuário.", color: Colors.grey.shade700, textAlign: TextAlign.center),
+                appText("Cashbacks via PIX podem demorar até 3 dias para serem depositados na conta do usuário.", color: Colors.grey.shade700, textAlign: TextAlign.center),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    text("R\$${vaucherBloc.state.dadosUsuarioModel.pontos},00", fontSize: 22, bold: true, color: AppColors.primaryColor),
+                    appText("R\$${vaucherBloc.state.dadosVendedorModel.pontos},00", fontSize: 22, bold: true, color: AppColors.primaryColor),
                     elevatedButtonText("Solicitar valor".toUpperCase(), function: () => {}, width: 180, height: 40, color: AppColors.primaryColor, textColor: Colors.white, borderRadius: 50),
                   ],
                 )
@@ -123,7 +123,7 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
             case VaucherErrorState:
               return erro(state.errorModel, function: () => _load());
             default:
-              return container();
+              return appContainer();
           }
         },
       ),

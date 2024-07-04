@@ -12,9 +12,9 @@ class TermosDeUsoScreen extends StatefulWidget {
 
 class _TermosDeUsoScreenState extends State<TermosDeUsoScreen> {
   Widget _body() {
-    return container(
+    return appContainer(
       child: Center(
-        child: text("Aqui vai a termos de uso"),
+        child: appText("Aqui vai a termos de uso"),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 
 class ExtratoModel {
   int? id;
@@ -7,7 +7,7 @@ class ExtratoModel {
   int? pontos;
   String? data;
   bool? entrada;
-  int? idUsuario;
+  int? idVendedor;
   int? idVaucher;
 
   ExtratoModel({
@@ -17,7 +17,7 @@ class ExtratoModel {
     this.pontos,
     this.data,
     this.entrada,
-    this.idUsuario,
+    this.idVendedor,
     this.idVaucher,
   });
 
@@ -28,7 +28,7 @@ class ExtratoModel {
       titulo: AppStrings.vazio,
       descricao: AppStrings.vazio,
       pontos: 0,
-      idUsuario: 0,
+      idVendedor: 0,
       data: AppStrings.vazio,
       entrada: false,
     );
@@ -41,7 +41,7 @@ class ExtratoModel {
     pontos = json['pontos_extrato'];
     data = json['data_extrato'];
     entrada = json['entrada_extrato'];
-    idUsuario = json['id_usuario_extrato'];
+    idVendedor = json['id_usuario_extrato'];
     idVaucher = json['id_vaucher_extrato'];
   }
 }

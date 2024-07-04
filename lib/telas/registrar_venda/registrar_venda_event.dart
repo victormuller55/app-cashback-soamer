@@ -1,4 +1,3 @@
-import 'package:app_cashback_soamer/models/venda_model.dart';
 
 abstract class RegistrarVendaEvent {}
 

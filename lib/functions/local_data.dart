@@ -1,15 +1,15 @@
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void saveLocalUserData(VendedorModel usuarioModel) async {
+void saveLocalUserData(VendedorModel vendedorModel) async {
   final SharedPreferences localData = await SharedPreferences.getInstance();
 
-  localData.setInt("id", usuarioModel.id ?? 0);
-  localData.setString("nome", usuarioModel.nome ?? "");
-  localData.setString("email", usuarioModel.email ?? "");
-  localData.setString("celular", usuarioModel.celular.toString() ?? "");
-  localData.setString("cpf", usuarioModel.cpf ?? "");
-  localData.setString("data", usuarioModel.data ?? "");
+  localData.setInt("id", vendedorModel.id ?? 0);
+  localData.setString("nome", vendedorModel.nome ?? "");
+  localData.setString("email", vendedorModel.email ?? "");
+  localData.setString("celular", vendedorModel.celular.toString());
+  localData.setString("cpf", vendedorModel.cpf ?? "");
+  localData.setString("data", vendedorModel.data ?? "");
 }
 
 Future<VendedorModel> getModelLocal() async {

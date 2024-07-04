@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_screen.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
@@ -24,7 +24,7 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
      if(codeController.text == widget.code) {
        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  AlterarSenhaScreen(email: widget.email)));
      } else {
-       showSnackbarWarning(context, message: "Código Incorreto");
+       showSnackbarWarning(message: "Código Incorreto");
      }
   }
 
@@ -38,7 +38,7 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
             SizedBox(height: 300, child: Image.network("https://www.signiflow.com/wp-content/uploads/2021/10/SigniFlow-application-security.png")),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
-              child: text("Enviamos um e-mail para ${widget.email}, confira sua caixa de entrada, spam ou promoções", textAlign: TextAlign.center, fontSize: 15),
+              child: appText("Enviamos um e-mail para ${widget.email}, confira sua caixa de entrada, spam ou promoções", textAlign: TextAlign.center, fontSize: 15),
             ),
             getPinCodeFormField(
               controller: codeController,

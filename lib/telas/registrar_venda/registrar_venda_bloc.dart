@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/models/venda_model.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_event.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_service.dart';
@@ -15,8 +15,8 @@ class RegistrarVendaBloc extends Bloc<RegistrarVendaEvent, RegistrarVendaState> 
     on<RegistrarVendaLoadEvent>((event, emit) async {
       emit(RegistrarVendaLoadingState());
       try {
-        VendedorModel usuarioModel = await getModelLocal();
-        VendaModel vendaModel = VendaModel(idUsuario: usuarioModel.id!, nfeCode: event.nfc, idPonteira: event.idPonteira);
+        VendedorModel vendedorModel = await getModelLocal();
+        VendaModel vendaModel = VendaModel(idVendedor: vendedorModel.id!, nfeCode: event.nfc, idPonteira: event.idPonteira);
         await registrarVenda(vendaModel);
         emit(RegistrarVendaSuccessState());
       } catch (e) {

@@ -1,8 +1,14 @@
 class AppStrings {
-
   static const String vazio = "";
+  static const String nenhumRegistroEncontrado = "Nenhum registro encontrado\nComece registrando uma venda!";
   static const String nome = "Nome";
-  static const String email = "E-mail";
+  static const String totalSaidasHoje = "Total de saídas (Hoje)";
+  static const String totalEntradasHoje = "Total de entradas (Hoje)";
+  static const String hoje = "Hoje";
+  static const String anterior = "Anterior";
+  static const String extrato = "Extrato";
+  static const String ontem = "Ontem";
+  static const String email = "Email";
   static const String celular = "Celular";
   static const String cpf = "CPF";
   static const String entrar = "Entrar";
@@ -31,7 +37,7 @@ class AppStrings {
   static String tituloPresentacao1 = "Seja Bem-Vindo".toUpperCase();
   static const String descricaoapresentacao1 = "Bem-vindo ao aplicativo da SOAMER ponteiras automotivas, esse aplicativo tem como objetivo distribuir cashback a vendedores das ponteiras SOAMER.";
 
-  static  String tituloPresentacao2 = "Pontos e mais Pontos".toUpperCase();
+  static String tituloPresentacao2 = "Pontos e mais Pontos".toUpperCase();
   static const String descricaoapresentacao2 = "Ao escanear o código de barras da NFE após a venda de uma ponteira SOAMER, você ganha pontos no aplicativo!";
 
   static String tituloPresentacao3 = "Espere um pouco".toUpperCase();
@@ -39,5 +45,4 @@ class AppStrings {
 
   static String tituloPresentacao4 = "Vouchers e Pix".toUpperCase();
   static const String descricaoapresentacao4 = "Você pode resgatar seus pontos trocando por vouchers, ou se preferir receber um PIX direto na sua conta!";
-
 }

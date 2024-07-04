@@ -8,7 +8,7 @@ class AppEndpoints {
 
   // Dados do usuarios
   static String endpointHome = "$server/v1/soamer/usuario/home";
-  static String endpointEditarUsuario = "$server/v1/soamer/usuario/edit";
+  static String endpointEditarVendedor = "$server/v1/soamer/usuario/edit";
   static String endpointExtrato = "$server/v1/soamer/extrato";
   static String endpointRecuperarSenha = "$server/v1/soamer/senha/recuperar";
 
@@ -21,8 +21,8 @@ class AppEndpoints {
   // Venda
   static String endpointVenda = "$server/v1/soamer/venda";
 
-  static String endpointImageUsuario(int idUsuario) {
-    return "$server/v1/soamer/usuario/foto?id_usuario=$idUsuario";
+  static String endpointImageVendedor(int idVendedor) {
+    return "$server/v1/soamer/usuario/foto?id_usuario=$idVendedor";
   }
 
   static String endpointImageVoucher(int idVoucher) {

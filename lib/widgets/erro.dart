@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
@@ -11,9 +11,9 @@ Widget erro(ErrorModel errorModel, {required void Function() function}) {
       children: [
         SizedBox(width: 80, height: 80, child: Image.asset("assets/images/error.png")),
         const SizedBox(height: 10),
-        text(errorModel.erro ?? "Ocorreu um erro", color: AppColors.primaryColor, bold: true, fontSize: 20),
+        appText(errorModel.erro ?? "Ocorreu um erro", color: AppColors.primaryColor, bold: true, fontSize: 20),
         const SizedBox(height: 10),
-        text(errorModel.mensagem ?? "Tente novamente mais tarde"),
+        appText(errorModel.mensagem ?? "Tente novamente mais tarde"),
         const SizedBox(height: 20),
         elevatedButtonText("Tentar novamente".toUpperCase(), function: function, width: 250)
       ],

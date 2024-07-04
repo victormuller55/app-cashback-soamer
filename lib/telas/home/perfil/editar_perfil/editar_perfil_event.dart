@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:app_cashback_soamer/models/edit_usuario_model.dart';
+import 'package:app_cashback_soamer/models/edit_vendedor_model.dart';
 
-abstract class EditarUsuarioEvent {}
+abstract class EditarVendedorEvent {}
 
-class EditarUsuarioSalvarEvent extends EditarUsuarioEvent {
-  EditUsuarioModel editUsuarioModel;
+class EditarVendedorSalvarEvent extends EditarVendedorEvent {
+  EditVendedorModel editarVendedorModel;
   File image;
-  EditarUsuarioSalvarEvent(this.editUsuarioModel, this.image);
+  EditarVendedorSalvarEvent(this.editarVendedorModel, this.image);
 }

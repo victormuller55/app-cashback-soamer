@@ -14,7 +14,7 @@ void showModalEmpty(
     backgroundColor: Colors.transparent,
     isDismissible: isDismissible ?? true,
     builder: (context) {
-      return container(
+      return appContainer(
         height: height ?? 300,
         width: MediaQuery.of(context).size.width,
         backgroundColor: Colors.grey.shade200,
@@ -23,7 +23,7 @@ void showModalEmpty(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            container(
+            appContainer(
               height: 7,
               width: 120,
               backgroundColor: Colors.grey,

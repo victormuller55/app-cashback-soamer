@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
@@ -6,7 +6,7 @@ import 'package:app_cashback_soamer/telas/vaucher/voucher_screen.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 
-Widget container({
+Widget appContainer({
   // Alignments
   MainAxisAlignment? mainAxisAlignment,
 
@@ -52,8 +52,8 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => open(context, screen: VaucherScreen(vaucherModel: vaucherModel, heroImage: heroImage, pontos: pontos)),
-          child: container(
+          onTap: () => open(screen: VaucherScreen(vaucherModel: vaucherModel, heroImage: heroImage, pontos: pontos)),
+          child: appContainer(
             height: 165,
             width: 165,
             radius: BorderRadius.circular(20),
@@ -63,7 +63,7 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
               children: [ 
                 Hero(
                   tag: heroImage,
-                  child: container(
+                  child: appContainer(
                     height: 85,
                     width: 165,
                     backgroundColor: Colors.grey.shade300,
@@ -76,19 +76,19 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text(vaucherModel.titulo ?? "vazio", fontSize: 14, bold: true, overflow: true),
+                      appText(vaucherModel.titulo ?? "vazio", fontSize: 14, bold: true, overflow: true),
                       const SizedBox(height: 5),
-                      vaucherModel.desconto! > 0 ? text("${vaucherModel.pontosCheio} Pontos", color: Colors.red, fontSize: 13, cortado: true) : const SizedBox(),
+                      vaucherModel.desconto! > 0 ? appText("${vaucherModel.pontosCheio} Pontos", color: Colors.red, fontSize: 13, cortado: true) : const SizedBox(),
                       const SizedBox(height: 3),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          text("${vaucherModel.pontos} Pontos", bold: true, color: Colors.black, fontSize: 14),
+                          appText("${vaucherModel.pontos} Pontos", bold: true, color: Colors.black, fontSize: 14),
                           Row(
                             children: [
                               const Icon(Icons.timer_sharp, size: 20, color: Colors.grey),
-                              text("${days}d", fontSize: 13, color: Colors.grey),
+                              appText("${days}d", fontSize: 13, color: Colors.grey),
                             ],
                           )
                         ],

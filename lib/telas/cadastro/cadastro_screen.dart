@@ -1,14 +1,14 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_form_formatter.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_form_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/functions/formatters.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/functions/util.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_bloc.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
@@ -43,7 +43,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   void _salvar() {
 
-    VendedorModel usuarioModel = VendedorModel(
+    VendedorModel vendedorModel = VendedorModel(
       nome: nome.text,
       email: email.text,
       celular: somenteNumeros(celular.text),
@@ -51,7 +51,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
       senha: senha.text,
     );
 
-    bloc.add(CadastroSalvarEvent(usuarioModel));
+    bloc.add(CadastroSalvarEvent(vendedorModel));
   }
 
   void _validar() {
@@ -87,7 +87,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
           width: 330,
           child: CheckboxListTile(
             value: termosAceitos,
-            title: text(AppStrings.concordoTermosPoliticas, color: Colors.white, bold: false),
+            title: appText(AppStrings.concordoTermosPoliticas, color: Colors.white, bold: false),
             onChanged: (value) => setState(() => termosAceitos = !termosAceitos),
             checkColor: AppColors.primaryColor,
             fillColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -96,7 +96,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
         appSizedBoxHeight(AppSpacing.medium),
         elevatedButtonPadrao(
           function: () => _validar(),
-          text(AppStrings.cadastrar.toUpperCase(), color: AppColors.primaryColor, bold: true, fontSize: AppFontSizes.small),
+          appText(AppStrings.cadastrar.toUpperCase(), color: AppColors.primaryColor, bold: true, fontSize: AppFontSizes.small),
         ),
         appSizedBoxHeight(AppSpacing.normal),
         elevatedButtonText(

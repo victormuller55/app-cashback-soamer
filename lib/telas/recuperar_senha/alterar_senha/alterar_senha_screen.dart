@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
@@ -34,18 +34,18 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
      if (senha.text == confirmarSenha.text) {
        alterarSenhaBloc.add(AlterarSenhaEnviarEvent(widget.email, senha.text));
      } else {
-       showSnackbarWarning(context, message: "As senha não são iguais");
+       showSnackbarWarning(message: "As senha não são iguais");
      }
    } else {
-     showSnackbarWarning(context, message: "Preencha todos os camps");
+     showSnackbarWarning(message: "Preencha todos os camps");
    }
   }
 
   void _onChangeState(AlterarSenhaState state) {
     if (state is AlterarSenhaSuccessState) {
-      open(context, screen: HomeScreen(usuarioModel: state.usuarioModel), closePrevious: true);
-      saveLocalUserData(state.usuarioModel);
-      if (state.usuarioModel.nomeConcessionaria != null || state.usuarioModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.usuarioModel.nomeConcessionaria ?? "");
+      open(screen: HomeScreen(vendedorModel: state.vendedorModel), closePrevious: true);
+      saveLocalUserData(state.vendedorModel);
+      if (state.vendedorModel.nomeConcessionaria != null || state.vendedorModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.vendedorModel.nomeConcessionaria ?? "");
     }
   }
 
@@ -54,9 +54,9 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
       padding: const EdgeInsets.all(10.0),
       child: ListView(
         children: [
-          formFieldPadrao(context, "Digite sua nova senha", showSenha: false, controller: senha),
+          formFieldPadrao(context, hint: "Digite sua nova senha", showSenha: false, controller: senha),
           const SizedBox(height: 10),
-          formFieldPadrao(context, "Confirme sua nova senha", showSenha: false, controller: confirmarSenha),
+          formFieldPadrao(context, hint: "Confirme sua nova senha", showSenha: false, controller: confirmarSenha),
           const SizedBox(height: 10),
           elevatedButtonText(
             "Salvar e entrar".toUpperCase(),

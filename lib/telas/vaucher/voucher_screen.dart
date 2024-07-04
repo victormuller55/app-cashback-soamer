@@ -1,7 +1,7 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/app_widget/app_strings.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_bloc.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_event.dart';
@@ -47,7 +47,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
           children: [
             avatar(AppEndpoints.endpointImageVoucher(widget.vaucherModel.id!), radius: 80),
             const SizedBox(height: 15),
-            text(
+            appText(
               "VOUCHER ADQUIRIDO \n COM SUCESSO!",
               bold: true,
               color: AppColors.primaryColor,
@@ -55,14 +55,14 @@ class _VaucherScreenState extends State<VaucherScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
-            container(
+            appContainer(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               backgroundColor: Colors.green,
               radius: BorderRadius.circular(20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  text(
+                  appText(
                     "Verifique seu e-mail",
                     color: Colors.white,
                     fontSize: 16,
@@ -74,11 +74,11 @@ class _VaucherScreenState extends State<VaucherScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            container(
+            appContainer(
               radius: BorderRadius.circular(20),
               padding: const EdgeInsets.all(10),
               backgroundColor: Colors.grey.shade300,
-              child: text(
+              child: appText(
                 "Após adquirir o voucher, o código será enviado para o seu e-mail conectado à conta. Por favor, verifique a pasta de descontos e spam ao verificar o e-mail, pois o processo pode levar até 1 dia para ser concluído. Fique atento e aproveite seus benefícios!",
                 color: Colors.grey.shade600,
                 fontSize: 15,
@@ -106,25 +106,25 @@ class _VaucherScreenState extends State<VaucherScreen> {
       height: 350,
       child: Column(
         children: [
-          text(widget.vaucherModel.titulo!, fontSize: 18, bold: true),
+          appText(widget.vaucherModel.titulo!, fontSize: 18, bold: true),
           const SizedBox(height: 10),
-          container(
+          appContainer(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.all(10),
             backgroundColor: Colors.grey.shade300,
             radius: BorderRadius.circular(10),
-            child: Center(child: text("Você realmente deseja trocar ${widget.vaucherModel.pontos} pontos deste vaucher?", fontSize: 15, textAlign: TextAlign.center)),
+            child: Center(child: appText("Você realmente deseja trocar ${widget.vaucherModel.pontos} pontos deste vaucher?", fontSize: 15, textAlign: TextAlign.center)),
           ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              text("Saldo atual: ", bold: true, fontSize: 17, color: Colors.grey.shade600),
-              text("${widget.pontos} Pontos", bold: true, fontSize: 17, color: Colors.grey.shade800),
+              appText("Saldo atual: ", bold: true, fontSize: 17, color: Colors.grey.shade600),
+              appText("${widget.pontos} Pontos", bold: true, fontSize: 17, color: Colors.grey.shade800),
             ],
           ),
           const SizedBox(height: 5),
-          text("Após da troca: ${widget.pontos - widget.vaucherModel.pontos! <= 0 ? 0 : widget.pontos - widget.vaucherModel.pontos!} Pontos", fontSize: 15, color: Colors.grey.shade600),
+          appText("Após da troca: ${widget.pontos - widget.vaucherModel.pontos! <= 0 ? 0 : widget.pontos - widget.vaucherModel.pontos!} Pontos", fontSize: 15, color: Colors.grey.shade600),
           const SizedBox(height: 20),
           elevatedButtonText(
             "TROCAR",
@@ -136,7 +136,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
                 voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.id!));
                 Navigator.pop(context);
               } else {
-                showSnackbarWarning(context, message: "Pontos insuficientes");
+                showSnackbarWarning(message: "Pontos insuficientes");
                 Navigator.pop(context);
               }
             },
@@ -170,7 +170,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
       children: [
         Hero(
           tag: widget.heroImage,
-          child: container(
+          child: appContainer(
             height: 200,
             width: MediaQuery.of(context).size.width,
             backgroundColor: Colors.grey.shade300,
@@ -207,12 +207,12 @@ class _VaucherScreenState extends State<VaucherScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              container(
+              appContainer(
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(10),
                 backgroundColor: Colors.grey.shade300,
                 radius: BorderRadius.circular(20),
-                child: Center(child: text(widget.vaucherModel.info!, fontSize: 15, textAlign: TextAlign.justify)),
+                child: Center(child: appText(widget.vaucherModel.info!, fontSize: 15, textAlign: TextAlign.justify)),
               ),
             ],
           ),
@@ -221,15 +221,15 @@ class _VaucherScreenState extends State<VaucherScreen> {
         ExpansionTile(
           collapsedBackgroundColor: Colors.white,
           textColor: Colors.black,
-          title: text("Por quanto tempo posso utilizar o voucher?"),
+          title: appText("Por quanto tempo posso utilizar o voucher?"),
           children: [
-            container(
+            appContainer(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(10),
               backgroundColor: Colors.grey.shade300,
               child: Center(
-                child: text(
-                  Strings.explicacaoComoUtilizarVoucher,
+                child: appText(
+                  AppStrings.explicacaoComoUtilizarVoucher,
                   fontSize: 15,
                   color: Colors.grey.shade600,
                   textAlign: TextAlign.justify,
@@ -241,15 +241,15 @@ class _VaucherScreenState extends State<VaucherScreen> {
         ExpansionTile(
           collapsedBackgroundColor: Colors.white,
           textColor: Colors.black,
-          title: text("Por quanto tempo posso utilizar o voucher?"),
+          title: appText("Por quanto tempo posso utilizar o voucher?"),
           children: [
-            container(
+            appContainer(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(10),
               backgroundColor: Colors.grey.shade300,
               child: Center(
-                child: text(
-                  Strings.explicacaoTempoVoucher,
+                child: appText(
+                  AppStrings.explicacaoTempoVoucher,
                   fontSize: 15,
                   textAlign: TextAlign.justify,
                   color: Colors.grey.shade600,

@@ -1,26 +1,26 @@
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 
-abstract class EditarUsuarioState {
-  VendedorModel usuarioModel;
+abstract class EditarVendedorState {
+  VendedorModel vendedorModel;
   ErrorModel errorModel;
 
-  EditarUsuarioState({required this.usuarioModel, required this.errorModel});
+  EditarVendedorState({required this.vendedorModel, required this.errorModel});
 }
 
-class EditarUsuarioInitialState extends EditarUsuarioState {
-  EditarUsuarioInitialState() : super(usuarioModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
+class EditarVendedorInitialState extends EditarVendedorState {
+  EditarVendedorInitialState() : super(vendedorModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
 }
 
-class EditarUsuarioLoadingState extends EditarUsuarioState {
-  EditarUsuarioLoadingState() : super(usuarioModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
+class EditarVendedorLoadingState extends EditarVendedorState {
+  EditarVendedorLoadingState() : super(vendedorModel: VendedorModel.empty(), errorModel: ErrorModel.empty());
 }
 
-class EditarUsuarioSuccessState extends EditarUsuarioState {
-  EditarUsuarioSuccessState({required VendedorModel usuarioModel, required List<ConcessionariaModel> concessionariaModelList}) : super(usuarioModel: usuarioModel, errorModel: ErrorModel.empty());
+class EditarVendedorSuccessState extends EditarVendedorState {
+  EditarVendedorSuccessState({required VendedorModel vendedorModel, required List<ConcessionariaModel> concessionariaModelList}) : super(vendedorModel: vendedorModel, errorModel: ErrorModel.empty());
 }
 
-class EditarUsuarioErrorState extends EditarUsuarioState {
-  EditarUsuarioErrorState({required ErrorModel errorModel}) : super(usuarioModel: VendedorModel.empty(), errorModel: errorModel);
+class EditarVendedorErrorState extends EditarVendedorState {
+  EditarVendedorErrorState({required ErrorModel errorModel}) : super(vendedorModel: VendedorModel.empty(), errorModel: errorModel);
 }

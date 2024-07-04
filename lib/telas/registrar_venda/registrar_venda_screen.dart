@@ -1,5 +1,5 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_form_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_form_formatter.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_bloc.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_event.dart';
@@ -38,10 +38,10 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
       if (selected != -1) {
         return bloc.add(RegistrarVendaLoadEvent(formNFCE.text, selected));
       }
-      return showSnackbarError(context, message: "Selecione uma ponteira");
+      return showSnackbarError(message: "Selecione uma ponteira");
     }
 
-    return showSnackbarError(context, message: "Digite ou escaneie o código");
+    return showSnackbarError(message: "Digite ou escaneie o código");
   }
 
   Future<void> scanBarcode() async {
@@ -51,7 +51,7 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
       return setState(() => formNFCE.text = barcodeScanRes);
     }
 
-    return showSnackbarWarning(context, message: "Não foi possivel escanear o código de barras");
+    return showSnackbarWarning(message: "Não foi possivel escanear o código de barras");
   }
 
   void selectContainer(int index) {
@@ -67,23 +67,23 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
   Widget buildContainer(int index, String image, String nome) {
     return GestureDetector(
       onTap: () => selectContainer(index),
-      child: container(
+      child: appContainer(
         backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300,
         radius: BorderRadius.circular(20),
         border: Border.all(color: selected == index ? AppColors.primaryColor : Colors.grey.shade300, width: 3),
         child: Column(
           children: [
-            container(
+            appContainer(
               height: 160,
               width: 160,
               radius: const BorderRadius.only(topLeft: Radius.circular(18), topRight: Radius.circular(18)),
               image: AssetImage("assets/images/ponteiras/$image"),
             ),
-            container(height: 2, backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300, width: 160),
+            appContainer(height: 2, backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300, width: 160),
             appSizedBoxHeight(5),
-            text(nome, color: selected == index ? Colors.white : Colors.grey),
+            appText(nome, color: selected == index ? Colors.white : Colors.grey),
             appSizedBoxHeight(5),
-            text(nome.contains("dupla") ? "+20 Pontos" : "+ 10 Pontos", color: selected == index ? Colors.white : Colors.grey, bold: true, fontSize: 16),
+            appText(nome.contains("dupla") ? "+20 Pontos" : "+ 10 Pontos", color: selected == index ? Colors.white : Colors.grey, bold: true, fontSize: 16),
             appSizedBoxHeight(5),
           ],
         ),
@@ -96,16 +96,16 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
       padding: const EdgeInsets.all(10.0),
       child: ListView(
         children: [
-          container(
+          appContainer(
             backgroundColor: Colors.grey.shade300,
             radius: BorderRadius.circular(10),
             padding: const EdgeInsets.all(10),
-            child: text('Digite o código NF-E abaixo, ou escaneie o código de barras da NF-E para registrar a venda e ganhar pontos.', textAlign: TextAlign.center),
+            child: appText('Digite o código NF-E abaixo, ou escaneie o código de barras da NF-E para registrar a venda e ganhar pontos.', textAlign: TextAlign.center),
           ),
           appSizedBoxHeight(10),
-          formFieldPadrao(context, "Digite o número da NF-E", textInputFormatter: AppFormFormatters.nfeFormatter, textInputType: TextInputType.number, controller: formNFCE),
+          formFieldPadrao(context, hint: "Digite o número da NF-E", textInputFormatter: AppFormFormatters.nfeFormatter, textInputType: TextInputType.number, controller: formNFCE),
           appSizedBoxHeight(10),
-          text('OU', textAlign: TextAlign.center, bold: true, color: AppColors.primaryColor),
+          appText('OU', textAlign: TextAlign.center, bold: true, color: AppColors.primaryColor),
           appSizedBoxHeight(10),
           elevatedButtonText(
             "Escanear código de barras".toUpperCase(),
@@ -115,11 +115,11 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
             width: MediaQuery.of(context).size.width,
           ),
           const Divider(),
-          container(
+          appContainer(
             backgroundColor: Colors.grey.shade300,
             radius: BorderRadius.circular(10),
             padding: const EdgeInsets.all(10),
-            child: text('Selecione a ponteira vendida', textAlign: TextAlign.center),
+            child: appText('Selecione a ponteira vendida', textAlign: TextAlign.center),
           ),
           appSizedBoxHeight(20),
           Row(
@@ -151,9 +151,9 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
   }
 
   void _onChangeState(RegistrarVendaState state) {
-    if (state is RegistrarVendaErrorState) showSnackbarError(context, message: state.errorModel.mensagem);
+    if (state is RegistrarVendaErrorState) showSnackbarError(message: state.errorModel.mensagem);
     if (state is RegistrarVendaSuccessState) {
-      showSnackbarSuccess(context, message: "NF-E registrada com sucesso");
+      showSnackbarSuccess(message: "NF-E registrada com sucesso");
       Navigator.pop(context);
     }
   }

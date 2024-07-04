@@ -1,31 +1,31 @@
 import 'dart:convert';
+import 'package:app_cashback_soamer/api/api_connection.dart';
 import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/api_connection.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_event.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_service.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_state.dart';
 import 'package:bloc/bloc.dart';
 
-class EditarUsuarioBloc extends Bloc<EditarUsuarioEvent, EditarUsuarioState> {
-  EditarUsuarioBloc() : super(EditarUsuarioInitialState()) {
-    on<EditarUsuarioSalvarEvent>((event, emit) async {
-      emit(EditarUsuarioLoadingState());
+class EditarVendedorBloc extends Bloc<EditarVendedorEvent, EditarVendedorState> {
+  EditarVendedorBloc() : super(EditarVendedorInitialState()) {
+    on<EditarVendedorSalvarEvent>((event, emit) async {
+      emit(EditarVendedorLoadingState());
       try {
 
-        VendedorModel usuarioModel = await getModelLocal();
+        VendedorModel vendedorModel = await getModelLocal();
 
         if(event.image.path.isNotEmpty) {
-          await editarFotoUsuario(usuarioModel.id!, event.image);
+          await editarFotoVendedor(vendedorModel.id!, event.image);
         }
 
-        Response response = await editarUsuario(event.editUsuarioModel);
+        Response response = await editarVendedor(event.editarVendedorModel);
 
-        emit(EditarUsuarioSuccessState(usuarioModel: VendedorModel.fromMap(jsonDecode(response.body)), concessionariaModelList: []));
+        emit(EditarVendedorSuccessState(vendedorModel: VendedorModel.fromMap(jsonDecode(response.body)), concessionariaModelList: []));
       } catch (e) {
-        emit(EditarUsuarioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+        emit(EditarVendedorErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
       }
     });
   }

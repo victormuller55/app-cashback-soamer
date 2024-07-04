@@ -1,6 +1,6 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
@@ -52,12 +52,12 @@ class _EntrarScreenState extends State<EntrarScreen> {
         appSizedBoxHeight(AppSpacing.medium),
         GestureDetector(
           onTap: () => open(screen: const EnviarEmailScreen()),
-          child: text(AppStrings.esqueciMinhaSenha, color: AppColors.white, bold: true),
+          child: appText(AppStrings.esqueciMinhaSenha, color: AppColors.white, bold: true),
         ),
         appSizedBoxHeight(35),
         elevatedButtonPadrao(
           function: () => _validar(),
-          text(AppStrings.entrar.toUpperCase(), color: AppColors.primaryColor, bold: true),
+          appText(AppStrings.entrar.toUpperCase(), color: AppColors.primaryColor, bold: true),
         ),
         appSizedBoxHeight(AppSpacing.normal),
         elevatedButtonText(

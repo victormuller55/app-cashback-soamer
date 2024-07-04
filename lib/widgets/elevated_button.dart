@@ -19,7 +19,7 @@ Widget elevatedButtonPadrao(Widget child, {required void Function() function, Co
 
 Widget elevatedButtonText(String texto, {required void Function() function, Color? color, Color? textColor, double? width, double? height, double? borderRadius}) {
   return elevatedButtonPadrao(
-    text(texto, color: textColor ?? const Color.fromRGBO(34, 111, 162, 1), bold: true, fontSize: 12),
+    appText(texto, color: textColor ?? const Color.fromRGBO(34, 111, 162, 1), bold: true, fontSize: 12),
     function: function,
     backgroundColor: color,
     width: width,

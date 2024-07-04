@@ -1,9 +1,8 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
-import 'package:app_cashback_soamer/models/vaucher_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_event.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_state.dart';
@@ -45,13 +44,13 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 
   Future<void> _loadHome() async {
-    VendedorModel usuarioModel = await getModelLocal();
-    bloc.add(InicioLoadEvent(usuarioModel.email!));
+    VendedorModel vendedorModel = await getModelLocal();
+    bloc.add(InicioLoadEvent(vendedorModel.email!));
   }
 
   void _loadConcessionaria() async {
-    VendedorModel usuarioModel = await getModelLocal();
-    if (usuarioModel.nomeConcessionaria == null || usuarioModel.nomeConcessionaria == "") {
+    VendedorModel vendedorModel = await getModelLocal();
+    if (vendedorModel.nomeConcessionaria == null || vendedorModel.nomeConcessionaria == "") {
       bloc.add(LoadConcessionariaEvent());
     }
   }
@@ -72,11 +71,11 @@ class _InicioScreenState extends State<InicioScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          container(
+          appContainer(
             radius: BorderRadius.circular(10),
             padding: const EdgeInsets.all(10),
             backgroundColor: Colors.grey.shade800,
-            child: text("Escolha a concessionaria que você trabalha, utilizamos essa informação para a melhor experiencia dos usuarios no aplicativo.", bold: true, fontSize: 15, color: Colors.white, textAlign: TextAlign.center),
+            child: appText("Escolha a concessionaria que você trabalha, utilizamos essa informação para a melhor experiencia dos usuarios no aplicativo.", bold: true, fontSize: 15, color: Colors.white, textAlign: TextAlign.center),
           ),
           const SizedBox(height: 20),
           list.isNotEmpty
@@ -96,7 +95,7 @@ class _InicioScreenState extends State<InicioScreen> {
                   onChanged: (ConcessionariaModel? value) => setState(() => dropdownValue = value!),
                   items: list,
                 )
-              : text("Não foi encontrado nenhuma concessionaria"),
+              : appText("Não foi encontrado nenhuma concessionaria"),
           const SizedBox(height: 20),
           elevatedButtonText(
             "SALVAR",
@@ -112,7 +111,7 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 
   Widget _cardInfo({required String title, required String value}) {
-    return container(
+    return appContainer(
       radius: BorderRadius.circular(20),
       backgroundColor: Colors.grey.shade300,
       width: MediaQuery.of(context).size.width / 2.2,
@@ -130,7 +129,7 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 
   Widget _header(InicioState homeState) {
-    return container(
+    return appContainer(
       height: MediaQuery.of(context).size.height / 6,
       backgroundColor: AppColors.primaryColor,
       radius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -139,11 +138,11 @@ class _InicioScreenState extends State<InicioScreen> {
         children: [
           Row(
             children: [
-              avatar(AppEndpoints.endpointImageUsuario(homeState.usuarioModel.id!)),
+              avatar(AppEndpoints.endpointImageVendedor(homeState.vendedorModel.id!)),
               const SizedBox(width: 20),
               infoColumn(
-                title: homeState.usuarioModel.nome ?? "",
-                value: homeState.usuarioModel.nomeConcessionaria ?? "",
+                title: homeState.vendedorModel.nome ?? "",
+                value: homeState.vendedorModel.nomeConcessionaria ?? "",
                 width: MediaQuery.of(context).size.width / 3,
                 titleSize: 17,
                 spacing: true,
@@ -152,7 +151,7 @@ class _InicioScreenState extends State<InicioScreen> {
             ],
           ),
           infoColumn(
-            title: homeState.usuarioModel.pontos.toString(),
+            title: homeState.vendedorModel.pontos.toString(),
             value: "Pontos",
             titleSize: 25,
             valueSize: 13,
@@ -168,9 +167,9 @@ class _InicioScreenState extends State<InicioScreen> {
       value: concessionariaModel,
       child: Row(
         children: [
-          text(concessionariaModel.nome ?? ""),
-          text(" (${concessionariaModel.marca})"),
-          SizedBox(width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.5), child: text(" - ${concessionariaModel.endereco}", color: Colors.grey, overflow: true)),
+          appText(concessionariaModel.nome ?? ""),
+          appText(" (${concessionariaModel.marca})"),
+          SizedBox(width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width / 1.5), child: appText(" - ${concessionariaModel.endereco}", color: Colors.grey, overflow: true)),
         ],
       ),
     );
@@ -182,7 +181,7 @@ class _InicioScreenState extends State<InicioScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 15, top: 10),
-          child: text(title, bold: true, color: Colors.grey, fontSize: 14),
+          child: appText(title, bold: true, color: Colors.grey, fontSize: 14),
         ),
         SizedBox(
           height: lista.isNotEmpty ? 180 : 100,
@@ -193,7 +192,7 @@ class _InicioScreenState extends State<InicioScreen> {
               scrollDirection: Axis.horizontal,
               children: lista,
             ),
-          ): Center(child: text("Nenhum Voucher Encontrado", color: Colors.grey))
+          ): Center(child: appText("Nenhum Voucher Encontrado", color: Colors.grey))
         ),
       ],
     );
@@ -201,9 +200,9 @@ class _InicioScreenState extends State<InicioScreen> {
 
   void _onChangeState(InicioState state) async {
 
-    VendedorModel usuarioModel = await getModelLocal();
+    VendedorModel vendedorModel = await getModelLocal();
 
-    if (usuarioModel.nomeConcessionaria == null || usuarioModel.nomeConcessionaria == "") {
+    if (vendedorModel.nomeConcessionaria == null || vendedorModel.nomeConcessionaria == "") {
       if (state.concessionariaList.isNotEmpty) {
         if (!salvouConcessionaria) {
           _showModalConcessionaria(state);
@@ -217,11 +216,11 @@ class _InicioScreenState extends State<InicioScreen> {
     List<Widget> cardsMaisTrocados = [];
 
     for (int i = 0; i <= homeState.vaucherListPromocao.length - 1; i++) {
-      cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.usuarioModel.pontos!));
+      cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.vendedorModel.pontos!));
     }
 
     for (int i = 0; i <= homeState.vaucherListMaisTrocados.length - 1; i++) {
-      cardsMaisTrocados.add(cardVaucher(homeState.vaucherListMaisTrocados[i], "Mhero$i", homeState.usuarioModel.pontos!));
+      cardsMaisTrocados.add(cardVaucher(homeState.vaucherListMaisTrocados[i], "Mhero$i", homeState.vendedorModel.pontos!));
     }
 
     return RefreshIndicator(
@@ -236,8 +235,8 @@ class _InicioScreenState extends State<InicioScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _cardInfo(value: homeState.usuarioModel.pontosPedentesUsuario.toString(), title: "Pontos pendentes"),
-              _cardInfo(value: "R\$${homeState.usuarioModel.valorPix},00", title: "Em pix"),
+              _cardInfo(value: homeState.vendedorModel.pontosPendentes.toString(), title: "Pontos pendentes"),
+              _cardInfo(value: "R\$${homeState.vendedorModel.valorPix},00", title: "Em pix"),
             ],
           ),
           const SizedBox(height: 15),
@@ -262,7 +261,7 @@ class _InicioScreenState extends State<InicioScreen> {
           case InicioErrorState:
             return erro(state.errorModel, function: () => _loadHome());
           default:
-            return container();
+            return appContainer();
         }
       },
     );

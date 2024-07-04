@@ -1,12 +1,11 @@
 import 'dart:convert';
 
+import 'package:app_cashback_soamer/api/api_connection.dart';
 import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/api_connection.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
-import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/home_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_event.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_service.dart';
@@ -18,39 +17,46 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
     on<InicioLoadEvent>((event, emit) async {
       emit(InicioLoadingState());
       try {
-
-        List<VaucherModel> vauchersPromocao = [];
-        List<VaucherModel> vauchersMaisTrocados = [];
+        List<VaucherModel> vouchersPromocao = [];
+        List<VaucherModel> vouchersMaisTrocados = [];
 
         // Faz requisições
-        Response responseUsuario = await getHome(event.email);
+        Response responseVendedor = await getHome(event.email);
         Response responseVaucherPromocao = await getVaucherPromocao();
         Response responseVaucherMaisTrocados = await getVaucherMaisTrocados();
-        VendedorModel usuarioModel = await getModelLocal();
+        VendedorModel vendedorModel = await getModelLocal();
 
         // Transforma json em model (Voucher em promoção)
         for (var voucher in jsonDecode(responseVaucherPromocao.body)) {
           var vaucherModel = VaucherModel.fromMap(voucher);
-          vauchersPromocao.add(vaucherModel);
+          vouchersPromocao.add(vaucherModel);
         }
 
         // Transforma json em model (Voucher em promoção)
         for (var voucher in jsonDecode(responseVaucherMaisTrocados.body)) {
           var vaucherModel = VaucherModel.fromMap(voucher);
-          vauchersMaisTrocados.add(vaucherModel);
+          vouchersMaisTrocados.add(vaucherModel);
         }
 
-        // Transforma json em model (Usuario)
-        HomeModel homeModel = HomeModel.fromMap(jsonDecode(responseUsuario.body));
+        // Transforma json em model (Vendedor)
+        HomeModel homeModel = HomeModel.fromMap(jsonDecode(responseVendedor.body));
 
         // Set valores do usuario
-        usuarioModel.valorPix = homeModel.valorPix;
+        vendedorModel.valorPix = homeModel.valorPix;
 
-        usuarioModel.pontosPedentesUsuario = homeModel.pontosPendentes;
-        usuarioModel.pontos = homeModel.pontos;
-        emit(InicioSuccessState(usuarioModel: usuarioModel, vaucherListPromocao: vauchersPromocao, vaucherListMaisTrocados: vauchersMaisTrocados, concessionariaList: []));
+        vendedorModel.pontosPendentes = homeModel.pontosPendentes;
+        vendedorModel.pontos = homeModel.pontos;
+
+        emit(
+          InicioSuccessState(
+            vendedorModel: vendedorModel,
+            voucherListPromocao: vouchersPromocao,
+            voucherListMaisTrocados: vouchersMaisTrocados,
+          ),
+        );
+
       } catch (e) {
-        emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+        emit(InicioErrorState(errorModel: ApiException.errorModel(e)));
       }
     });
 
@@ -65,9 +71,9 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
           itens.add(vaucherModel);
         }
 
-        emit(InicioSuccessState(usuarioModel: VendedorModel.empty(), vaucherListPromocao: [], vaucherListMaisTrocados: [], concessionariaList: itens));
+        emit(InicioSuccessConcessionariaLoadState(concessionariaList: itens));
       } catch (e) {
-        emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+        emit(InicioErrorState(errorModel: ApiException.errorModel(e)));
       }
     });
 
@@ -75,9 +81,9 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
       emit(InicioLoadingState());
       try {
         await setConcessionaria(event.idConcessionaria);
-        emit(InicioSuccessState(usuarioModel: VendedorModel.empty(), vaucherListPromocao: [], concessionariaList: [], vaucherListMaisTrocados: []));
+        emit(InicioSuccessConcessionariaSaveState());
       } catch (e) {
-        emit(InicioErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+        emit(InicioErrorState(errorModel: ApiException.errorModel(e)));
       }
     });
   }

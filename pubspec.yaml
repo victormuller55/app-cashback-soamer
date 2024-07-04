@@ -48,7 +48,6 @@ flutter:
   assets:
      - assets/images/
      - assets/images/ponteiras/
-     - assets/gif/
      - assets/animations/
 
   fonts:

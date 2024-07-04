@@ -1,7 +1,7 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_context.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_icons.dart';
-import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_context.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_icons.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ SnackBar appSnackBar({
       children: [
         Icon(icon, color: color ?? AppColors.white),
         appSizedBoxWidth(10),
-        text(mensagem, color: color ?? AppColors.white),
+        appText(mensagem, color: color ?? AppColors.white),
       ],
     ),
     duration: const Duration(seconds: 3),

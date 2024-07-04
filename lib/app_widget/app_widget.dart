@@ -1,11 +1,12 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_context.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
+import 'package:app_cashback_soamer/telas/apresentacao/apresentacao_screen.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'consts/app_context.dart';
 
 Widget screen = const CadastroScreen();
 bool opened = false;
@@ -23,10 +24,11 @@ class _AppWidgetState extends State<AppWidget> {
 
     verificaLogin() async {
 
-      VendedorModel usuarioModel = await getModelLocal();
+      VendedorModel vendedorModel = await getModelLocal();
 
-      if (usuarioModel.id != null && !opened) {
-        setState(() => screen = HomeScreen(usuarioModel: usuarioModel));
+      if (vendedorModel.id != null && !opened) {
+        setState(() => screen = ApresentacaoScreen(vendedorModel: VendedorModel.empty()));
+        // setState(() => screen = HomeScreen(vendedorModel: vendedorModel));
         opened = true;
       }
 

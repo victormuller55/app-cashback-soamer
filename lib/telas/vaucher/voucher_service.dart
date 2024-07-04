@@ -1,12 +1,13 @@
-import 'package:app_cashback_soamer/app_widget/app_endpoints.dart';
-import 'package:app_cashback_soamer/functions/api_connection.dart';
 
-Future<Response> getCodeVoucher(int idVoucher, int idUsuario) async {
+import 'package:app_cashback_soamer/api/api_connection.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
+
+Future<Response> getCodeVoucher(int idVoucher, int idVendedor) async {
   return await getHTTP(
     endpoint: AppEndpoints.endpointTrocarVoucher,
     parameters: {
       "id_vaucher" : idVoucher.toString(),
-      "id_usuario" : idUsuario.toString(),
+      "id_usuario" : idVendedor.toString(),
     }
   );
 }

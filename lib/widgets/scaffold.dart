@@ -1,4 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ Widget scaffold({
       elevation: 0,
       backgroundColor: AppColors.primaryColor,
       centerTitle: true,
-      title: text(title.toUpperCase(), bold: true, color: AppColors.white),
+      title: appText(title.toUpperCase(), bold: true, color: AppColors.white),
       leading: hideBackArrow ?? false ? Container() : null,
       actions: actions != null ? [...actions, const SizedBox(width: 20)] : null,
     ),

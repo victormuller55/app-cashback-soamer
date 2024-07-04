@@ -1,4 +1,5 @@
-import 'package:app_cashback_soamer/app_widget/consts/app_strings.dart';
+
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 
 class ConcessionariaModel {
   int? id;

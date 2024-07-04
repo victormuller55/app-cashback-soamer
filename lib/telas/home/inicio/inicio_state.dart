@@ -1,17 +1,17 @@
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
-import 'package:app_cashback_soamer/models/usuario_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
 
 abstract class InicioState {
-  VendedorModel usuarioModel;
+  VendedorModel vendedorModel;
   List<VaucherModel> vaucherListPromocao;
   List<VaucherModel> vaucherListMaisTrocados;
   List<ConcessionariaModel> concessionariaList;
   ErrorModel errorModel;
 
   InicioState({
-    required this.usuarioModel,
+    required this.vendedorModel,
     required this.vaucherListPromocao,
     required this.vaucherListMaisTrocados,
     required this.concessionariaList,
@@ -22,7 +22,7 @@ abstract class InicioState {
 class InicioInitialState extends InicioState {
   InicioInitialState()
       : super(
-          usuarioModel: VendedorModel.empty(),
+          vendedorModel: VendedorModel.empty(),
           errorModel: ErrorModel.empty(),
           vaucherListPromocao: [],
           vaucherListMaisTrocados: [],
@@ -33,7 +33,7 @@ class InicioInitialState extends InicioState {
 class InicioLoadingState extends InicioState {
   InicioLoadingState()
       : super(
-          usuarioModel: VendedorModel.empty(),
+          vendedorModel: VendedorModel.empty(),
           errorModel: ErrorModel.empty(),
           vaucherListPromocao: [],
           vaucherListMaisTrocados: [],
@@ -43,23 +43,44 @@ class InicioLoadingState extends InicioState {
 
 class InicioSuccessState extends InicioState {
   InicioSuccessState({
-    required VendedorModel usuarioModel,
-    required List<VaucherModel> vaucherListPromocao,
-    required List<VaucherModel> vaucherListMaisTrocados,
+    required VendedorModel vendedorModel,
+    required List<VaucherModel> voucherListPromocao,
+    required List<VaucherModel> voucherListMaisTrocados,
+  }) : super(
+          vendedorModel: vendedorModel,
+          vaucherListPromocao: voucherListPromocao,
+          vaucherListMaisTrocados: voucherListMaisTrocados,
+          concessionariaList: [],
+          errorModel: ErrorModel.empty(),
+        );
+}
+
+class InicioSuccessConcessionariaLoadState extends InicioState {
+  InicioSuccessConcessionariaLoadState({
     required List<ConcessionariaModel> concessionariaList,
   }) : super(
-          usuarioModel: usuarioModel,
-          vaucherListPromocao: vaucherListPromocao,
-          vaucherListMaisTrocados: vaucherListMaisTrocados,
+          vendedorModel: VendedorModel.empty(),
+          vaucherListMaisTrocados: [],
+          vaucherListPromocao: [],
           concessionariaList: concessionariaList,
           errorModel: ErrorModel.empty(),
         );
 }
 
+class InicioSuccessConcessionariaSaveState extends InicioState {
+  InicioSuccessConcessionariaSaveState() : super(
+    vendedorModel: VendedorModel.empty(),
+    vaucherListMaisTrocados: [],
+    vaucherListPromocao: [],
+    concessionariaList: [],
+    errorModel: ErrorModel.empty(),
+  );
+}
+
 class InicioErrorState extends InicioState {
   InicioErrorState({required ErrorModel errorModel})
       : super(
-          usuarioModel: VendedorModel.empty(),
+          vendedorModel: VendedorModel.empty(),
           errorModel: errorModel,
           vaucherListPromocao: [],
           vaucherListMaisTrocados: [],
