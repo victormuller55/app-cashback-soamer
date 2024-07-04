@@ -32,7 +32,7 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
       PageViewModel(
         title: AppStrings.tituloPresentacao1,
         body: AppStrings.descricaoapresentacao1,
-        image: animacao(AppAnimations.apresentacao1),
+        image: appAnimation(AppAnimations.apresentacao1, repete: false),
         decoration: PageDecoration(
           titleTextStyle: tituloStyle,
           bodyTextStyle: descricaoStyle,
@@ -44,7 +44,7 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
       PageViewModel(
         title: AppStrings.tituloPresentacao2,
         body: AppStrings.descricaoapresentacao2,
-        image: animacao(AppAnimations.apresentacao2, height: 280),
+        image: appAnimation(AppAnimations.apresentacao2, height: 280, repete: false),
         decoration: PageDecoration(
           titleTextStyle: tituloStyle,
           bodyTextStyle: descricaoStyle,
@@ -56,7 +56,7 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
       PageViewModel(
         title: AppStrings.tituloPresentacao3,
         body: AppStrings.descricaoapresentacao3,
-        image: animacao(AppAnimations.apresentacao3, height: 280),
+        image: appAnimation(AppAnimations.apresentacao3, height: 280, repete: false),
         decoration: PageDecoration(
           titleTextStyle: tituloStyle,
           bodyTextStyle: descricaoStyle,
@@ -68,7 +68,7 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
       PageViewModel(
         title: AppStrings.tituloPresentacao4,
         body: AppStrings.descricaoapresentacao4,
-        image: animacao(AppAnimations.apresentacao4, height: 280),
+        image: appAnimation(AppAnimations.apresentacao4, height: 280),
         decoration: PageDecoration(
           titleTextStyle: tituloStyle,
           bodyTextStyle: descricaoStyle,

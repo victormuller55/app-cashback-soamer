@@ -255,7 +255,7 @@ class _InicioScreenState extends State<InicioScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case InicioLoadingState:
-            return loading();
+            return loadingAnimation();
           case InicioSuccessState:
             return _body(state);
           case InicioErrorState:

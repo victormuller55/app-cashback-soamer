@@ -1,4 +1,8 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_event.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_state.dart';
@@ -20,11 +24,12 @@ class RecompensasScreen extends StatefulWidget {
 }
 
 class _RecompensasScreeenState extends State<RecompensasScreen> {
-  VaucherBloc vaucherBloc = VaucherBloc();
-  TextEditingController controllerValor = TextEditingController();
+
+  VaucherBloc bloc = VaucherBloc();
+  TextEditingController valor = TextEditingController();
 
   Future<void> _load() async {
-    vaucherBloc.add(VaucherLoadEvent());
+    bloc.add(VaucherLoadEvent());
   }
 
   @override
@@ -37,8 +42,8 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        appSizedBoxHeight(10),
-        appText(title, bold: true, color: Colors.grey, fontSize: 14),
+        appSizedBoxHeight(AppSpacing.normal),
+        appText(title, bold: true, color: AppColors.grey, fontSize: AppFontSizes.normal),
         SizedBox(
           height: lista.isNotEmpty ? 180 : 100,
           child: lista.isNotEmpty
@@ -47,27 +52,28 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
                   scrollDirection: Axis.horizontal,
                   children: lista,
                 )
-              : Center(child: appText("Nenhum Voucher Encontrado", color: Colors.grey)),
+              : Center(child: appText(AppStrings.nenhumVoucherEncontrado, color: AppColors.grey)),
         ),
       ],
     );
   }
 
   Widget _body(VaucherState state) {
-    List<Widget> lista1 = [];
-    List<Widget> lista2 = [];
-    List<Widget> lista3 = [];
 
-    for (int i = 0; i <= state.vaucherModelList.length - 1; i++) {
-      lista1.add(cardVaucher(state.vaucherModelList[i], "1hero$i", vaucherBloc.state.dadosVendedorModel.pontos!));
+    List<Widget> vouchers = [];
+    List<Widget> maisTrocados = [];
+    List<Widget> promocao = [];
+
+    for (int i = 0; i <= state.vouchersLista.length - 1; i++) {
+      vouchers.add(cardVaucher(state.vouchersLista[i], "1hero$i", bloc.state.dadosVendedorModel.pontos!));
     }
 
-    for (int i = 0; i <= state.vaucherModelListMaisTrocados.length - 1; i++) {
-      lista2.add(cardVaucher(state.vaucherModelListMaisTrocados[i], "2hero$i", vaucherBloc.state.dadosVendedorModel.pontos!));
+    for (int i = 0; i <= state.maisTrocadosLista.length - 1; i++) {
+      maisTrocados.add(cardVaucher(state.maisTrocadosLista[i], "2hero$i", bloc.state.dadosVendedorModel.pontos!));
     }
 
-    for (int i = 0; i <= state.vaucherModelListPromocao.length - 1; i++) {
-      lista3.add(cardVaucher(state.vaucherModelListPromocao[i], "3hero$i", vaucherBloc.state.dadosVendedorModel.pontos!));
+    for (int i = 0; i <= state.promocaoLista.length - 1; i++) {
+      promocao.add(cardVaucher(state.promocaoLista[i], "3hero$i", bloc.state.dadosVendedorModel.pontos!));
     }
 
     return Padding(
@@ -78,28 +84,41 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
           appContainer(
             height: 130,
             width: MediaQuery.of(context).size.width,
-            radius: BorderRadius.circular(20),
-            backgroundColor: Colors.grey.shade300,
-            padding: const EdgeInsets.all(10),
+            radius: BorderRadius.circular(AppRadius.medium),
+            backgroundColor: AppColors.grey300,
+            padding: EdgeInsets.all(AppSpacing.normal),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                appText("Cashbacks via PIX podem demorar até 3 dias para serem depositados na conta do usuário.", color: Colors.grey.shade700, textAlign: TextAlign.center),
-                const SizedBox(height: 10),
+                appText(AppStrings.textoPix, color: AppColors.grey700, textAlign: TextAlign.center),
+                appSizedBoxHeight(AppSpacing.normal),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    appText("R\$${vaucherBloc.state.dadosVendedorModel.pontos},00", fontSize: 22, bold: true, color: AppColors.primaryColor),
-                    appElevatedButtonText("Solicitar valor".toUpperCase(), function: () => {}, width: 180, height: 40, color: AppColors.primaryColor, textColor: Colors.white, borderRadius: 50),
+                    appText(
+                      "R\$${bloc.state.dadosVendedorModel.pontos},00",
+                      fontSize: AppFontSizes.big,
+                      bold: true,
+                      color: AppColors.primaryColor,
+                    ),
+                    appElevatedButtonText(
+                      AppStrings.solicitarValor.toUpperCase(),
+                      function: () => {},
+                      width: 180,
+                      height: 40,
+                      borderRadius: AppRadius.big,
+                      color: AppColors.primaryColor,
+                      textColor: Colors.white,
+                    ),
                   ],
                 )
               ],
             ),
           ),
-          componenteVoucher(title: "TODOS", lista: lista1),
-          componenteVoucher(title: "MAIS TROCADOS", lista: lista2),
-          componenteVoucher(title: "PROMOÇÃO", lista: lista3),
-          const SizedBox(height: 30),
+          componenteVoucher(title: AppStrings.todos, lista: vouchers),
+          componenteVoucher(title: AppStrings.maisTrocados, lista: maisTrocados),
+          componenteVoucher(title: AppStrings.emPromocao, lista: promocao),
+          appSizedBoxHeight(AppSpacing.big),
         ],
       ),
     );
@@ -111,13 +130,12 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
       color: Colors.white,
       strokeWidth: 2,
       backgroundColor: AppColors.primaryColor,
-      child: BlocConsumer<VaucherBloc, VaucherState>(
-        bloc: vaucherBloc,
-        listener: (context, state) => state is VaucherSuccessState ? () => Future.delayed(const Duration(milliseconds: 500)).then((value) => setState(() {})) : () => {},
+      child: BlocBuilder<VaucherBloc, VaucherState>(
+        bloc: bloc,
         builder: (context, state) {
           switch (state.runtimeType) {
             case VaucherLoadingState:
-              return loading();
+              return loadingAnimation();
             case VaucherSuccessState:
               return _body(state);
             case VaucherErrorState:
@@ -134,8 +152,14 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      title: "Recompensas",
+      title: AppStrings.recompensas,
       hideBackArrow: true,
     );
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 }

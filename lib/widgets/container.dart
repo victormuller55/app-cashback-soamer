@@ -52,7 +52,7 @@ Widget cardVaucher(VaucherModel vaucherModel, String heroImage, int pontos) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => open(screen: VaucherScreen(vaucherModel: vaucherModel, heroImage: heroImage, pontos: pontos)),
+          onTap: () => open(screen: VaucherScreen(model: vaucherModel, hero: heroImage, pontos: pontos)),
           child: appContainer(
             height: 165,
             width: 165,

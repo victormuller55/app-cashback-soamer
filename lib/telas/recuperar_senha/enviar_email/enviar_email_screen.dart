@@ -1,4 +1,7 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_bloc.dart';
@@ -10,6 +13,7 @@ import 'package:app_cashback_soamer/widgets/elevated_button.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
+import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,46 +27,41 @@ class EnviarEmailScreen extends StatefulWidget {
 
 class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
 
-  EnviarEmailBloc emailBloc = EnviarEmailBloc();
-  TextEditingController controllerEmail = TextEditingController();
+  EnviarEmailBloc bloc = EnviarEmailBloc();
+  TextEditingController email = TextEditingController();
 
   void _enviarEmail() {
-    if (controllerEmail.text.isNotEmpty) {
-      if (validaEmail(controllerEmail.text)) {
-        emailBloc.add(EnviarEmailSendEvent(controllerEmail.text));
+    if (email.text.isNotEmpty) {
+      if (validaEmail(email.text)) {
+        bloc.add(EnviarEmailSendEvent(email.text));
       } else {
-        showSnackbarWarning(message: "E-mail inválido");
+        showSnackbarWarning(message: AppStrings.emailInvalido);
       }
     } else {
-      showSnackbarWarning(message: "Preencha o campo.");
+      showSnackbarWarning(message: AppStrings.preechaOCampo);
     }
   }
 
-  void _onChangeState(EnviarEmailState state) {
-    if (state.runtimeType == EnviarEmailSuccessState) Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerificarCodigoScreen(email: controllerEmail.text, code: state.code)));
-    if (state.runtimeType == EnviarEmailSuccessState) showSnackbarSuccess(message: "E-mail enviado");
-    if (state.runtimeType == EnviarEmailErrorState) showSnackbarError(message: state.errorModel.mensagem);
-  }
 
   Widget _body() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(AppSpacing.normal),
       child: ListView(
         children: [
           appContainer(
             border: Border.all(color: AppColors.primaryColor),
-            radius: BorderRadius.circular(10),
-            padding: const EdgeInsets.all(10),
-            backgroundColor: Colors.white,
-            margin: const EdgeInsets.only(bottom: 10),
-            child: appText("Nós utilizaremos o seu e-mail como forma de provar que a conta é realmente sua, enviaremos uma mensagem com um código de recuperação ao e-mail digitado abaixo.", textAlign: TextAlign.center),
+            radius: BorderRadius.circular(AppRadius.normal),
+            padding:  EdgeInsets.all(AppSpacing.normal),
+            backgroundColor: AppColors.white,
+            margin: EdgeInsets.only(bottom: AppSpacing.normal),
+            child: appText(AppStrings.mensagemEmail, textAlign: TextAlign.center),
           ),
-          formFieldPadrao(context, hint: "Digite seu e-mail", controller: controllerEmail),
-          const SizedBox(height: 10),
+          appFormField(context, hint: AppStrings.email, controller: email),
+          appSizedBoxHeight(AppSpacing.normal),
           appElevatedButtonText(
-            "Enviar Código".toUpperCase(),
+            AppStrings.enviarCodigo.toUpperCase(),
             color: AppColors.primaryColor,
-            textColor: Colors.white,
+            textColor: AppColors.white,
             function: () => _enviarEmail(),
           ),
         ],
@@ -71,13 +70,12 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
   }
 
   Widget _bodyBuilder() {
-    return BlocConsumer<EnviarEmailBloc, EnviarEmailState>(
-      bloc: emailBloc,
-      listener: (context, state) => _onChangeState(state),
+    return BlocBuilder<EnviarEmailBloc, EnviarEmailState>(
+      bloc: bloc,
       builder: (context, state) {
         switch (state.runtimeType) {
           case EnviarEmailLoadingState:
-            return loading();
+            return loadingAnimation();
           default:
             return _body();
         }
@@ -87,6 +85,15 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return scaffold(body: _bodyBuilder(), title: "Enviar e-mail");
+    return scaffold(
+      body: _bodyBuilder(),
+      title: AppStrings.enviarEmail,
+    );
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 }

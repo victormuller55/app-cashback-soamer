@@ -184,7 +184,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
         future: _loadDataLocal(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return loading();
+            return loadingAnimation();
           }
 
           if (snapshot.hasError) {

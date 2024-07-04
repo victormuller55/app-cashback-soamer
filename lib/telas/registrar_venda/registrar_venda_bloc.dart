@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:app_cashback_soamer/api/api_exception.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
+import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
@@ -19,8 +21,10 @@ class RegistrarVendaBloc extends Bloc<RegistrarVendaEvent, RegistrarVendaState> 
         VendaModel vendaModel = VendaModel(idVendedor: vendedorModel.id!, nfeCode: event.nfc, idPonteira: event.idPonteira);
         await registrarVenda(vendaModel);
         emit(RegistrarVendaSuccessState());
+        showSnackbarSuccess(message: AppStrings.nfeRegistradaComSucesso);
       } catch (e) {
-        emit(RegistrarVendaErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+        emit(RegistrarVendaErrorState(errorModel: ApiException.errorModel(e)));
+        showSnackbarError(message: state.errorModel.mensagem);
       }
     });
   }

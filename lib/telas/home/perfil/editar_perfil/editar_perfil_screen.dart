@@ -114,7 +114,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
               bold: true,
             ),
           ),
-          formFieldPadrao(
+          appFormField(
             context,
             hint: AppStrings.senha,
             controller: senha,
@@ -167,7 +167,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     appContainer(
-                      width: 230,
+                      width: MediaQuery.of(context).size.width * 0.50,
                       height: 90,
                       padding: EdgeInsets.all(AppSpacing.normal),
                       backgroundColor: AppColors.grey300,
@@ -185,7 +185,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                     appElevatedButtonText(
                       AppStrings.alterarFoto.toUpperCase(),
                       function: () => _imagemGaleria(),
-                      width: 230,
+                      width: MediaQuery.of(context).size.width * 0.50,
                       height: 45,
                       borderRadius: AppRadius.normal,
                       color: AppColors.primaryColor,
@@ -197,8 +197,8 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                   tag: "usuario",
                   child: imageFile.path.isEmpty
                       ? appContainer(
-                          height: 150,
-                          width: 150,
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          height: MediaQuery.of(context).size.width * 0.35,
                           radius: BorderRadius.circular(AppRadius.normal),
                           border: Border.all(color: AppColors.primaryColor, width: 2),
                           image: NetworkImage(AppEndpoints.endpointImageVendedor(widget.vendedorModel.id!)),
@@ -215,11 +215,11 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
               ],
             ),
           ),
-          formFieldPadrao(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
-          formFieldPadrao(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
-          formFieldPadrao(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
-          formFieldPadrao(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter, enable: false),
-          formFieldPadrao(context, controller: novaSenha, hint: AppStrings.novaSenha, width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
+          appFormField(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
+          appFormField(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
+          appFormField(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
+          appFormField(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter, enable: false),
+          appFormField(context, controller: novaSenha, hint: AppStrings.novaSenha, width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
           appSizedBoxHeight(AppSpacing.medium),
           appElevatedButtonText(
             AppStrings.salvar.toUpperCase(),
@@ -239,7 +239,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case EditarVendedorLoadingState:
-            return loading();
+            return loadingAnimation();
           default:
             return _body();
         }

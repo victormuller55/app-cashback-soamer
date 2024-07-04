@@ -1,4 +1,6 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/functions/navigation.dart';
@@ -11,6 +13,7 @@ import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/form_field.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
+import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +27,8 @@ class AlterarSenhaScreen extends StatefulWidget {
 }
 
 class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
-  AlterarSenhaBloc alterarSenhaBloc = AlterarSenhaBloc();
+
+  AlterarSenhaBloc bloc = AlterarSenhaBloc();
 
   TextEditingController senha = TextEditingController();
   TextEditingController confirmarSenha = TextEditingController();
@@ -32,37 +36,29 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
   void _entrarESalvar() {
    if(senha.text.isNotEmpty && confirmarSenha.text.isNotEmpty) {
      if (senha.text == confirmarSenha.text) {
-       alterarSenhaBloc.add(AlterarSenhaEnviarEvent(widget.email, senha.text));
+       bloc.add(AlterarSenhaEnviarEvent(widget.email, senha.text));
      } else {
-       showSnackbarWarning(message: "As senha não são iguais");
+       showSnackbarWarning(message: AppStrings.asSenhasNaoSaoIguais);
      }
    } else {
-     showSnackbarWarning(message: "Preencha todos os camps");
+     showSnackbarWarning(message: AppStrings.preenchaTodosOsCampos);
    }
-  }
-
-  void _onChangeState(AlterarSenhaState state) {
-    if (state is AlterarSenhaSuccessState) {
-      open(screen: HomeScreen(vendedorModel: state.vendedorModel), closePrevious: true);
-      saveLocalUserData(state.vendedorModel);
-      if (state.vendedorModel.nomeConcessionaria != null || state.vendedorModel.nomeConcessionaria != "") addLocalDataString("nome_concessionaria", state.vendedorModel.nomeConcessionaria ?? "");
-    }
   }
 
   Widget _body() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(AppSpacing.normal),
       child: ListView(
         children: [
-          formFieldPadrao(context, hint: "Digite sua nova senha", showSenha: false, controller: senha),
-          const SizedBox(height: 10),
-          formFieldPadrao(context, hint: "Confirme sua nova senha", showSenha: false, controller: confirmarSenha),
-          const SizedBox(height: 10),
+          appFormField(context, hint: AppStrings.digiteSuaNovaSenha, showSenha: false, controller: senha),
+          appSizedBoxHeight(AppSpacing.normal),
+          appFormField(context, hint: AppStrings.confirmeSuaNovaSenha, showSenha: false, controller: confirmarSenha),
+          appSizedBoxHeight(AppSpacing.normal),
           appElevatedButtonText(
-            "Salvar e entrar".toUpperCase(),
+            AppStrings.salvarEEntrar.toUpperCase(),
             function: () => _entrarESalvar(),
             color: AppColors.primaryColor,
-            textColor: Colors.white,
+            textColor: AppColors.white,
           )
         ],
       ),
@@ -70,13 +66,12 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
   }
 
   Widget _bodyBuilder() {
-    return BlocConsumer<AlterarSenhaBloc, AlterarSenhaState>(
-      bloc: alterarSenhaBloc,
-      listener: (context, state) => _onChangeState(state),
+    return BlocBuilder<AlterarSenhaBloc, AlterarSenhaState>(
+      bloc: bloc,
       builder: (context, state) {
         switch (state.runtimeType) {
           case AlterarSenhaLoadingState:
-            return loading();
+            return loadingAnimation();
           case AlterarSenhaErrorState:
             return erro(state.errorModel, function: () => _entrarESalvar());
           default:
@@ -90,8 +85,14 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      title: "Alterar senha",
+      title: AppStrings.alterarSenha,
       hideBackArrow: true,
     );
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
   }
 }

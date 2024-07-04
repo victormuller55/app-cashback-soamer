@@ -1,5 +1,9 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_form_formatter.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_bloc.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_event.dart';
@@ -24,37 +28,48 @@ class RegistrarVendaScreen extends StatefulWidget {
 
 class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
   RegistrarVendaBloc bloc = RegistrarVendaBloc();
-  TextEditingController formNFCE = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  TextEditingController nota = TextEditingController();
 
   int selected = -1;
 
   void _save() {
-    if (formNFCE.text.isNotEmpty) {
+    if (nota.text.isNotEmpty) {
       if (selected != -1) {
-        return bloc.add(RegistrarVendaLoadEvent(formNFCE.text, selected));
+        return bloc.add(RegistrarVendaLoadEvent(nota.text, selected));
       }
-      return showSnackbarError(message: "Selecione uma ponteira");
+      return showSnackbarError(message: AppStrings.selecioneUmaPonteira);
     }
 
-    return showSnackbarError(message: "Digite ou escaneie o código");
+    return showSnackbarError(message: AppStrings.digiteOuEscaneieOCodigo);
+  }
+
+  Widget _buttonSave() {
+    return Padding(
+      padding: EdgeInsets.all(AppSpacing.normal),
+      child: Hero(
+        tag: "floatingButton",
+        child: appElevatedButtonText(
+          AppStrings.enviarNFE.toUpperCase(),
+          function: () => _save(),
+          color: AppColors.primaryColor,
+          textColor: AppColors.white,
+          width: MediaQuery.of(context).size.width,
+        ),
+      ),
+    );
   }
 
   Future<void> scanBarcode() async {
-    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#FFFFFF', 'CANCELAR', false, ScanMode.BARCODE);
+    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode('#FFFFFF', AppStrings.cancelar, false, ScanMode.BARCODE);
 
     if (barcodeScanRes != '-1') {
-      return setState(() => formNFCE.text = barcodeScanRes);
+      return setState(() => nota.text = barcodeScanRes);
     }
 
-    return showSnackbarWarning(message: "Não foi possivel escanear o código de barras");
+    return showSnackbarWarning(message: AppStrings.naoFoiPossivelEscanearOCodigo);
   }
 
-  void selectContainer(int index) {
+  void _selectContainer(int index) {
     setState(() {
       if (selected == index) {
         selected = -1;
@@ -64,27 +79,39 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
     });
   }
 
-  Widget buildContainer(int index, String image, String nome) {
+  Widget _ponteiras(int index, String image, String nome) {
     return GestureDetector(
-      onTap: () => selectContainer(index),
+      onTap: () => _selectContainer(index),
       child: appContainer(
-        backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300,
-        radius: BorderRadius.circular(20),
-        border: Border.all(color: selected == index ? AppColors.primaryColor : Colors.grey.shade300, width: 3),
+        backgroundColor: selected == index ? AppColors.primaryColor : AppColors.grey300,
+        radius: BorderRadius.circular(AppRadius.medium),
+        border: Border.all(color: selected == index ? AppColors.primaryColor : AppColors.grey300, width: 3),
         child: Column(
           children: [
             appContainer(
               height: 160,
               width: 160,
-              radius: const BorderRadius.only(topLeft: Radius.circular(18), topRight: Radius.circular(18)),
+              radius: BorderRadius.only(
+                topLeft: Radius.circular(AppRadius.medium),
+                topRight: Radius.circular(AppRadius.medium),
+              ),
               image: AssetImage("assets/images/ponteiras/$image"),
             ),
-            appContainer(height: 2, backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300, width: 160),
-            appSizedBoxHeight(5),
+            appContainer(
+              height: 2,
+              backgroundColor: selected == index ? AppColors.primaryColor : Colors.grey.shade300,
+              width: 160,
+            ),
+            appSizedBoxHeight(AppSpacing.small),
             appText(nome, color: selected == index ? Colors.white : Colors.grey),
-            appSizedBoxHeight(5),
-            appText(nome.contains("dupla") ? "+20 Pontos" : "+ 10 Pontos", color: selected == index ? Colors.white : Colors.grey, bold: true, fontSize: 16),
-            appSizedBoxHeight(5),
+            appSizedBoxHeight(AppSpacing.small),
+            appText(
+              nome.contains("dupla") ? "+20 Pontos" : "+ 10 Pontos",
+              color: selected == index ? AppColors.white : AppColors.grey,
+              bold: true,
+              fontSize: AppFontSizes.normal,
+            ),
+            appSizedBoxHeight(AppSpacing.small),
           ],
         ),
       ),
@@ -93,69 +120,64 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
 
   Widget _body() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(AppSpacing.normal),
       child: ListView(
         children: [
           appContainer(
             backgroundColor: Colors.grey.shade300,
-            radius: BorderRadius.circular(10),
-            padding: const EdgeInsets.all(10),
-            child: appText('Digite o código NF-E abaixo, ou escaneie o código de barras da NF-E para registrar a venda e ganhar pontos.', textAlign: TextAlign.center),
+            radius: BorderRadius.circular(AppRadius.normal),
+            padding: EdgeInsets.all(AppSpacing.normal),
+            child: appText(AppStrings.mensagemNFE, textAlign: TextAlign.center),
           ),
-          appSizedBoxHeight(10),
-          formFieldPadrao(context, hint: "Digite o número da NF-E", textInputFormatter: AppFormFormatters.nfeFormatter, textInputType: TextInputType.number, controller: formNFCE),
-          appSizedBoxHeight(10),
-          appText('OU', textAlign: TextAlign.center, bold: true, color: AppColors.primaryColor),
-          appSizedBoxHeight(10),
+          appSizedBoxHeight(AppSpacing.normal),
+          appFormField(
+            context,
+            hint: AppStrings.digiteONumeroDaNFE,
+            textInputFormatter: AppFormFormatters.nfeFormatter,
+            textInputType: TextInputType.number,
+            controller: nota,
+          ),
+          appSizedBoxHeight(AppSpacing.normal),
+          appText(AppStrings.ou, textAlign: TextAlign.center, bold: true, color: AppColors.primaryColor),
+          appSizedBoxHeight(AppSpacing.normal),
           appElevatedButtonText(
-            "Escanear código de barras".toUpperCase(),
+            AppStrings.escanearCodigo.toUpperCase(),
             function: () => scanBarcode(),
             color: AppColors.primaryColor,
-            textColor: Colors.white,
+            textColor: AppColors.white,
             width: MediaQuery.of(context).size.width,
           ),
           const Divider(),
           appContainer(
-            backgroundColor: Colors.grey.shade300,
-            radius: BorderRadius.circular(10),
-            padding: const EdgeInsets.all(10),
-            child: appText('Selecione a ponteira vendida', textAlign: TextAlign.center),
+            backgroundColor: AppColors.grey300,
+            radius: BorderRadius.circular(AppRadius.normal),
+            padding: EdgeInsets.all(AppSpacing.normal),
+            child: appText(AppStrings.selecioneAPonteiraVendida, textAlign: TextAlign.center),
           ),
-          appSizedBoxHeight(20),
+          appSizedBoxHeight(AppSpacing.medium),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              buildContainer(0, "black_piano_dupla.jpg", "Black piano (dupla)"),
-              buildContainer(1, "black_piano_simples.jpg", "Black piano (simples)"),
+              _ponteiras(0, "black_piano_dupla.jpg", AppStrings.blackPianoDupla),
+              _ponteiras(1, "black_piano_simples.jpg", AppStrings.blackPianoSimples),
             ],
           ),
-          const SizedBox(height: 20),
+          appSizedBoxHeight(AppSpacing.medium),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              buildContainer(2, "polida_dupla.jpg", "Polida (dupla)"),
-              buildContainer(3, "polida_simples.jpg", "Polida (Simples)"),
+              _ponteiras(2, "polida_dupla.jpg", AppStrings.polidaDupla),
+              _ponteiras(3, "polida_simples.jpg", AppStrings.polidaSimples),
             ],
           ),
-          appSizedBoxHeight(20),
-          appElevatedButtonText(
-            "Enviar NF-E".toUpperCase(),
-            function: () => _save(),
-            color: AppColors.primaryColor,
-            textColor: Colors.white,
-            width: MediaQuery.of(context).size.width,
-          ),
+          appSizedBoxHeight(AppSpacing.medium),
         ],
       ),
     );
   }
 
   void _onChangeState(RegistrarVendaState state) {
-    if (state is RegistrarVendaErrorState) showSnackbarError(message: state.errorModel.mensagem);
-    if (state is RegistrarVendaSuccessState) {
-      showSnackbarSuccess(message: "NF-E registrada com sucesso");
-      Navigator.pop(context);
-    }
+    if (state is RegistrarVendaSuccessState) Navigator.pop(context);
   }
 
   Widget _bodyBuilder() {
@@ -165,7 +187,7 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case RegistrarVendaLoadingState:
-            return loading();
+            return loadingAnimation();
           default:
             return _body();
         }
@@ -176,8 +198,9 @@ class _RegistrarVendaScreenState extends State<RegistrarVendaScreen> {
   @override
   Widget build(BuildContext context) {
     return scaffold(
-      title: "Registrar venda",
+      title: AppStrings.registrarVenda,
       body: _bodyBuilder(),
+      bottomNavigationBar: _buttonSave(),
     );
   }
 

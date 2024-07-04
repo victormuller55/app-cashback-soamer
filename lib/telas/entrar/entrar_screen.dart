@@ -47,8 +47,8 @@ class _EntrarScreenState extends State<EntrarScreen> {
     return Column(
       children: [
         appSizedBoxHeight(70),
-        formFieldPadrao(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
-        formFieldPadrao(context, controller: senha,hint: AppStrings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+        appFormField(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
+        appFormField(context, controller: senha,hint: AppStrings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
         appSizedBoxHeight(AppSpacing.medium),
         GestureDetector(
           onTap: () => open(screen: const EnviarEmailScreen()),

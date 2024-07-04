@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-formFieldPadrao(
+appFormField(
   BuildContext context, {
   required String hint,
   double? width,

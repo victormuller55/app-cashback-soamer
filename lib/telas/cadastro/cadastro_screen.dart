@@ -78,11 +78,11 @@ class _CadastroScreenState extends State<CadastroScreen> {
     return Column(
       children: [
         appSizedBoxHeight(70),
-        formFieldPadrao(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
-        formFieldPadrao(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
-        formFieldPadrao(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
-        formFieldPadrao(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter),
-        formFieldPadrao(context, controller: senha, hint: AppStrings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+        appFormField(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
+        appFormField(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
+        appFormField(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
+        appFormField(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter),
+        appFormField(context, controller: senha, hint: AppStrings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
         SizedBox(
           width: 330,
           child: CheckboxListTile(

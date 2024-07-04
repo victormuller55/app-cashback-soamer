@@ -15,11 +15,14 @@ class VoucherBloc extends Bloc<VoucherEvent, VoucherState> {
     on<VoucherTrocarEvent>((event, emit) async {
       emit(VoucherLoadingState());
       try {
+
         VendedorModel vendedorModel = await getModelLocal();
         Response response = await getCodeVoucher(event.idVoucher, vendedorModel.id!);
+
         emit(VoucherSuccessState(code: response.body));
       } catch (e) {
-        emit(VoucherErrorState(errorModel: e is ApiException ? ErrorModel.fromMap(jsonDecode(e.response.body)) : ErrorModel.empty()));
+
+        emit(VoucherErrorState(errorModel: ApiException.errorModel(e)));
       }
     });
   }

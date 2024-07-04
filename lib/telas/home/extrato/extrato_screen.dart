@@ -1,3 +1,4 @@
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
@@ -8,6 +9,7 @@ import 'package:app_cashback_soamer/models/extrato_model.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_event.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_state.dart';
+import 'package:app_cashback_soamer/widgets/animations.dart';
 import 'package:app_cashback_soamer/widgets/container.dart';
 import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
@@ -96,54 +98,44 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
     );
   }
 
+
   Widget _body(List<ExtratoModel> extratoModel) {
     int totalEntrada = 0;
     int totalSaida = 0;
 
-    DateTime dataAtual = DateTime.now();
-    DateTime dataOntem = dataAtual.subtract(const Duration(days: 1));
-    DateTime dataAnterior = dataAtual.subtract(const Duration(days: 2));
 
-    List<Widget> hoje = [];
-    List<Widget> ontem = [];
-    List<Widget> anterior = [];
-
-    void addCardToList(DateTime dataRegistro, ExtratoModel extratoModel) {
-      if (dataRegistro.isBefore(dataOntem)) {
-        ontem.add(_cardExtrato(extratoModel));
-      } else if (dataRegistro.isBefore(dataAnterior)) {
-        anterior.add(_cardExtrato(extratoModel));
-      } else {
-        if (extratoModel.entrada!) {
-          totalEntrada += extratoModel.pontos!;
+    void adicionaValores(ExtratoModel model) {
+      if(formataStringParaDateTime(model.data!).day == DateTime.now().day) {
+        if (model.entrada!) {
+          totalEntrada += model.pontos!;
         } else {
-          totalSaida += extratoModel.pontos!;
+          totalSaida += model.pontos!;
         }
-        hoje.add(_cardExtrato(extratoModel));
       }
     }
+
+    List<Widget> registros = [];
 
     for (ExtratoModel model in extratoModel) {
-      DateTime dataRegistro = DateTime.parse(model.data!).subtract(const Duration(hours: 3));
-      addCardToList(dataRegistro, model);
+      adicionaValores(model);
+      registros.add(_cardExtrato(model));
     }
 
-    if (hoje.isEmpty && ontem.isEmpty && anterior.isEmpty) {
-      return Center(child: appText(AppStrings.nenhumRegistroEncontrado, textAlign: TextAlign.center, fontSize: AppFontSizes.normal));
-    }
-
-    Widget buildSection(String title, List<Widget> items) {
-      if (items.isNotEmpty) {
-        return Column(
+    if (registros.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(child: appText(title.toUpperCase(), bold: true, color: AppColors.primaryColor)),
-            appSizedBoxHeight(AppSpacing.normal),
-            ...items.reversed,
+            appAnimation(AppAnimations.notFound, height: 300, repete: false),
+            appText(
+              AppStrings.nenhumRegistroEncontrado,
+              textAlign: TextAlign.center,
+              fontSize: AppFontSizes.normal,
+            ),
+            appSizedBoxHeight(100),
           ],
-        );
-      }
-
-      return appContainer();
+        ),
+      );
     }
 
     return Padding(
@@ -160,11 +152,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
             ],
           ),
           appSizedBoxHeight(AppSpacing.normal),
-          buildSection(AppStrings.hoje, hoje),
-          appSizedBoxHeight(AppSpacing.small),
-          buildSection(AppStrings.ontem, ontem),
-          appSizedBoxHeight(AppSpacing.small),
-          buildSection(AppStrings.anterior, anterior),
+          ...registros.reversed,
         ],
       ),
     );
@@ -181,7 +169,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
         builder: (context, state) {
           switch (state.runtimeType) {
             case ExtratoLoadingState:
-              return loading();
+              return loadingAnimation();
             case ExtratoSuccessState:
               return _body(state.extratoModel);
             case ExtratoErrorState:

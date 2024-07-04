@@ -1,5 +1,8 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
@@ -13,19 +16,20 @@ import 'package:app_cashback_soamer/widgets/erro.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:app_cashback_soamer/widgets/modal.dart';
 import 'package:app_cashback_soamer/widgets/scaffold.dart';
+import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VaucherScreen extends StatefulWidget {
-  final VaucherModel vaucherModel;
-  final String heroImage;
+  final VaucherModel model;
+  final String hero;
   final int pontos;
 
   const VaucherScreen({
     super.key,
-    required this.vaucherModel,
-    required this.heroImage,
+    required this.model,
+    required this.hero,
     required this.pontos,
   });
 
@@ -34,66 +38,48 @@ class VaucherScreen extends StatefulWidget {
 }
 
 class _VaucherScreenState extends State<VaucherScreen> {
-  VoucherBloc voucherBloc = VoucherBloc();
+
+  VoucherBloc bloc = VoucherBloc();
 
   Widget _bodySuccess(VoucherState voucherState) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(AppSpacing.normal),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            avatar(AppEndpoints.endpointImageVoucher(widget.vaucherModel.id!), radius: 80),
-            const SizedBox(height: 15),
+            avatar(AppEndpoints.endpointImageVoucher(widget.model.id!), radius: 100),
+            appSizedBoxHeight(AppSpacing.medium),
             appText(
-              "VOUCHER ADQUIRIDO \n COM SUCESSO!",
+              AppStrings.voucherAdquiridoComSucesso,
               bold: true,
               color: AppColors.primaryColor,
-              fontSize: 17,
+              fontSize: AppFontSizes.normal,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+            appSizedBoxHeight(AppSpacing.normal),
             appContainer(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              backgroundColor: Colors.green,
-              radius: BorderRadius.circular(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  appText(
-                    "Verifique seu e-mail",
-                    color: Colors.white,
-                    fontSize: 16,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(width: 10),
-                  const Icon(Icons.email, color: Colors.white),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            appContainer(
-              radius: BorderRadius.circular(20),
-              padding: const EdgeInsets.all(10),
-              backgroundColor: Colors.grey.shade300,
+              radius: BorderRadius.circular(AppRadius.medium),
+              padding: EdgeInsets.all(AppSpacing.normal),
+              backgroundColor: AppColors.grey300,
               child: appText(
-                "Após adquirir o voucher, o código será enviado para o seu e-mail conectado à conta. Por favor, verifique a pasta de descontos e spam ao verificar o e-mail, pois o processo pode levar até 1 dia para ser concluído. Fique atento e aproveite seus benefícios!",
-                color: Colors.grey.shade600,
-                fontSize: 15,
+                AppStrings.voucherComprado,
+                color: AppColors.grey600,
+                fontSize: AppFontSizes.normal,
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 20),
+            appSizedBoxHeight(AppSpacing.medium),
             appElevatedButtonText(
-              "CONCLUIR",
+              AppStrings.concluir,
               function: () => Navigator.pop(context),
               color: AppColors.primaryColor,
-              textColor: Colors.white,
+              textColor: AppColors.white,
               width: MediaQuery.of(context).size.width,
             ),
-            const SizedBox(height: 40),
+            appSizedBoxHeight(AppSpacing.big),
           ],
         ),
       ),
@@ -106,48 +92,45 @@ class _VaucherScreenState extends State<VaucherScreen> {
       height: 350,
       child: Column(
         children: [
-          appText(widget.vaucherModel.titulo!, fontSize: 18, bold: true),
-          const SizedBox(height: 10),
+          appSizedBoxHeight(AppSpacing.medium),
+          appText(widget.model.titulo!, fontSize: AppFontSizes.medium, bold: true),
+          appSizedBoxHeight(AppSpacing.normal),
           appContainer(
             width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(10),
-            backgroundColor: Colors.grey.shade300,
-            radius: BorderRadius.circular(10),
-            child: Center(child: appText("Você realmente deseja trocar ${widget.vaucherModel.pontos} pontos deste vaucher?", fontSize: 15, textAlign: TextAlign.center)),
+            padding: EdgeInsets.all(AppSpacing.normal),
+            backgroundColor: AppColors.grey300,
+            radius: BorderRadius.circular(AppRadius.normal),
+            child: Center(
+              child: appText(
+                "Você realmente deseja trocar ${widget.model.pontos} pontos deste vaucher?",
+                fontSize: AppFontSizes.normal,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              appText("Saldo atual: ", bold: true, fontSize: 17, color: Colors.grey.shade600),
-              appText("${widget.pontos} Pontos", bold: true, fontSize: 17, color: Colors.grey.shade800),
-            ],
-          ),
-          const SizedBox(height: 5),
-          appText("Após da troca: ${widget.pontos - widget.vaucherModel.pontos! <= 0 ? 0 : widget.pontos - widget.vaucherModel.pontos!} Pontos", fontSize: 15, color: Colors.grey.shade600),
-          const SizedBox(height: 20),
+          appSizedBoxHeight(AppSpacing.medium),
           appElevatedButtonText(
-            "TROCAR",
+            AppStrings.trocar.toUpperCase(),
             width: MediaQuery.of(context).size.width,
-            color: Colors.green,
-            textColor: Colors.white,
+            color: AppColors.green,
+            textColor: AppColors.white,
             function: () {
-              if (widget.vaucherModel.pontos! <= widget.pontos) {
-                voucherBloc.add(VoucherTrocarEvent(widget.vaucherModel.id!));
+              if (widget.model.pontos! <= widget.pontos) {
+                bloc.add(VoucherTrocarEvent(widget.model.id!));
                 Navigator.pop(context);
               } else {
-                showSnackbarWarning(message: "Pontos insuficientes");
+                showSnackbarWarning(message: AppStrings.pontosInsuficientes);
                 Navigator.pop(context);
               }
             },
           ),
-          const SizedBox(height: 10),
+          appSizedBoxHeight(AppSpacing.normal),
           appElevatedButtonText(
-            "CANCELAR",
+            AppStrings.cancelar,
             width: MediaQuery.of(context).size.width,
             function: () => Navigator.pop(context),
           ),
-          const SizedBox(height: 20),
+          appSizedBoxHeight(AppSpacing.medium),
         ],
       ),
     );
@@ -155,12 +138,12 @@ class _VaucherScreenState extends State<VaucherScreen> {
 
   Widget _buttonTrocar() {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(AppSpacing.normal),
       child: appElevatedButtonText(
-        "TROCAR CUPOM",
+        AppStrings.trocarVoucher,
         function: () => _showModal(),
         color: AppColors.primaryColor,
-        textColor: Colors.white,
+        textColor: AppColors.white,
       ),
     );
   }
@@ -169,16 +152,21 @@ class _VaucherScreenState extends State<VaucherScreen> {
     return ListView(
       children: [
         Hero(
-          tag: widget.heroImage,
+          tag: widget.hero,
           child: appContainer(
             height: 200,
             width: MediaQuery.of(context).size.width,
-            backgroundColor: Colors.grey.shade300,
-            image: NetworkImage(AppEndpoints.endpointImageVoucher(widget.vaucherModel.id!)),
+            backgroundColor: AppColors.grey300,
+            image: NetworkImage(AppEndpoints.endpointImageVoucher(widget.model.id!)),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 5),
+          padding: EdgeInsets.only(
+            left: AppSpacing.medium,
+            right: AppSpacing.medium,
+            top: AppSpacing.medium,
+            bottom: AppSpacing.small,
+          ),
           child: Column(
             children: [
               Row(
@@ -186,52 +174,52 @@ class _VaucherScreenState extends State<VaucherScreen> {
                 children: [
                   infoColumn(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    title: widget.vaucherModel.titulo ?? "",
-                    value: "Até ${widget.vaucherModel.dataFinal}",
-                    titleColor: Colors.black,
-                    valueColor: Colors.grey.shade600,
+                    title: widget.model.titulo ?? "",
+                    value: "Até ${widget.model.dataFinal}",
+                    titleColor: AppColors.black,
+                    valueColor: AppColors.grey600,
                     titleSize: 18,
                     valueSize: 15,
                     spacing: true,
                   ),
                   infoColumn(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    title: widget.vaucherModel.desconto == 0 ? "" : "${widget.vaucherModel.pontosCheio} Pontos",
-                    value: widget.vaucherModel.desconto == 0 ? "${widget.vaucherModel.pontosCheio} Pontos" : "${widget.vaucherModel.pontos} Pontos",
-                    titleColor: Colors.red,
-                    valueColor: Colors.black,
+                    title: widget.model.desconto == 0 ? AppStrings.vazio : "${widget.model.pontosCheio} Pontos",
+                    value: widget.model.desconto == 0 ? "${widget.model.pontosCheio} Pontos" : "${widget.model.pontos} Pontos",
+                    titleColor: AppColors.red,
+                    valueColor: AppColors.black,
                     titleSize: 14,
                     valueSize: 18,
                     cortarTitle: true,
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              appSizedBoxHeight(AppSpacing.medium),
               appContainer(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(10),
-                backgroundColor: Colors.grey.shade300,
-                radius: BorderRadius.circular(20),
-                child: Center(child: appText(widget.vaucherModel.info!, fontSize: 15, textAlign: TextAlign.justify)),
+                padding: EdgeInsets.all(AppSpacing.normal),
+                backgroundColor: AppColors.grey300,
+                radius: BorderRadius.circular(AppRadius.medium),
+                child: Center(child: appText(widget.model.info!, fontSize: AppFontSizes.normal, textAlign: TextAlign.justify)),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        appSizedBoxHeight(AppSpacing.medium),
         ExpansionTile(
-          collapsedBackgroundColor: Colors.white,
-          textColor: Colors.black,
-          title: appText("Por quanto tempo posso utilizar o voucher?"),
+          collapsedBackgroundColor: AppColors.white,
+          textColor: AppColors.black,
+          title: appText(AppStrings.perguntaVoucher1),
           children: [
             appContainer(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(10),
-              backgroundColor: Colors.grey.shade300,
+              padding: EdgeInsets.all(AppSpacing.normal),
+              backgroundColor: AppColors.grey300,
               child: Center(
                 child: appText(
                   AppStrings.explicacaoComoUtilizarVoucher,
-                  fontSize: 15,
-                  color: Colors.grey.shade600,
+                  fontSize: AppFontSizes.normal,
+                  color: AppColors.grey600,
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -239,20 +227,20 @@ class _VaucherScreenState extends State<VaucherScreen> {
           ],
         ),
         ExpansionTile(
-          collapsedBackgroundColor: Colors.white,
-          textColor: Colors.black,
-          title: appText("Por quanto tempo posso utilizar o voucher?"),
+          collapsedBackgroundColor: AppColors.white,
+          textColor: AppColors.black,
+          title: appText(AppStrings.perguntaVoucher2),
           children: [
             appContainer(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(10),
-              backgroundColor: Colors.grey.shade300,
+              padding: EdgeInsets.all(AppSpacing.normal),
+              backgroundColor: AppColors.grey300,
               child: Center(
                 child: appText(
                   AppStrings.explicacaoTempoVoucher,
-                  fontSize: 15,
+                  fontSize: AppFontSizes.normal,
                   textAlign: TextAlign.justify,
-                  color: Colors.grey.shade600,
+                  color: AppColors.grey600,
                 ),
               ),
             ),
@@ -263,13 +251,12 @@ class _VaucherScreenState extends State<VaucherScreen> {
   }
 
   Widget _bodyBuilder() {
-    return BlocConsumer<VoucherBloc, VoucherState>(
-      bloc: voucherBloc,
-      listener: (context, state) => setState(() {}),
+    return BlocBuilder<VoucherBloc, VoucherState>(
+      bloc: bloc,
       builder: (context, state) {
         switch (state.runtimeType) {
           case VoucherLoadingState:
-            return loading();
+            return loadingAnimation();
           case VoucherErrorState:
             return erro(state.errorModel, function: () => {});
           case VoucherSuccessState:
@@ -285,12 +272,12 @@ class _VaucherScreenState extends State<VaucherScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      title: widget.vaucherModel.titulo ?? "",
-      bottomNavigationBar: voucherBloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
+      title: widget.model.titulo ?? "",
+      bottomNavigationBar: bloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
       actions: [
         infoColumn(
           title: widget.pontos.toString(),
-          value: "Pontos",
+          value: AppStrings.pontos,
           crossAxisAlignment: CrossAxisAlignment.center,
         ),
       ],
@@ -299,7 +286,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
 
   @override
   void dispose() {
-    voucherBloc.close();
+    bloc.close();
     super.dispose();
   }
 }
