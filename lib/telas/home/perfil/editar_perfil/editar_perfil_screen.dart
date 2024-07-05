@@ -1,32 +1,18 @@
 import 'dart:io';
 
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_form_formatter.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
-import 'package:app_cashback_soamer/functions/formatters.dart';
-import 'package:app_cashback_soamer/functions/util.dart';
 import 'package:app_cashback_soamer/models/edit_vendedor_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_event.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_state.dart';
-import 'package:app_cashback_soamer/widgets/container.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/form_field.dart';
-import 'package:app_cashback_soamer/widgets/loading.dart';
-import 'package:app_cashback_soamer/widgets/modal.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
-import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:muller_package/muller_package.dart';
 
 class EditarPerfilScreen extends StatefulWidget {
   final VendedorModel vendedorModel;
@@ -106,7 +92,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
             radius: BorderRadius.circular(AppRadius.normal),
             padding: EdgeInsets.all(AppSpacing.medium),
             height: 60,
-            backgroundColor: AppColors.grey700,
+            backgroundColor: cashboost.AppColors.grey700,
             child: appText(
               AppStrings.digiteSuaSenhaEditarDados,
               textAlign: TextAlign.center,
@@ -121,7 +107,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
             showSenha: false,
             width: MediaQuery.of(context).size.width,
           ),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height: AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.salvar.toUpperCase(),
             width: MediaQuery.of(context).size.width,
@@ -130,10 +116,10 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
               _validar();
               Navigator.pop(context);
             },
-            color: AppColors.primaryColor,
+            color: cashboost.AppColors.primaryColor,
             textColor: Colors.white,
           ),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height: AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.cancelar.toUpperCase(),
             borderRadius: AppRadius.normal,
@@ -141,7 +127,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
             function: () {
               Navigator.pop(context);
             },
-            color: AppColors.red,
+            color: cashboost.AppColors.red,
             textColor: Colors.white,
           ),
         ],
@@ -155,11 +141,11 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height: AppSpacing.normal),
           appContainer(
             padding: EdgeInsets.all(AppSpacing.normal),
             radius: BorderRadius.circular(AppRadius.medium),
-            backgroundColor: AppColors.white,
+            backgroundColor: cashboost.AppColors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -170,7 +156,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                       width: MediaQuery.of(context).size.width * 0.50,
                       height: 90,
                       padding: EdgeInsets.all(AppSpacing.normal),
-                      backgroundColor: AppColors.grey300,
+                      backgroundColor: cashboost.AppColors.grey300,
                       radius: BorderRadius.circular(AppRadius.normal),
                       child: Center(
                         child: appText(
@@ -181,14 +167,14 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                         ),
                       ),
                     ),
-                    appSizedBoxHeight(10),
+                    appSizedBox(height: AppSpacing.normal),
                     appElevatedButtonText(
                       AppStrings.alterarFoto.toUpperCase(),
                       function: () => _imagemGaleria(),
                       width: MediaQuery.of(context).size.width * 0.50,
                       height: 45,
                       borderRadius: AppRadius.normal,
-                      color: AppColors.primaryColor,
+                      color: cashboost.AppColors.primaryColor,
                       textColor: Colors.white,
                     ),
                   ],
@@ -200,18 +186,18 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
                           width: MediaQuery.of(context).size.width * 0.35,
                           height: MediaQuery.of(context).size.width * 0.35,
                           radius: BorderRadius.circular(AppRadius.normal),
-                          border: Border.all(color: AppColors.primaryColor, width: 2),
+                          border: Border.all(color: cashboost.AppColors.primaryColor, width: 2),
                           image: NetworkImage(AppEndpoints.endpointImageVendedor(widget.vendedorModel.id!)),
                         )
                       : appContainer(
                           height: 150,
                           width: 150,
                           radius: BorderRadius.circular(AppRadius.normal),
-                          border: Border.all(color: AppColors.primaryColor, width: 2),
+                          border: Border.all(color: cashboost.AppColors.primaryColor, width: 2),
                           image: FileImage(imageFile),
                         ),
                 ),
-                appSizedBoxHeight(10),
+                appSizedBox(height: AppSpacing.normal),
               ],
             ),
           ),
@@ -220,11 +206,11 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
           appFormField(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
           appFormField(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter, enable: false),
           appFormField(context, controller: novaSenha, hint: AppStrings.novaSenha, width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
-          appSizedBoxHeight(AppSpacing.medium),
+          appSizedBox(height: AppSpacing.medium),
           appElevatedButtonText(
             AppStrings.salvar.toUpperCase(),
-            color: AppColors.primaryColor,
-            textColor: AppColors.white,
+            color: cashboost.AppColors.primaryColor,
+            textColor: cashboost.AppColors.white,
             borderRadius: AppRadius.normal,
             function: () => _pedirSenhaModel(),
           ),
@@ -239,7 +225,8 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case EditarVendedorLoadingState:
-            return loadingAnimation();
+            return appLoadingAnimation(animation: AppAnimations.loading);
+
           default:
             return _body();
         }
@@ -251,6 +238,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
+      appBarBackground: cashboost.AppColors.primaryColor,
       title: AppStrings.editarPerfil,
     );
   }

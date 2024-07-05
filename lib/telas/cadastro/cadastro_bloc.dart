@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/api/api_connection.dart';
-import 'package:app_cashback_soamer/api/api_exception.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
+import 'package:muller_package/muller_package.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/apresentacao/apresentacao_screen.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
@@ -18,7 +15,7 @@ class CadastroBloc extends Bloc<CadastroEvent, CadastroState> {
       emit(CadastroLoadingState());
       try {
 
-        Response response = await postUser(event.vendedorModel);
+        AppResponse response = await postUser(event.vendedorModel);
         VendedorModel vendedorModel = VendedorModel.fromMap(jsonDecode(response.body));
         saveLocalUserData(vendedorModel);
 

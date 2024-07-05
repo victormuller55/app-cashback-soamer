@@ -1,8 +1,7 @@
-
-import 'package:app_cashback_soamer/api/api_connection.dart';
+import 'package:muller_package/muller_package.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
 
-Future<Response> alterarSenha(String email, String novaSenha) async {
+Future<AppResponse> alterarSenha(String email, String novaSenha) async {
   return await getHTTP(
     endpoint: AppEndpoints.endpointEntrarCadastrar,
     parameters: {

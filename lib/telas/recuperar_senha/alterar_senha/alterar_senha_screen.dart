@@ -1,21 +1,11 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
-import 'package:app_cashback_soamer/telas/home/home_screen.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_bloc.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_event.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_state.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/erro.dart';
-import 'package:app_cashback_soamer/widgets/form_field.dart';
-import 'package:app_cashback_soamer/widgets/loading.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:muller_package/muller_package.dart';
 
 class AlterarSenhaScreen extends StatefulWidget {
   final String email;
@@ -51,14 +41,14 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
       child: ListView(
         children: [
           appFormField(context, hint: AppStrings.digiteSuaNovaSenha, showSenha: false, controller: senha),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
           appFormField(context, hint: AppStrings.confirmeSuaNovaSenha, showSenha: false, controller: confirmarSenha),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.salvarEEntrar.toUpperCase(),
             function: () => _entrarESalvar(),
-            color: AppColors.primaryColor,
-            textColor: AppColors.white,
+            color: cashboost.AppColors.primaryColor,
+            textColor: cashboost.AppColors.white,
           )
         ],
       ),
@@ -71,9 +61,9 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case AlterarSenhaLoadingState:
-            return loadingAnimation();
+            return appLoadingAnimation(animation: AppAnimations.loading);
           case AlterarSenhaErrorState:
-            return erro(state.errorModel, function: () => _entrarESalvar());
+            return appError(state.errorModel, function: () => _entrarESalvar());
           default:
             return _body();
         }
@@ -85,6 +75,7 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
+      appBarBackground: cashboost.AppColors.primaryColor,
       title: AppStrings.alterarSenha,
       hideBackArrow: true,
     );

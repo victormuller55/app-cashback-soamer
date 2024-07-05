@@ -1,22 +1,12 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_bloc.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_event.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_state.dart';
-import 'package:app_cashback_soamer/telas/recuperar_senha/verificar_codigo/verificar_codigo_screen.dart';
-import 'package:app_cashback_soamer/widgets/container.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/form_field.dart';
-import 'package:app_cashback_soamer/widgets/loading.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
-import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:muller_package/muller_package.dart';
 
 class EnviarEmailScreen extends StatefulWidget {
   const EnviarEmailScreen({super.key});
@@ -49,19 +39,19 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
       child: ListView(
         children: [
           appContainer(
-            border: Border.all(color: AppColors.primaryColor),
+            border: Border.all(color: cashboost.AppColors.primaryColor),
             radius: BorderRadius.circular(AppRadius.normal),
             padding:  EdgeInsets.all(AppSpacing.normal),
-            backgroundColor: AppColors.white,
+            backgroundColor:  cashboost.AppColors.white,
             margin: EdgeInsets.only(bottom: AppSpacing.normal),
             child: appText(AppStrings.mensagemEmail, textAlign: TextAlign.center),
           ),
           appFormField(context, hint: AppStrings.email, controller: email),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.enviarCodigo.toUpperCase(),
-            color: AppColors.primaryColor,
-            textColor: AppColors.white,
+            color:  cashboost.AppColors.primaryColor,
+            textColor:  cashboost.AppColors.white,
             function: () => _enviarEmail(),
           ),
         ],
@@ -75,7 +65,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case EnviarEmailLoadingState:
-            return loadingAnimation();
+            return appLoadingAnimation(animation: AppAnimations.loading);
           default:
             return _body();
         }
@@ -87,6 +77,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
+      appBarBackground: cashboost.AppColors.primaryColor,
       title: AppStrings.enviarEmail,
     );
   }

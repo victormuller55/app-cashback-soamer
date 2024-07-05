@@ -1,28 +1,15 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_icons.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
-import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/contato/contato_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/politica_de_privacidade/politica_de_privacidade_screen.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/termos_de_uso/termos_de_uso_screen.dart';
-import 'package:app_cashback_soamer/widgets/container.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/erro.dart';
-import 'package:app_cashback_soamer/widgets/loading.dart';
-import 'package:app_cashback_soamer/widgets/modal.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
-import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
+import 'package:muller_package/muller_package.dart';
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
@@ -50,13 +37,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          appSizedBoxHeight(AppSpacing.medium),
-          appText(AppStrings.voceRealmenteDesejaSairDaConta, bold: true, fontSize: AppFontSizes.normal, color: AppColors.grey600),
-          appSizedBoxHeight(AppSpacing.medium),
-          appElevatedButtonText(AppStrings.simSairDaConta.toUpperCase(), function: () => _exit(), width: MediaQuery.of(context).size.width, color: AppColors.red, textColor: AppColors.white),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.medium),
+          appText(AppStrings.voceRealmenteDesejaSairDaConta, bold: true, fontSize: AppFontSizes.normal, color: cashboost.AppColors.grey600),
+          appSizedBox(height:AppSpacing.medium),
+          appElevatedButtonText(AppStrings.simSairDaConta.toUpperCase(), function: () => _exit(), width: MediaQuery.of(context).size.width, color: cashboost.AppColors.red, textColor: cashboost.AppColors.white),
+          appSizedBox(height:AppSpacing.normal),
           appElevatedButtonText(AppStrings.naoCancelar.toUpperCase(), function: () => Navigator.pop(context), width: MediaQuery.of(context).size.width),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
         ],
       ),
     );
@@ -75,14 +62,14 @@ class _PerfilScreenState extends State<PerfilScreen> {
         child: appContainer(
           height: 50,
           width: MediaQuery.of(context).size.width,
-          backgroundColor: closeAccount ?? false ? AppColors.red : AppColors.grey100,
+          backgroundColor: closeAccount ?? false ? cashboost.AppColors.red : cashboost.AppColors.grey100,
           padding: EdgeInsets.only(left: AppSpacing.big, right: AppSpacing.big),
           radius: BorderRadius.circular(AppRadius.normal),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              appText(titulo, color: closeAccount ?? false ? AppColors.white : AppColors.grey600, bold: false, fontSize: AppFontSizes.normal),
-              Icon(AppIcons.arrowRight, color: closeAccount ?? false ? AppColors.white : AppColors.grey, size: 30),
+              appText(titulo, color: closeAccount ?? false ? cashboost.AppColors.white : cashboost.AppColors.grey600, bold: false, fontSize: AppFontSizes.normal),
+              Icon(AppIcons.arrowRight, color: closeAccount ?? false ? cashboost.AppColors.white : cashboost.AppColors.grey, size: 30),
             ],
           ),
         ),
@@ -94,7 +81,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
     return appContainer(
       height: 140,
       width: MediaQuery.of(context).size.width,
-      backgroundColor: AppColors.white,
+      backgroundColor: cashboost.AppColors.white,
       padding: EdgeInsets.only(
         top: AppSpacing.normal,
         bottom: AppSpacing.normal,
@@ -113,24 +100,24 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 vendedorModel.nome ?? AppStrings.vazio,
                 bold: true,
                 fontSize: AppFontSizes.medium,
-                color: AppColors.primaryColor,
+                color: cashboost.AppColors.primaryColor,
               ),
-              appSizedBoxHeight(AppSpacing.normal),
+              appSizedBox(height:AppSpacing.normal),
               appText(
                 vendedorModel.nomeConcessionaria ?? AppStrings.vazio,
                 bold: true,
                 fontSize: AppFontSizes.small,
-                color: AppColors.grey600,
+                color: cashboost.AppColors.grey600,
               ),
-              appSizedBoxHeight(AppSpacing.normal),
+              appSizedBox(height:AppSpacing.normal),
               appElevatedButtonText(
                 AppStrings.editarPerfil.toUpperCase(),
                 function: () => open(screen: EditarPerfilScreen(vendedorModel: vendedorModel)),
                 width: 200,
                 height: 45,
                 borderRadius: AppRadius.normal,
-                color: AppColors.primaryColor,
-                textColor: AppColors.white,
+                color: cashboost.AppColors.primaryColor,
+                textColor: cashboost.AppColors.white,
               ),
             ],
           ),
@@ -140,7 +127,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
               height: 120,
               width: 120,
               radius: BorderRadius.circular(AppRadius.normal),
-              border: Border.all(color: AppColors.primaryColor, width: 2),
+              border: Border.all(color: cashboost.AppColors.primaryColor, width: 2),
               image: NetworkImage(AppEndpoints.endpointImageVendedor(vendedorModel.id!)),
             ),
           ),
@@ -156,12 +143,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
         physics: const BouncingScrollPhysics(),
         children: [
           _header(vendedorModel),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
           appContainer(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(AppSpacing.normal),
             radius: BorderRadius.circular(AppRadius.medium),
-            backgroundColor: AppColors.white,
+            backgroundColor: cashboost.AppColors.white,
             child: Column(
               children: [
                 _option(AppStrings.termosDeUso, onTap: () => open(screen: const TermosDeUsoScreen())),
@@ -180,15 +167,16 @@ class _PerfilScreenState extends State<PerfilScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       title: AppStrings.meuPerfil,
+      appBarBackground: cashboost.AppColors.primaryColor,
       body: FutureBuilder(
         future: _loadDataLocal(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return loadingAnimation();
+            return appLoadingAnimation(animation: AppAnimations.loading);
           }
 
           if (snapshot.hasError) {
-            return erro(ErrorModel(mensagem: AppStrings.ocorreuUmErro), function: () => _loadDataLocal());
+            return appError(ErrorModel(mensagem: AppStrings.ocorreuUmErro), function: () => _loadDataLocal());
           }
 
           return _body(snapshot.data!);

@@ -1,11 +1,10 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_context.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as app;
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
-import 'package:app_cashback_soamer/telas/apresentacao/apresentacao_screen.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:muller_package/muller_package.dart';
 
 
 Widget screen = const CadastroScreen();
@@ -37,7 +36,7 @@ class _AppWidgetState extends State<AppWidget> {
 
     return MaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.primaryColor,
+        scaffoldBackgroundColor: app.AppColors.primaryColor,
         useMaterial3: false,
       ),
       navigatorKey: AppContext.navigatorKey,

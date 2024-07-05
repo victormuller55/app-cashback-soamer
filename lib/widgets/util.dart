@@ -1,11 +1,14 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:flutter/material.dart';
+import 'package:muller_package/muller_package.dart';
+
+
 
 Widget backgroundCadastroLogin(
-  BuildContext context, {
-  required Widget child,
-  double? height,
-}) {
+    BuildContext context, {
+      required Widget child,
+      double? height,
+    }) {
   return ListView(
     children: [
       Container(
@@ -15,8 +18,8 @@ Widget backgroundCadastroLogin(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.primaryColor,
-              AppColors.secondaryColor,
+              cashboost.AppColors.primaryColor,
+              cashboost.AppColors.secondaryColor,
             ],
           ),
         ),
@@ -33,36 +36,6 @@ Widget backgroundCadastroLogin(
         ),
       ),
     ],
-  );
-}
-
-Widget appText(
-  String text, {
-  Color? color,
-  double? fontSize,
-  bool? overflow,
-  bool? bold,
-  double? letterSpacing,
-  String? fontFamily,
-  TextAlign? textAlign,
-  bool? cortado,
-}) {
-  return StatefulBuilder(
-    builder: (context, setState) {
-      return Text(
-        text,
-        textAlign: textAlign ?? TextAlign.start,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize ?? 13,
-          overflow: overflow == true ? TextOverflow.ellipsis : null,
-          fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
-          letterSpacing: letterSpacing,
-          fontFamily: fontFamily ?? 'lato',
-          decoration: cortado ?? false ? TextDecoration.lineThrough : null,
-        ),
-      );
-    },
   );
 }
 

@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/api/api_connection.dart';
-import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/home_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
@@ -11,7 +8,9 @@ import 'package:app_cashback_soamer/telas/home/inicio/inicio_service.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_event.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_service.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_state.dart';
+import 'package:muller_package/muller_package.dart';
 import 'package:bloc/bloc.dart';
+
 
 class VaucherBloc extends Bloc<VaucherEvent, VaucherState> {
   VaucherBloc() : super(VaucherInitialState()) {
@@ -25,10 +24,10 @@ class VaucherBloc extends Bloc<VaucherEvent, VaucherState> {
         List<VaucherModel> lista2 = [];
         List<VaucherModel> lista3 = [];
 
-        Response responseVendedor = await getDadosRecompensa(vendedorModel.email!);
-        Response response = await getVaucher();
-        Response responseVaucherPromocao = await getVaucherPromocao();
-        Response responseVaucherMaisTrocados = await getVaucherMaisTrocados();
+        AppResponse responseVendedor = await getDadosRecompensa(vendedorModel.email!);
+        AppResponse response = await getVaucher();
+        AppResponse responseVaucherPromocao = await getVaucherPromocao();
+        AppResponse responseVaucherMaisTrocados = await getVaucherMaisTrocados();
 
         for (var voucher in jsonDecode(response.body)) {
           var voucherModel = VaucherModel.fromMap(voucher);

@@ -1,21 +1,17 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_event.dart';
-import 'package:app_cashback_soamer/telas/home/inicio/inicio_state.dart';
-import 'package:app_cashback_soamer/widgets/circular_avatar.dart';
-import 'package:app_cashback_soamer/widgets/container.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/erro.dart';
-import 'package:app_cashback_soamer/widgets/loading.dart';
-import 'package:app_cashback_soamer/widgets/modal.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
+import 'package:app_cashback_soamer/telas/home/inicio/inicio_state.dart'; 
 import 'package:app_cashback_soamer/widgets/util.dart';
+import 'package:app_cashback_soamer/widgets/voucher_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:muller_package/muller_package.dart';
 
 class InicioScreen extends StatefulWidget {
   const InicioScreen({super.key});
@@ -101,7 +97,7 @@ class _InicioScreenState extends State<InicioScreen> {
             "SALVAR",
             function: () => _saveConcessionaria(dropdownValue),
             width: MediaQuery.of(context).size.width,
-            color: AppColors.primaryColor,
+            color: cashboost.AppColors.primaryColor,
             textColor: Colors.white,
           ),
           const SizedBox(height: 20),
@@ -121,7 +117,7 @@ class _InicioScreenState extends State<InicioScreen> {
         value: title,
         titleSize: 25,
         valueSize: 13,
-        titleColor: AppColors.primaryColor,
+        titleColor: cashboost.AppColors.primaryColor,
         valueColor: Colors.grey.shade600,
         crossAxisAlignment: CrossAxisAlignment.center,
       ),
@@ -131,7 +127,7 @@ class _InicioScreenState extends State<InicioScreen> {
   Widget _header(InicioState homeState) {
     return appContainer(
       height: MediaQuery.of(context).size.height / 6,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: cashboost.AppColors.primaryColor,
       radius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -225,7 +221,7 @@ class _InicioScreenState extends State<InicioScreen> {
 
     return RefreshIndicator(
       color: Colors.white,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: cashboost.AppColors.primaryColor,
       strokeWidth: 2,
       onRefresh: _loadHome,
       child: ListView(
@@ -255,11 +251,11 @@ class _InicioScreenState extends State<InicioScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case InicioLoadingState:
-            return loadingAnimation();
+            return appLoadingAnimation(animation: AppAnimations.loading);
           case InicioSuccessState:
             return _body(state);
           case InicioErrorState:
-            return erro(state.errorModel, function: () => _loadHome());
+            return appError(state.errorModel, function: () => _loadHome());
           default:
             return appContainer();
         }
@@ -271,6 +267,7 @@ class _InicioScreenState extends State<InicioScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
+      appBarBackground: cashboost.AppColors.primaryColor,
       title: "Inicio",
       hideBackArrow: true,
     );

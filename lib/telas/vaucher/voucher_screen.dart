@@ -1,25 +1,14 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_bloc.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_event.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_state.dart';
-import 'package:app_cashback_soamer/widgets/circular_avatar.dart';
-import 'package:app_cashback_soamer/widgets/container.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/erro.dart';
-import 'package:app_cashback_soamer/widgets/loading.dart';
-import 'package:app_cashback_soamer/widgets/modal.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:muller_package/muller_package.dart';
 
 class VaucherScreen extends StatefulWidget {
   final VaucherModel model;
@@ -51,35 +40,35 @@ class _VaucherScreenState extends State<VaucherScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             avatar(AppEndpoints.endpointImageVoucher(widget.model.id!), radius: 100),
-            appSizedBoxHeight(AppSpacing.medium),
+            appSizedBox(height:AppSpacing.medium),
             appText(
               AppStrings.voucherAdquiridoComSucesso,
               bold: true,
-              color: AppColors.primaryColor,
+              color: cashboost.AppColors.primaryColor,
               fontSize: AppFontSizes.normal,
               textAlign: TextAlign.center,
             ),
-            appSizedBoxHeight(AppSpacing.normal),
+            appSizedBox(height:AppSpacing.normal),
             appContainer(
               radius: BorderRadius.circular(AppRadius.medium),
               padding: EdgeInsets.all(AppSpacing.normal),
-              backgroundColor: AppColors.grey300,
+              backgroundColor: cashboost.AppColors.grey300,
               child: appText(
                 AppStrings.voucherComprado,
-                color: AppColors.grey600,
+                color: cashboost.AppColors.grey600,
                 fontSize: AppFontSizes.normal,
                 textAlign: TextAlign.center,
               ),
             ),
-            appSizedBoxHeight(AppSpacing.medium),
+            appSizedBox(height:AppSpacing.medium),
             appElevatedButtonText(
               AppStrings.concluir,
               function: () => Navigator.pop(context),
-              color: AppColors.primaryColor,
-              textColor: AppColors.white,
+              color:  cashboost.AppColors.primaryColor,
+              textColor:  cashboost.AppColors.white,
               width: MediaQuery.of(context).size.width,
             ),
-            appSizedBoxHeight(AppSpacing.big),
+            appSizedBox(height:AppSpacing.big),
           ],
         ),
       ),
@@ -92,13 +81,13 @@ class _VaucherScreenState extends State<VaucherScreen> {
       height: 350,
       child: Column(
         children: [
-          appSizedBoxHeight(AppSpacing.medium),
+          appSizedBox(height:AppSpacing.medium),
           appText(widget.model.titulo!, fontSize: AppFontSizes.medium, bold: true),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
           appContainer(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(AppSpacing.normal),
-            backgroundColor: AppColors.grey300,
+            backgroundColor:  cashboost.AppColors.grey300,
             radius: BorderRadius.circular(AppRadius.normal),
             child: Center(
               child: appText(
@@ -108,12 +97,12 @@ class _VaucherScreenState extends State<VaucherScreen> {
               ),
             ),
           ),
-          appSizedBoxHeight(AppSpacing.medium),
+          appSizedBox(height:AppSpacing.medium),
           appElevatedButtonText(
             AppStrings.trocar.toUpperCase(),
             width: MediaQuery.of(context).size.width,
-            color: AppColors.green,
-            textColor: AppColors.white,
+            color:  cashboost.AppColors.green,
+            textColor:  cashboost.AppColors.white,
             function: () {
               if (widget.model.pontos! <= widget.pontos) {
                 bloc.add(VoucherTrocarEvent(widget.model.id!));
@@ -124,13 +113,13 @@ class _VaucherScreenState extends State<VaucherScreen> {
               }
             },
           ),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.cancelar,
             width: MediaQuery.of(context).size.width,
             function: () => Navigator.pop(context),
           ),
-          appSizedBoxHeight(AppSpacing.medium),
+          appSizedBox(height:AppSpacing.medium),
         ],
       ),
     );
@@ -142,8 +131,8 @@ class _VaucherScreenState extends State<VaucherScreen> {
       child: appElevatedButtonText(
         AppStrings.trocarVoucher,
         function: () => _showModal(),
-        color: AppColors.primaryColor,
-        textColor: AppColors.white,
+        color:  cashboost.AppColors.primaryColor,
+        textColor:  cashboost.AppColors.white,
       ),
     );
   }
@@ -156,7 +145,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
           child: appContainer(
             height: 200,
             width: MediaQuery.of(context).size.width,
-            backgroundColor: AppColors.grey300,
+            backgroundColor:  cashboost.AppColors.grey300,
             image: NetworkImage(AppEndpoints.endpointImageVoucher(widget.model.id!)),
           ),
         ),
@@ -176,8 +165,8 @@ class _VaucherScreenState extends State<VaucherScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     title: widget.model.titulo ?? "",
                     value: "Até ${widget.model.dataFinal}",
-                    titleColor: AppColors.black,
-                    valueColor: AppColors.grey600,
+                    titleColor:  cashboost.AppColors.black,
+                    valueColor:  cashboost.AppColors.grey600,
                     titleSize: 18,
                     valueSize: 15,
                     spacing: true,
@@ -186,40 +175,40 @@ class _VaucherScreenState extends State<VaucherScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     title: widget.model.desconto == 0 ? AppStrings.vazio : "${widget.model.pontosCheio} Pontos",
                     value: widget.model.desconto == 0 ? "${widget.model.pontosCheio} Pontos" : "${widget.model.pontos} Pontos",
-                    titleColor: AppColors.red,
-                    valueColor: AppColors.black,
+                    titleColor:  cashboost.AppColors.red,
+                    valueColor:  cashboost.AppColors.black,
                     titleSize: 14,
                     valueSize: 18,
                     cortarTitle: true,
                   ),
                 ],
               ),
-              appSizedBoxHeight(AppSpacing.medium),
+              appSizedBox(height:AppSpacing.medium),
               appContainer(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(AppSpacing.normal),
-                backgroundColor: AppColors.grey300,
+                backgroundColor:  cashboost.AppColors.grey300,
                 radius: BorderRadius.circular(AppRadius.medium),
                 child: Center(child: appText(widget.model.info!, fontSize: AppFontSizes.normal, textAlign: TextAlign.justify)),
               ),
             ],
           ),
         ),
-        appSizedBoxHeight(AppSpacing.medium),
+        appSizedBox(height:AppSpacing.medium),
         ExpansionTile(
-          collapsedBackgroundColor: AppColors.white,
-          textColor: AppColors.black,
+          collapsedBackgroundColor:  cashboost.AppColors.white,
+          textColor:  cashboost.AppColors.black,
           title: appText(AppStrings.perguntaVoucher1),
           children: [
             appContainer(
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(AppSpacing.normal),
-              backgroundColor: AppColors.grey300,
+              backgroundColor:  cashboost.AppColors.grey300,
               child: Center(
                 child: appText(
                   AppStrings.explicacaoComoUtilizarVoucher,
                   fontSize: AppFontSizes.normal,
-                  color: AppColors.grey600,
+                  color:  cashboost.AppColors.grey600,
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -227,20 +216,20 @@ class _VaucherScreenState extends State<VaucherScreen> {
           ],
         ),
         ExpansionTile(
-          collapsedBackgroundColor: AppColors.white,
-          textColor: AppColors.black,
+          collapsedBackgroundColor:  cashboost.AppColors.white,
+          textColor:  cashboost.AppColors.black,
           title: appText(AppStrings.perguntaVoucher2),
           children: [
             appContainer(
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(AppSpacing.normal),
-              backgroundColor: AppColors.grey300,
+              backgroundColor:  cashboost.AppColors.grey300,
               child: Center(
                 child: appText(
                   AppStrings.explicacaoTempoVoucher,
                   fontSize: AppFontSizes.normal,
                   textAlign: TextAlign.justify,
-                  color: AppColors.grey600,
+                  color:  cashboost.AppColors.grey600,
                 ),
               ),
             ),
@@ -256,9 +245,9 @@ class _VaucherScreenState extends State<VaucherScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case VoucherLoadingState:
-            return loadingAnimation();
+            return appLoadingAnimation(animation: AppAnimations.loading);
           case VoucherErrorState:
-            return erro(state.errorModel, function: () => {});
+            return appError(state.errorModel, function: () => {});
           case VoucherSuccessState:
             return _bodySuccess(state);
           default:
@@ -272,8 +261,9 @@ class _VaucherScreenState extends State<VaucherScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
+      appBarBackground: cashboost.AppColors.primaryColor,
       title: widget.model.titulo ?? "",
-      bottomNavigationBar: bloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
+      fixedBottom: bloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
       actions: [
         infoColumn(
           title: widget.pontos.toString(),

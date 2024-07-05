@@ -1,15 +1,12 @@
 import 'dart:convert';
-import 'package:app_cashback_soamer/api/api_connection.dart';
-import 'package:app_cashback_soamer/api/api_exception.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_event.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_service.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_state.dart';
 import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:bloc/bloc.dart';
+import 'package:muller_package/muller_package.dart';
 
 class EntrarBloc extends Bloc<EntrarEvent, EntrarState> {
   EntrarBloc() : super(EntrarInitialState()) {
@@ -17,7 +14,7 @@ class EntrarBloc extends Bloc<EntrarEvent, EntrarState> {
       emit(EntrarLoadingState());
       try {
 
-        Response response = await getUser(event.email, event.senha);
+        AppResponse response = await getUser(event.email, event.senha);
         VendedorModel vendedorModel = VendedorModel.fromMap(jsonDecode(response.body));
         saveLocalUserData(vendedorModel);
 

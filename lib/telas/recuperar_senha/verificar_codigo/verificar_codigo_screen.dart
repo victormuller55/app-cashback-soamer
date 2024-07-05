@@ -1,18 +1,8 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as  cashboost;
 import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_screen.dart';
-import 'package:app_cashback_soamer/widgets/animations.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/form_field.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
-import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
+import 'package:muller_package/muller_package.dart';
 
 class VerificarCodigoScreen extends StatefulWidget {
   final String email;
@@ -41,7 +31,7 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
         padding: EdgeInsets.all(AppSpacing.normal),
         child: ListView(
           children: [
-            appSizedBoxHeight(AppSpacing.big),
+            appSizedBox(height:AppSpacing.big),
             appAnimation(AppAnimations.code, repete: false),
             Padding(
               padding: EdgeInsets.only(left: AppSpacing.normal, right: AppSpacing.normal, bottom: AppSpacing.big),
@@ -49,19 +39,19 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
             ),
             getPinCodeFormField(
               controller: code,
-              activeFillColor: AppColors.white,
-              inactiveFillColor: AppColors.grey300,
-              selectedFillColor: AppColors.grey100,
-              activeColor: AppColors.grey,
-              selectedColor: AppColors.grey700,
-              inactiveColor: AppColors.grey300,
+              activeFillColor:  cashboost.AppColors.white,
+              inactiveFillColor:  cashboost.AppColors.grey300,
+              selectedFillColor:  cashboost.AppColors.grey100,
+              activeColor:  cashboost.AppColors.grey,
+              selectedColor:  cashboost.AppColors.grey700,
+              inactiveColor:  cashboost.AppColors.grey300,
             ),
-            appSizedBoxHeight(AppSpacing.medium),
+            appSizedBox(height:AppSpacing.medium),
             appElevatedButtonText(
               AppStrings.verificar.toUpperCase(),
               width: MediaQuery.of(context).size.width - 30,
-              color: AppColors.primaryColor,
-              textColor: AppColors.white,
+              color:  cashboost.AppColors.primaryColor,
+              textColor:  cashboost.AppColors.white,
                function: () => _checkCode(),
             ),
           ],
@@ -74,6 +64,7 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       title: AppStrings.verificarCodigo,
+      appBarBackground: cashboost.AppColors.primaryColor,
       body: _body(),
       hideBackArrow: true,
     );

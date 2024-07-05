@@ -1,6 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_screen.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_screen.dart';
@@ -8,6 +7,7 @@ import 'package:app_cashback_soamer/telas/home/perfil/perfil_screen.dart';
 import 'package:app_cashback_soamer/telas/home/recompensas/recompensas_screen.dart';
 import 'package:app_cashback_soamer/telas/registrar_venda/registrar_venda_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:muller_package/muller_package.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.defaultEdge,
         onTap: (index) => setState(() => _selectedIndex = index),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: cashboost.AppColors.primaryColor,
         iconSize: 30,
         notchMargin: 5,
         splashSpeedInMilliseconds: 0,
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: FloatingActionButton(
             heroTag: "floatingButton",
             onPressed: () => open( screen: const RegistrarVendaScreen()),
-            backgroundColor: AppColors.secondaryColor,
+            backgroundColor: cashboost.AppColors.secondaryColor,
             child: const Icon(Icons.camera_alt, size: 30),
           ),
         ),

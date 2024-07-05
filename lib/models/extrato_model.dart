@@ -1,4 +1,5 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
+import 'package:muller_package/muller_package.dart';
+
 
 class ExtratoModel {
   int? id;

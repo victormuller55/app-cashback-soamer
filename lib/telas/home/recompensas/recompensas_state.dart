@@ -1,6 +1,6 @@
-import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/home_model.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
+import 'package:muller_package/muller_package.dart';
 
 abstract class VaucherState {
   ErrorModel errorModel;

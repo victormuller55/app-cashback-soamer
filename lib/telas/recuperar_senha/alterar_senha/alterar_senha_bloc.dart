@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/api/api_connection.dart';
-import 'package:app_cashback_soamer/api/api_exception.dart';
+import 'package:muller_package/muller_package.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
-import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/home_screen.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/alterar_senha/alterar_senha_event.dart';
@@ -18,7 +15,7 @@ class AlterarSenhaBloc extends Bloc<AlterarSenhaEvent, AlterarSenhaState> {
       emit(AlterarSenhaLoadingState());
       try {
 
-        Response response = await alterarSenha(event.email, event.novaSenha);
+        AppResponse response = await alterarSenha(event.email, event.novaSenha);
         VendedorModel vendedorModel = VendedorModel.fromMap(jsonDecode(response.body));
         saveLocalUserData(vendedorModel);
 

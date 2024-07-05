@@ -1,23 +1,13 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/functions/formatters.dart';
-import 'package:app_cashback_soamer/models/extrato_model.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_event.dart';
 import 'package:app_cashback_soamer/telas/home/extrato/extrato_state.dart';
-import 'package:app_cashback_soamer/widgets/animations.dart';
-import 'package:app_cashback_soamer/widgets/container.dart';
-import 'package:app_cashback_soamer/widgets/erro.dart';
-import 'package:app_cashback_soamer/widgets/loading.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
+import 'package:app_cashback_soamer/models/extrato_model.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:muller_package/muller_package.dart';
 
 class ExtratoScreen extends StatefulWidget {
   const ExtratoScreen({super.key});
@@ -132,7 +122,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
               textAlign: TextAlign.center,
               fontSize: AppFontSizes.normal,
             ),
-            appSizedBoxHeight(100),
+            appSizedBox(height: 100),
           ],
         ),
       );
@@ -143,7 +133,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
       child: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height: AppSpacing.normal),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -151,7 +141,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
               _cardEntradaSaida(title: AppStrings.totalEntradasHoje, value: "+$totalEntrada", entrada: true),
             ],
           ),
-          appSizedBoxHeight(AppSpacing.normal),
+          appSizedBox(height:AppSpacing.normal),
           ...registros.reversed,
         ],
       ),
@@ -162,18 +152,18 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
     return RefreshIndicator(
       color: AppColors.white,
       strokeWidth: 2,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: cashboost.AppColors.primaryColor,
       onRefresh: _loadExtrato,
       child: BlocBuilder<ExtratoBloc, ExtratoState>(
         bloc: bloc,
         builder: (context, state) {
           switch (state.runtimeType) {
             case ExtratoLoadingState:
-              return loadingAnimation();
+              return appLoadingAnimation(animation: AppAnimations.loading);
             case ExtratoSuccessState:
               return _body(state.extratoModel);
             case ExtratoErrorState:
-              return erro(state.errorModel, function: () => _loadExtrato());
+              return appError(state.errorModel, function: () => _loadExtrato());
             default:
               return appContainer();
           }
@@ -186,6 +176,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
+      appBarBackground: cashboost.AppColors.primaryColor,
       title: AppStrings.extrato,
       hideBackArrow: true,
     );

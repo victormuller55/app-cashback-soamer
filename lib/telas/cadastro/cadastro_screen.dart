@@ -1,26 +1,15 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_form_formatter.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
-import 'package:app_cashback_soamer/functions/formatters.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
-import 'package:app_cashback_soamer/functions/util.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_bloc.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_screen.dart';
-import 'package:app_cashback_soamer/widgets/elevated_button.dart';
-import 'package:app_cashback_soamer/widgets/form_field.dart';
-import 'package:app_cashback_soamer/widgets/sized_box.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
+import 'package:app_cashback_soamer/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../widgets/loading.dart';
+import 'package:muller_package/muller_package.dart';
 
 class CadastroScreen extends StatefulWidget {
   const CadastroScreen({super.key});
@@ -30,7 +19,6 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
-
   CadastroBloc bloc = CadastroBloc();
 
   TextEditingController nome = TextEditingController();
@@ -42,7 +30,6 @@ class _CadastroScreenState extends State<CadastroScreen> {
   bool termosAceitos = false;
 
   void _salvar() {
-
     VendedorModel vendedorModel = VendedorModel(
       nome: nome.text,
       email: email.text,
@@ -64,7 +51,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             showSnackbarWarning(message: AppStrings.concordeComOsTermosDeUsoEPoliticaDePrivacidade);
           }
         } else {
-          showSnackbarWarning( message: AppStrings.cpfInvalido);
+          showSnackbarWarning(message: AppStrings.cpfInvalido);
         }
       } else {
         showSnackbarWarning(message: AppStrings.emailInvalido);
@@ -77,7 +64,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
   Widget _body() {
     return Column(
       children: [
-        appSizedBoxHeight(70),
+        appSizedBox(height: 70),
         appFormField(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
         appFormField(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
         appFormField(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
@@ -89,23 +76,23 @@ class _CadastroScreenState extends State<CadastroScreen> {
             value: termosAceitos,
             title: appText(AppStrings.concordoTermosPoliticas, color: Colors.white, bold: false),
             onChanged: (value) => setState(() => termosAceitos = !termosAceitos),
-            checkColor: AppColors.primaryColor,
+            checkColor: cashboost.AppColors.primaryColor,
             fillColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
         ),
-        appSizedBoxHeight(AppSpacing.medium),
-        elevatedButtonPadrao(
+        appSizedBox(height: AppSpacing.medium),
+        appElevatedButton(
           function: () => _validar(),
-          appText(AppStrings.cadastrar.toUpperCase(), color: AppColors.primaryColor, bold: true, fontSize: AppFontSizes.small),
+          appText(AppStrings.cadastrar.toUpperCase(), color: cashboost.AppColors.primaryColor, bold: true, fontSize: AppFontSizes.small),
         ),
-        appSizedBoxHeight(AppSpacing.normal),
+        appSizedBox(height: AppSpacing.normal),
         appElevatedButtonText(
           AppStrings.jaTenhoConta.toUpperCase(),
-          color: AppColors.primaryColor.withOpacity(0.5),
+          color: cashboost.AppColors.primaryColor.withOpacity(0.5),
           textColor: Colors.white,
           function: () => open(screen: const EntrarScreen(), closePrevious: true),
         ),
-        appSizedBoxHeight(AppSpacing.medium),
+        appSizedBox(height: AppSpacing.medium),
       ],
     );
   }
@@ -116,7 +103,10 @@ class _CadastroScreenState extends State<CadastroScreen> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case CadastroLoadingState:
-            return loading(color: Colors.white);
+            return appLoading(
+              child: loadingCircular(),
+              color: Colors.white,
+            );
           default:
             return _body();
         }

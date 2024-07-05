@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:app_cashback_soamer/api/api_connection.dart';
-import 'package:app_cashback_soamer/api/api_exception.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
 import 'package:app_cashback_soamer/models/home_model.dart';
@@ -11,6 +9,7 @@ import 'package:app_cashback_soamer/telas/home/inicio/inicio_event.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_service.dart';
 import 'package:app_cashback_soamer/telas/home/inicio/inicio_state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:muller_package/muller_package.dart';
 
 class InicioBloc extends Bloc<InicioEvent, InicioState> {
   InicioBloc() : super(InicioInitialState()) {
@@ -21,9 +20,9 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
         List<VaucherModel> vouchersMaisTrocados = [];
 
         // Faz requisições
-        Response responseVendedor = await getHome(event.email);
-        Response responseVaucherPromocao = await getVaucherPromocao();
-        Response responseVaucherMaisTrocados = await getVaucherMaisTrocados();
+        AppResponse responseVendedor = await getHome(event.email);
+        AppResponse responseVaucherPromocao = await getVaucherPromocao();
+        AppResponse responseVaucherMaisTrocados = await getVaucherMaisTrocados();
         VendedorModel vendedorModel = await getModelLocal();
 
         // Transforma json em model (Voucher em promoção)
@@ -63,7 +62,7 @@ class InicioBloc extends Bloc<InicioEvent, InicioState> {
     on<LoadConcessionariaEvent>((event, emit) async {
       emit(InicioLoadingState());
       try {
-        Response response = await getConcessionarias();
+        AppResponse response = await getConcessionarias();
         List<ConcessionariaModel> itens = [];
 
         for (var voucher in jsonDecode(response.body)) {

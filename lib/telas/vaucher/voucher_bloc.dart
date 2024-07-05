@@ -1,9 +1,5 @@
-import 'dart:convert';
-
-import 'package:app_cashback_soamer/api/api_connection.dart';
-import 'package:app_cashback_soamer/api/api_exception.dart';
+import 'package:muller_package/muller_package.dart';
 import 'package:app_cashback_soamer/functions/local_data.dart';
-import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_event.dart';
 import 'package:app_cashback_soamer/telas/vaucher/voucher_service.dart';
@@ -17,7 +13,7 @@ class VoucherBloc extends Bloc<VoucherEvent, VoucherState> {
       try {
 
         VendedorModel vendedorModel = await getModelLocal();
-        Response response = await getCodeVoucher(event.idVoucher, vendedorModel.id!);
+        AppResponse response = await getCodeVoucher(event.idVoucher, vendedorModel.id!);
 
         emit(VoucherSuccessState(code: response.body));
       } catch (e) {

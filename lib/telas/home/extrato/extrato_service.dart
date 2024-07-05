@@ -1,7 +1,7 @@
-import 'package:app_cashback_soamer/api/api_connection.dart';
+import 'package:muller_package/muller_package.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
 
-Future<Response> getExtrato(int idVendedor) async {
+Future<AppResponse> getExtrato(int idVendedor) async {
   return await getHTTP(
     endpoint: AppEndpoints.endpointExtrato,
     parameters: {

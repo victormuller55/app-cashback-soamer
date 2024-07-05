@@ -1,7 +1,7 @@
 import 'package:app_cashback_soamer/models/concessionaria_model.dart';
-import 'package:app_cashback_soamer/models/error_model.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
+import 'package:muller_package/muller_package.dart';
 
 abstract class InicioState {
   VendedorModel vendedorModel;

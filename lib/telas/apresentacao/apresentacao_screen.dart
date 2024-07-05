@@ -1,12 +1,8 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/functions/navigation.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
+import 'package:muller_package/muller_package.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/home_screen.dart';
-import 'package:app_cashback_soamer/widgets/animations.dart';
-import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -21,8 +17,8 @@ class ApresentacaoScreen extends StatefulWidget {
 
 class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
 
-  TextStyle tituloStyle = TextStyle(fontSize: AppFontSizes.big, color: AppColors.primaryColor, fontWeight: FontWeight.bold, fontFamily: 'lato');
-  TextStyle descricaoStyle = TextStyle(fontSize: AppFontSizes.normal, color: AppColors.grey, fontFamily: 'lato');
+  TextStyle tituloStyle = TextStyle(fontSize: AppFontSizes.big, color: cashboost.AppColors.primaryColor, fontWeight: FontWeight.bold, fontFamily: 'lato');
+  TextStyle descricaoStyle = TextStyle(fontSize: AppFontSizes.normal, color: cashboost.AppColors.grey, fontFamily: 'lato');
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +81,12 @@ class _ApresentacaoScreenState extends State<ApresentacaoScreen> {
         onDone: () => open(screen: HomeScreen(vendedorModel: widget.vendedorModel), closePrevious: true),
         showSkipButton: true,
         skip: appText(AppStrings.pular, bold: true, color: AppColors.grey, fontSize: AppFontSizes.small),
-        next: appText(AppStrings.proximo.toUpperCase(), bold: true, color: AppColors.primaryColor, fontSize: AppFontSizes.small),
-        done: appText(AppStrings.concluir.toUpperCase(), bold: true, color: AppColors.primaryColor, fontSize: AppFontSizes.small),
+        next: appText(AppStrings.proximo.toUpperCase(), bold: true, color: cashboost.AppColors.primaryColor, fontSize: AppFontSizes.small),
+        done: appText(AppStrings.concluir.toUpperCase(), bold: true, color: cashboost.AppColors.primaryColor, fontSize: AppFontSizes.small),
         dotsDecorator: DotsDecorator(
           size: const Size.square(10.0),
           activeSize: const Size(20.0, 10.0),
-          activeColor: AppColors.primaryColor,
+          activeColor: cashboost.AppColors.primaryColor,
           color: Colors.black,
           spacing: const EdgeInsets.symmetric(horizontal: 3.0),
           activeShape: RoundedRectangleBorder(

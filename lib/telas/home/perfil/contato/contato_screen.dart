@@ -1,14 +1,6 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_font_sizes.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_icons.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_radius.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_spacing.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_strings.dart';
-import 'package:app_cashback_soamer/app_widget/snack_bar/snack_bar.dart';
-import 'package:app_cashback_soamer/widgets/container.dart';
-import 'package:app_cashback_soamer/widgets/scaffold.dart';
-import 'package:app_cashback_soamer/widgets/util.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:flutter/material.dart';
+import 'package:muller_package/muller_package.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContatoSoamer extends StatefulWidget {
@@ -35,12 +27,12 @@ class _ContatoSoamerState extends State<ContatoSoamer> {
         child: appContainer(
           height: 60,
           width: MediaQuery.of(context).size.width,
-          backgroundColor: AppColors.grey50,
+          backgroundColor: cashboost.AppColors.grey50,
           padding: EdgeInsets.only(left: AppSpacing.normal, right: AppSpacing.normal),
           radius: BorderRadius.circular(AppRadius.normal),
           child: ListTile(
-            leading: Icon(icon, color: AppColors.primaryColor),
-            title: appText(titulo, color: AppColors.grey, bold: true, fontSize: AppFontSizes.small),
+            leading: Icon(icon, color: cashboost.AppColors.primaryColor),
+            title: appText(titulo, color: cashboost.AppColors.grey, bold: true, fontSize: AppFontSizes.small),
             trailing: const Icon(AppIcons.link),
           ),
         ),
@@ -64,6 +56,7 @@ class _ContatoSoamerState extends State<ContatoSoamer> {
   @override
   Widget build(BuildContext context) {
     return scaffold(
+      appBarBackground: cashboost.AppColors.primaryColor,
       title: AppStrings.contatoSoamer,
       body: _body(),
     );
