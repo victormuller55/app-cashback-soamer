@@ -2,9 +2,9 @@ import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
 import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
 import 'package:app_cashback_soamer/models/vaucher_model.dart';
-import 'package:app_cashback_soamer/telas/vaucher/voucher_bloc.dart';
-import 'package:app_cashback_soamer/telas/vaucher/voucher_event.dart';
-import 'package:app_cashback_soamer/telas/vaucher/voucher_state.dart';
+import 'package:app_cashback_soamer/telas/voucher/voucher_bloc.dart';
+import 'package:app_cashback_soamer/telas/voucher/voucher_event.dart';
+import 'package:app_cashback_soamer/telas/voucher/voucher_state.dart';
 import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,7 +91,7 @@ class _VaucherScreenState extends State<VaucherScreen> {
             radius: BorderRadius.circular(AppRadius.normal),
             child: Center(
               child: appText(
-                "Você realmente deseja trocar ${widget.model.pontos} pontos deste vaucher?",
+                "Você realmente deseja trocar ${widget.model.pontos} pontos deste voucher?",
                 fontSize: AppFontSizes.normal,
                 textAlign: TextAlign.center,
               ),

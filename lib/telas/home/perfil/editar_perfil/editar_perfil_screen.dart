@@ -1,14 +1,13 @@
 import 'dart:io';
 
-import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
-import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
-import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
-import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
-import 'package:app_cashback_soamer/models/edit_vendedor_model.dart';
-import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_bloc.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_event.dart';
 import 'package:app_cashback_soamer/telas/home/perfil/editar_perfil/editar_perfil_state.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
+import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
+import 'package:app_cashback_soamer/app_widget/app_consts/app_endpoints.dart';
+import 'package:app_cashback_soamer/models/edit_vendedor_model.dart';
+import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

@@ -57,15 +57,15 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
     List<Widget> promocao = [];
 
     for (int i = 0; i <= state.vouchersLista.length - 1; i++) {
-      vouchers.add(cardVaucher(state.vouchersLista[i], "1hero$i", bloc.state.dadosVendedorModel.pontos!));
+      vouchers.add(cardVoucher(state.vouchersLista[i], "1hero$i", bloc.state.dadosVendedorModel.pontos!));
     }
 
     for (int i = 0; i <= state.maisTrocadosLista.length - 1; i++) {
-      maisTrocados.add(cardVaucher(state.maisTrocadosLista[i], "2hero$i", bloc.state.dadosVendedorModel.pontos!));
+      maisTrocados.add(cardVoucher(state.maisTrocadosLista[i], "2hero$i", bloc.state.dadosVendedorModel.pontos!));
     }
 
     for (int i = 0; i <= state.promocaoLista.length - 1; i++) {
-      promocao.add(cardVaucher(state.promocaoLista[i], "3hero$i", bloc.state.dadosVendedorModel.pontos!));
+      promocao.add(cardVoucher(state.promocaoLista[i], "3hero$i", bloc.state.dadosVendedorModel.pontos!));
     }
 
     return Padding(

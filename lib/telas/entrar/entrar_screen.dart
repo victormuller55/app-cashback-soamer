@@ -1,6 +1,4 @@
-import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
-import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_screen.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_bloc.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_event.dart';

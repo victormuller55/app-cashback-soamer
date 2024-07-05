@@ -212,11 +212,11 @@ class _InicioScreenState extends State<InicioScreen> {
     List<Widget> cardsMaisTrocados = [];
 
     for (int i = 0; i <= homeState.vaucherListPromocao.length - 1; i++) {
-      cardsPromocao.add(cardVaucher(homeState.vaucherListPromocao[i], "hero$i", homeState.vendedorModel.pontos!));
+      cardsPromocao.add(cardVoucher(homeState.vaucherListPromocao[i], "hero$i", homeState.vendedorModel.pontos!));
     }
 
     for (int i = 0; i <= homeState.vaucherListMaisTrocados.length - 1; i++) {
-      cardsMaisTrocados.add(cardVaucher(homeState.vaucherListMaisTrocados[i], "Mhero$i", homeState.vendedorModel.pontos!));
+      cardsMaisTrocados.add(cardVoucher(homeState.vaucherListMaisTrocados[i], "Mhero$i", homeState.vendedorModel.pontos!));
     }
 
     return RefreshIndicator(

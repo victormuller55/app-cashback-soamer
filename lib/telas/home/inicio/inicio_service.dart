@@ -11,11 +11,11 @@ Future<AppResponse> getHome(String email) async {
 }
 
 Future<AppResponse> getVaucherPromocao() async {
-  return await getHTTP(endpoint: AppEndpoints.endpointVaucherPromocao);
+  return await getHTTP(endpoint: AppEndpoints.endpointVoucherPromocao);
 }
 
 Future<AppResponse> getVaucherMaisTrocados() async {
-  return await getHTTP(endpoint: AppEndpoints.endpointVaucherMaisTrocados);
+  return await getHTTP(endpoint: AppEndpoints.endpointVoucherMaisTrocados);
 }
 
 Future<AppResponse> getConcessionarias() async {

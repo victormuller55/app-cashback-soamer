@@ -1,6 +1,5 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_animations.dart';
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
-import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_bloc.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_event.dart';
 import 'package:app_cashback_soamer/telas/recuperar_senha/enviar_email/enviar_email_state.dart';

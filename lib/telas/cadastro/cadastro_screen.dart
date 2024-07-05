@@ -1,5 +1,4 @@
 import 'package:app_cashback_soamer/app_widget/app_consts/app_colors.dart' as cashboost;
-import 'package:app_cashback_soamer/app_widget/validators/validators.dart';
 import 'package:app_cashback_soamer/models/vendedor_model.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_bloc.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
@@ -77,7 +76,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             title: appText(AppStrings.concordoTermosPoliticas, color: Colors.white, bold: false),
             onChanged: (value) => setState(() => termosAceitos = !termosAceitos),
             checkColor: cashboost.AppColors.primaryColor,
-            fillColor: MaterialStateProperty.all<Color>(Colors.white),
+            fillColor: WidgetStateProperty.all<Color>(Colors.white),
           ),
         ),
         appSizedBox(height: AppSpacing.medium),

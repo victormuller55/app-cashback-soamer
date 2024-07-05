@@ -8,9 +8,9 @@ class AppEndpoints {
   static String endpointEditarVendedor = "$server/v1/soamer/usuario/edit";
   static String endpointExtrato = "$server/v1/soamer/extrato";
   static String endpointRecuperarSenha = "$server/v1/soamer/senha/recuperar";
-  static String endpointVaucher = "$server/v1/soamer/vaucher";
-  static String endpointVaucherMaisTrocados = "$server/v1/soamer/vaucher/trocados";
-  static String endpointVaucherPromocao = "$server/v1/soamer/vaucher/promocao";
+  static String endpointVoucher = "$server/v1/soamer/vaucher";
+  static String endpointVoucherMaisTrocados = "$server/v1/soamer/vaucher/trocados";
+  static String endpointVoucherPromocao = "$server/v1/soamer/vaucher/promocao";
   static String endpointTrocarVoucher = "$server/v1/soamer/vaucher/trocar";
   static String endpointVenda = "$server/v1/soamer/venda";
 
