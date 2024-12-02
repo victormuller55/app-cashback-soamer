@@ -20,19 +20,37 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
 
   AlterarSenhaBloc bloc = AlterarSenhaBloc();
 
-  TextEditingController senha = TextEditingController();
-  TextEditingController confirmarSenha = TextEditingController();
+  late AppFormField senha;
+  late AppFormField confirmarSenha;
+
+  @override
+  void initState() {
+
+    senha = AppFormField(
+      context: context,
+      hint: AppStrings.digiteSuaNovaSenha,
+      showContent: false,
+    );
+
+    confirmarSenha = AppFormField(
+      context: context,
+      hint: AppStrings.digiteSuaNovaSenha,
+      showContent: false,
+    );
+
+    super.initState();
+  }
 
   void _entrarESalvar() {
-   if(senha.text.isNotEmpty && confirmarSenha.text.isNotEmpty) {
-     if (senha.text == confirmarSenha.text) {
-       bloc.add(AlterarSenhaEnviarEvent(widget.email, senha.text));
-     } else {
-       showSnackbarWarning(message: AppStrings.asSenhasNaoSaoIguais);
-     }
-   } else {
-     showSnackbarWarning(message: AppStrings.preenchaTodosOsCampos);
-   }
+    if (senha.controller.text.isNotEmpty && confirmarSenha.controller.text.isNotEmpty) {
+      if (senha.controller.text == confirmarSenha.controller.text) {
+        bloc.add(AlterarSenhaEnviarEvent(widget.email, senha.controller.text));
+      } else {
+        showSnackbarWarning(message: AppStrings.asSenhasNaoSaoIguais);
+      }
+    } else {
+      showSnackbarWarning(message: AppStrings.preenchaTodosOsCampos);
+    }
   }
 
   Widget _body() {
@@ -40,10 +58,10 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
       padding: EdgeInsets.all(AppSpacing.normal),
       child: ListView(
         children: [
-          appFormField(context, hint: AppStrings.digiteSuaNovaSenha, showSenha: false, controller: senha),
-          appSizedBox(height:AppSpacing.normal),
-          appFormField(context, hint: AppStrings.confirmeSuaNovaSenha, showSenha: false, controller: confirmarSenha),
-          appSizedBox(height:AppSpacing.normal),
+          senha.formulario,
+          appSizedBox(height: AppSpacing.normal),
+          confirmarSenha.formulario,
+          appSizedBox(height: AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.salvarEEntrar.toUpperCase(),
             function: () => _entrarESalvar(),
@@ -75,9 +93,9 @@ class _AlterarSenhaScreenState extends State<AlterarSenhaScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.alterarSenha,
-      hideBackArrow: true,
+      hideBackIcon: true,
     );
   }
 

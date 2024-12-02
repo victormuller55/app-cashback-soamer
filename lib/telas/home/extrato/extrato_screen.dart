@@ -176,9 +176,9 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.extrato,
-      hideBackArrow: true,
+      hideBackIcon: true,
     );
   }
 

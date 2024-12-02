@@ -4,8 +4,8 @@ import 'package:app_cashback_soamer/telas/cadastro/cadastro_bloc.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_event.dart';
 import 'package:app_cashback_soamer/telas/cadastro/cadastro_state.dart';
 import 'package:app_cashback_soamer/telas/entrar/entrar_screen.dart';
-import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:app_cashback_soamer/widgets/loading.dart';
+import 'package:app_cashback_soamer/widgets/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:muller_package/muller_package.dart';
@@ -18,32 +18,76 @@ class CadastroScreen extends StatefulWidget {
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
+
   CadastroBloc bloc = CadastroBloc();
 
-  TextEditingController nome = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController celular = TextEditingController();
-  TextEditingController cpf = TextEditingController();
-  TextEditingController senha = TextEditingController();
+  late AppFormField nome;
+  late AppFormField email;
+  late AppFormField celular;
+  late AppFormField cpf;
+  late AppFormField senha;
 
   bool termosAceitos = false;
 
+  @override
+  void initState() {
+
+    nome = AppFormField(
+      context: context,
+      hint: AppStrings.nome,
+      width: 300,
+      textInputType: TextInputType.name,
+    );
+
+    email = AppFormField(
+      context: context,
+      hint: AppStrings.email,
+      width: 300,
+      textInputType: TextInputType.emailAddress,
+    );
+
+    celular = AppFormField(
+      context: context,
+      hint: AppStrings.celular,
+      width: 300,
+      textInputType: TextInputType.number,
+      textInputFormatter: AppFormFormatters.phoneFormatter,
+    );
+
+    cpf = AppFormField(
+      context: context,
+      hint: AppStrings.cpf,
+      width: 300,
+      textInputType: TextInputType.number,
+      textInputFormatter: AppFormFormatters.cpfFormatter,
+    );
+
+    senha = AppFormField(
+      context: context,
+      hint: AppStrings.senha,
+      width: 300,
+      textInputType: TextInputType.visiblePassword,
+    );
+
+    super.initState();
+  }
+
   void _salvar() {
     VendedorModel vendedorModel = VendedorModel(
-      nome: nome.text,
-      email: email.text,
-      celular: somenteNumeros(celular.text),
-      cpf: somenteNumeros(cpf.text),
-      senha: senha.text,
+      nome: nome.controller.text,
+      email: email.controller.text,
+      celular: somenteNumeros(celular.controller.text),
+      cpf: somenteNumeros(cpf.controller.text),
+      senha: senha.controller.text,
     );
 
     bloc.add(CadastroSalvarEvent(vendedorModel));
   }
 
   void _validar() {
-    if (verificaCampoFormVazio(controllers: [nome, email, cpf, senha])) {
-      if (validaEmail(email.text)) {
-        if (validaCPF(cpf.text)) {
+    if (verificaCampoFormVazio(controllers: [nome.controller, email.controller, cpf.controller, senha.controller])) {
+      if (validaEmail(email.controller.text)) {
+        if (validaCPF(cpf.controller.text)) {
           if (termosAceitos) {
             _salvar();
           } else {
@@ -64,11 +108,11 @@ class _CadastroScreenState extends State<CadastroScreen> {
     return Column(
       children: [
         appSizedBox(height: 70),
-        appFormField(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
-        appFormField(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
-        appFormField(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
-        appFormField(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter),
-        appFormField(context, controller: senha, hint: AppStrings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
+        nome.formulario,
+        email.formulario,
+        celular.formulario,
+        cpf.formulario,
+        senha.formulario,
         SizedBox(
           width: 330,
           child: CheckboxListTile(

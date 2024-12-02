@@ -15,14 +15,24 @@ class EnviarEmailScreen extends StatefulWidget {
 }
 
 class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
-
   EnviarEmailBloc bloc = EnviarEmailBloc();
-  TextEditingController email = TextEditingController();
+  late AppFormField email;
+
+  @override
+  void initState() {
+
+    email = AppFormField(
+      context: context,
+      hint: AppStrings.email,
+    );
+
+    super.initState();
+  }
 
   void _enviarEmail() {
-    if (email.text.isNotEmpty) {
-      if (validaEmail(email.text)) {
-        bloc.add(EnviarEmailSendEvent(email.text));
+    if (email.controller.text.isNotEmpty) {
+      if (validaEmail(email.controller.text)) {
+        bloc.add(EnviarEmailSendEvent(email.controller.text));
       } else {
         showSnackbarWarning(message: AppStrings.emailInvalido);
       }
@@ -30,7 +40,6 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
       showSnackbarWarning(message: AppStrings.preechaOCampo);
     }
   }
-
 
   Widget _body() {
     return Padding(
@@ -40,17 +49,17 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
           appContainer(
             border: Border.all(color: cashboost.AppColors.primaryColor),
             radius: BorderRadius.circular(AppRadius.normal),
-            padding:  EdgeInsets.all(AppSpacing.normal),
-            backgroundColor:  cashboost.AppColors.white,
+            padding: EdgeInsets.all(AppSpacing.normal),
+            backgroundColor: cashboost.AppColors.white,
             margin: EdgeInsets.only(bottom: AppSpacing.normal),
             child: appText(AppStrings.mensagemEmail, textAlign: TextAlign.center),
           ),
-          appFormField(context, hint: AppStrings.email, controller: email),
-          appSizedBox(height:AppSpacing.normal),
+          email.formulario,
+          appSizedBox(height: AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.enviarCodigo.toUpperCase(),
-            color:  cashboost.AppColors.primaryColor,
-            textColor:  cashboost.AppColors.white,
+            color: cashboost.AppColors.primaryColor,
+            textColor: cashboost.AppColors.white,
             function: () => _enviarEmail(),
           ),
         ],
@@ -76,7 +85,7 @@ class _EnviarEmailScreenState extends State<EnviarEmailScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.enviarEmail,
     );
   }

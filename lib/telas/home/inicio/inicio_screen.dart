@@ -267,9 +267,9 @@ class _InicioScreenState extends State<InicioScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: "Inicio",
-      hideBackArrow: true,
+      hideBackIcon: true,
     );
   }
 }

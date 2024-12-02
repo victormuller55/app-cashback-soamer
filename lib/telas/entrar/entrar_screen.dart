@@ -20,13 +20,33 @@ class EntrarScreen extends StatefulWidget {
 class _EntrarScreenState extends State<EntrarScreen> {
   EntrarBloc bloc = EntrarBloc();
 
-  TextEditingController email = TextEditingController();
-  TextEditingController senha = TextEditingController();
+  late AppFormField email;
+  late AppFormField senha;
+
+  @override
+  void initState() {
+    email = AppFormField(
+      context: context,
+      hint: AppStrings.email,
+      width: 300,
+      textInputType: TextInputType.emailAddress,
+    );
+
+    senha = AppFormField(
+      context: context,
+      hint: AppStrings.senha,
+      width: 300,
+      showContent: false,
+      textInputType: TextInputType.visiblePassword,
+    );
+
+    super.initState();
+  }
 
   void _validar() {
-    if (verificaCampoFormVazio(controllers: [email, senha])) {
-      if (validaEmail(email.text)) {
-        bloc.add(EntrarLoginEvent(email.text, senha.text));
+    if (verificaCampoFormVazio(controllers: [email.controller, senha.controller])) {
+      if (validaEmail(email.controller.text)) {
+        bloc.add(EntrarLoginEvent(email.controller.text, senha.controller.text));
       } else {
         showSnackbarWarning(message: AppStrings.emailInvalido);
       }
@@ -38,27 +58,27 @@ class _EntrarScreenState extends State<EntrarScreen> {
   Widget _body() {
     return Column(
       children: [
-        appSizedBox(height:70),
-        appFormField(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
-        appFormField(context, controller: senha,hint: AppStrings.senha, width: 300, showSenha: false, textInputType: TextInputType.visiblePassword),
-        appSizedBox(height:AppSpacing.medium),
+        appSizedBox(height: 70),
+        email.formulario,
+        senha.formulario,
+        appSizedBox(height: AppSpacing.medium),
         GestureDetector(
           onTap: () => open(screen: const EnviarEmailScreen()),
           child: appText(AppStrings.esqueciMinhaSenha, color: AppColors.white, bold: true),
         ),
-        appSizedBox(height:35),
+        appSizedBox(height: 35),
         appElevatedButton(
           function: () => _validar(),
           appText(AppStrings.entrar.toUpperCase(), color: cashboost.AppColors.primaryColor, bold: true),
         ),
-        appSizedBox(height:AppSpacing.normal),
+        appSizedBox(height: AppSpacing.normal),
         appElevatedButtonText(
           AppStrings.naoTenhoConta.toUpperCase(),
           color: cashboost.AppColors.primaryColor.withOpacity(0.5),
           textColor: cashboost.AppColors.white,
           function: () => open(screen: const CadastroScreen(), closePrevious: true),
         ),
-        appSizedBox(height:AppSpacing.medium),
+        appSizedBox(height: AppSpacing.medium),
       ],
     );
   }

@@ -23,22 +23,62 @@ class EditarPerfilScreen extends StatefulWidget {
 }
 
 class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
+
   EditarVendedorBloc bloc = EditarVendedorBloc();
   File imageFile = File("");
 
-  TextEditingController nome = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController celular = TextEditingController();
-  TextEditingController cpf = TextEditingController();
-  TextEditingController senha = TextEditingController();
-  TextEditingController novaSenha = TextEditingController();
+  late AppFormField nome ;
+  late AppFormField email ;
+  late AppFormField celular ;
+  late AppFormField cpf ;
+  late AppFormField senha ;
+  late AppFormField novaSenha ;
 
   @override
   void initState() {
-    nome.text = widget.vendedorModel.nome ?? AppStrings.vazio;
-    email.text = widget.vendedorModel.email ?? AppStrings.vazio;
-    cpf.text = formataCPF(widget.vendedorModel.cpf ?? "");
-    celular.text = formataCelular(widget.vendedorModel.celular.toString());
+
+    nome = AppFormField(
+      context: context,
+      hint: AppStrings.nome,
+      width: 300,
+      textInputType: TextInputType.name,
+    );
+
+    email = AppFormField(
+      context: context,
+      hint: AppStrings.email,
+      width: 300,
+      textInputType: TextInputType.emailAddress,
+    );
+
+    celular = AppFormField(
+      context: context,
+      hint: AppStrings.celular,
+      width: 300,
+      textInputType: TextInputType.number,
+      textInputFormatter: AppFormFormatters.phoneFormatter,
+    );
+
+    cpf = AppFormField(
+      context: context,
+      hint: AppStrings.cpf,
+      width: 300,
+      textInputType: TextInputType.number,
+      textInputFormatter: AppFormFormatters.cpfFormatter,
+    );
+
+    cpf = AppFormField(
+      context: context,
+      hint: AppStrings.senha,
+      width: 300,
+      textInputType: TextInputType.visiblePassword,
+    );
+
+    nome.controller.text = widget.vendedorModel.nome ?? AppStrings.vazio;
+    email.controller.text = widget.vendedorModel.email ?? AppStrings.vazio;
+    cpf.controller.text = formataCPF(widget.vendedorModel.cpf ?? "");
+    celular.controller.text = formataCelular(widget.vendedorModel.celular.toString());
+
     super.initState();
   }
 
@@ -55,21 +95,22 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
   }
 
   void _salvar() {
+
     EditVendedorModel vendedorModel = EditVendedorModel(
-      nome: nome.text,
-      email: email.text,
-      celular: celular.text,
-      newEmail: email.text,
-      senha: senha.text,
-      newSenha: novaSenha.text,
+      nome: nome.controller.text,
+      email: email.controller.text,
+      celular: celular.controller.text,
+      newEmail: email.controller.text,
+      senha: senha.controller.text,
+      newSenha: novaSenha.controller.text,
     );
 
     bloc.add(EditarVendedorSalvarEvent(vendedorModel, imageFile));
   }
 
   void _validar() {
-    if (verificaCampoFormVazio(controllers: [nome, email, cpf, senha])) {
-      if (validaEmail(email.text)) {
+    if (verificaCampoFormVazio(controllers: [nome.controller, email.controller, cpf.controller, senha.controller])) {
+      if (validaEmail(email.controller.text)) {
         _salvar();
       } else {
         showSnackbarWarning(message: AppStrings.emailInvalido);
@@ -99,13 +140,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
               bold: true,
             ),
           ),
-          appFormField(
-            context,
-            hint: AppStrings.senha,
-            controller: senha,
-            showSenha: false,
-            width: MediaQuery.of(context).size.width,
-          ),
+          senha.formulario,
           appSizedBox(height: AppSpacing.normal),
           appElevatedButtonText(
             AppStrings.salvar.toUpperCase(),
@@ -200,11 +235,11 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
               ],
             ),
           ),
-          appFormField(context, controller: nome, hint: AppStrings.nome, width: 300, textInputType: TextInputType.name),
-          appFormField(context, controller: email, hint: AppStrings.email, width: 300, textInputType: TextInputType.emailAddress),
-          appFormField(context, controller: celular, hint: AppStrings.celular, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.phoneFormatter),
-          appFormField(context, controller: cpf, hint: AppStrings.cpf, width: 300, textInputType: TextInputType.number, textInputFormatter: AppFormFormatters.cpfFormatter, enable: false),
-          appFormField(context, controller: novaSenha, hint: AppStrings.novaSenha, width: 300, textInputType: TextInputType.visiblePassword, showSenha: false),
+          nome.formulario,
+          email.formulario,
+          celular.formulario,
+          cpf.formulario,
+          novaSenha.formulario,
           appSizedBox(height: AppSpacing.medium),
           appElevatedButtonText(
             AppStrings.salvar.toUpperCase(),
@@ -237,7 +272,7 @@ class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.editarPerfil,
     );
   }

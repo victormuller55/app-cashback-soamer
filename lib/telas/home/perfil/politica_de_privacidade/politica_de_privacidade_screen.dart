@@ -23,7 +23,7 @@ class _PoliticaDePrivacidadeScreenState extends State<PoliticaDePrivacidadeScree
   Widget build(BuildContext context) {
     return scaffold(
       body: _body(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.politicasDePrivacidades,
     );
   }

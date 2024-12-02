@@ -56,7 +56,7 @@ class _ContatoSoamerState extends State<ContatoSoamer> {
   @override
   Widget build(BuildContext context) {
     return scaffold(
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.contatoSoamer,
       body: _body(),
     );

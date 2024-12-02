@@ -167,7 +167,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       title: AppStrings.meuPerfil,
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       body: FutureBuilder(
         future: _loadDataLocal(),
         builder: (context, snapshot) {
@@ -182,7 +182,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
           return _body(snapshot.data!);
         },
       ),
-      hideBackArrow: true,
+      hideBackIcon: true,
     );
   }
 }

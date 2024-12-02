@@ -22,7 +22,7 @@ class _TermosDeUsoScreenState extends State<TermosDeUsoScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _body(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.termosDeUso,
     );
   }

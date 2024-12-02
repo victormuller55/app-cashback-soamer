@@ -261,9 +261,9 @@ class _VaucherScreenState extends State<VaucherScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: widget.model.titulo ?? "",
-      fixedBottom: bloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
+      bottomNavigationBar: bloc.state.runtimeType == VoucherSuccessState ? null : _buttonTrocar(),
       actions: [
         infoColumn(
           title: widget.pontos.toString(),

@@ -15,7 +15,7 @@ class VerificarCodigoScreen extends StatefulWidget {
 
 class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
 
-  TextEditingController code = TextEditingController();
+  late TextEditingController code = TextEditingController();
 
   void _checkCode() {
      if(code.text == widget.code) {
@@ -64,9 +64,9 @@ class _VerificarCodigoScreenState extends State<VerificarCodigoScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       title: AppStrings.verificarCodigo,
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       body: _body(),
-      hideBackArrow: true,
+      hideBackIcon: true,
     );
   }
 }

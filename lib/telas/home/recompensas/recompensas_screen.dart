@@ -18,7 +18,7 @@ class RecompensasScreen extends StatefulWidget {
 class _RecompensasScreeenState extends State<RecompensasScreen> {
 
   VaucherBloc bloc = VaucherBloc();
-  TextEditingController valor = TextEditingController();
+  late AppFormField valor ;
 
   Future<void> _load() async {
     bloc.add(VaucherLoadEvent());
@@ -146,9 +146,9 @@ class _RecompensasScreeenState extends State<RecompensasScreen> {
   Widget build(BuildContext context) {
     return scaffold(
       body: _bodyBuilder(),
-      appBarBackground: cashboost.AppColors.primaryColor,
+      appBarColor: cashboost.AppColors.primaryColor,
       title: AppStrings.recompensas,
-      hideBackArrow: true,
+      hideBackIcon: true,
     );
   }
 
